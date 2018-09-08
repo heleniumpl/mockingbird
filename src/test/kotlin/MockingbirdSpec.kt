@@ -1,5 +1,6 @@
 package pl.helenium.mockingbird
 
+import com.github.kittinunf.fuel.httpGet
 import io.kotlintest.matchers.collections.shouldBeUnique
 import io.kotlintest.matchers.numerics.shouldBeGreaterThan
 import io.kotlintest.shouldBe
@@ -11,12 +12,24 @@ class MockingbirdSpec : Spek({
 
     describe("mock lifecycle") {
 
+        fun ensureHandlesHttp(port: Int) {
+            "http://localhost:$port/not_existing_uri"
+                .httpGet()
+                .response()
+                .second
+                .statusCode shouldBe 404
+        }
+
         context("when mock is started with no given port") {
             val mock by memoized { Mockingbird() }
             beforeEach { mock.start() }
 
             it("starts on random free port > 1024") {
                 mock.port().shouldBeGreaterThan(1024)
+            }
+
+            it("handles HTTP") {
+                ensureHandlesHttp(mock.port())
             }
 
             afterEach { mock.stop() }
@@ -31,6 +44,10 @@ class MockingbirdSpec : Spek({
                 mock.port() shouldBe freePort
             }
 
+            it("handles HTTP") {
+                ensureHandlesHttp(mock.port())
+            }
+
             afterEach { mock.stop() }
         }
 
@@ -43,6 +60,12 @@ class MockingbirdSpec : Spek({
                 mocks.map(Mockingbird::port).shouldBeUnique()
             }
 
+            it("handles HTTP") {
+                mocks.forEach {
+                    ensureHandlesHttp(it.port())
+                }
+            }
+
             afterEach { mocks.forEach(Mockingbird::stop) }
         }
 
@@ -51,6 +74,8 @@ class MockingbirdSpec : Spek({
 })
 
 private fun freeTcpPort() = ServerSocket(0).use {
-    it.reuseAddress = true
-    it.localPort
+    with(it) {
+        reuseAddress = true
+        localPort
+    }
 }

@@ -15,6 +15,7 @@ class Mockingbird(port: Int = 0) {
         .setHandler { exchange ->
             exchange.run {
                 responseHeaders.put(CONTENT_TYPE, "text/plain")
+                statusCode = 404
                 responseSender.send("Hello World")
             }
         }.build()

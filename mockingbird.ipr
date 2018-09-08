@@ -49,6 +49,7 @@
   <component name="ProjectDictionaryState">
     <dictionary name="mmally">
       <words>
+        <w>kittinunf</w>
         <w>kotlintest</w>
         <w>microutils</w>
         <w>spek</w>
@@ -77,7 +78,7 @@
       <module fileurl="file://$PROJECT_DIR$/mockingbird_test.iml" filepath="$PROJECT_DIR$/mockingbird_test.iml" group="mockingbird" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="10" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="VcsDirectoryMappings">
@@ -100,6 +101,24 @@
       <JAVADOC />
       <SOURCES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-core/1.2.3/3ebabe69eba0196af9ad3a814f723fb720b9101e/logback-core-1.2.3-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: com.github.kittinunf.fuel:fuel:1.15.0">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.kittinunf.fuel/fuel/1.15.0/aefaf63dbea0b9d83b161728a4540f6463e3bd22/fuel-1.15.0.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.kittinunf.fuel/fuel/1.15.0/caa897b88d46c2dc7e2180eb4df99d672f4b53cf/fuel-1.15.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: com.github.kittinunf.result:result:1.5.0">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.kittinunf.result/result/1.5.0/1be1ca0a17fe24ac18716e8193c7f38e847c4212/result-1.5.0.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.kittinunf.result/result/1.5.0/54a7ed17ace51ec972fa753d7565cb15d017b4da/result-1.5.0-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: com.google.guava:guava:20.0">
