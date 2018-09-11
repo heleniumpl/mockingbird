@@ -15,9 +15,8 @@ class MockingbirdSpec : Spek({
         fun ensureHandlesHttp(port: Int) {
             "http://localhost:$port/not_existing_uri"
                 .httpGet()
-                .response()
-                .second
-                .statusCode shouldBe 404
+                .responseString()
+                .status() shouldBe 404
         }
 
         context("when mock is started with no given port") {
@@ -54,7 +53,7 @@ class MockingbirdSpec : Spek({
         context("when multiple mocks are run") {
             val mocks by memoized { List(5) { Mockingbird() } }
 
-            beforeEach { mocks.forEach(Mockingbird::start) }
+            beforeEach { mocks.map(Mockingbird::start) }
 
             it("every mock should have different port") {
                 mocks.map(Mockingbird::port).shouldBeUnique()
@@ -68,6 +67,41 @@ class MockingbirdSpec : Spek({
 
             afterEach { mocks.forEach(Mockingbird::stop) }
         }
+
+    }
+
+    describe("routes") {
+
+        val mock by memoized { Mockingbird() }
+
+        context("when route is registered") {
+            beforeEach {
+                mock
+                    .route {
+                        get("/hello_world") { _, _ ->
+                            "Hello World!"
+                        }
+                    }
+                    .start()
+            }
+
+            val response by memoized {
+                "http://localhost:${mock.port()}/hello_world"
+                    .httpGet()
+                    .responseString()
+            }
+
+            it("returns 200") {
+                response.status() shouldBe 200
+            }
+
+            it("returns configured response text") {
+                response.body() shouldBe "Hello World!"
+            }
+
+        }
+
+        afterEach { mock.stop() }
 
     }
 
