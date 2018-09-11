@@ -1,3 +1,6 @@
+import org.jetbrains.kotlin.gradle.dsl.Coroutines
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     kotlin("jvm") version "1.2.61"
 }
@@ -5,8 +8,9 @@ plugins {
 object Versions {
     const val logback = "1.2.3"
     const val kotlinLogging = "1.6.10"
-    const val undertow = "2.0.13.Final"
+    const val spark = "2.7.2"
 
+    // test
     const val spek2 = "2.0.0-alpha.1"
     const val kotlinTest = "3.1.9"
     const val fuel = "1.15.0"
@@ -22,7 +26,7 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
 
     implementation(group = "io.github.microutils", name = "kotlin-logging", version = Versions.kotlinLogging)
-    implementation(group = "io.undertow", name = "undertow-core", version = Versions.undertow)
+    implementation(group = "com.sparkjava", name = "spark-core", version = Versions.spark)
 
     runtimeOnly(group = "ch.qos.logback", name = "logback-classic", version = Versions.logback)
 
