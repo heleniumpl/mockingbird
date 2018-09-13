@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.dsl.Coroutines
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.2.61"
+    kotlin("jvm") version "1.2.70"
 }
 
 object Versions {
@@ -47,7 +47,7 @@ tasks {
     }
 
     withType<Wrapper> {
-        gradleVersion = "4.10"
+        gradleVersion = "4.10.1"
         distributionType = Wrapper.DistributionType.ALL
     }
 }
