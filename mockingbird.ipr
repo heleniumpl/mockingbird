@@ -194,13 +194,13 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.microutils/kotlin-logging/1.6.10/f87745c3435fc03a96c2e7b6d8d92ff1a51b49b6/kotlin-logging-1.6.10-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: io.kotlintest:kotlintest-assertions:3.1.9">
+    <library name="Gradle: io.kotlintest:kotlintest-assertions:3.1.10">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.kotlintest/kotlintest-assertions/3.1.9/1947e5bfe82213bb560191ead8069f5fdc111497/kotlintest-assertions-3.1.9.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.kotlintest/kotlintest-assertions/3.1.10/fba8f6c617c3bfb876a77f83f41d6d2089b00d54/kotlintest-assertions-3.1.10.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.kotlintest/kotlintest-assertions/3.1.9/e1df5449c8478507eea19dc13c6dc37948f2d291/kotlintest-assertions-3.1.9-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.kotlintest/kotlintest-assertions/3.1.10/9fe422476336e60a8a9dcf0535589a7c7e4acf61/kotlintest-assertions-3.1.10-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: javax.servlet:javax.servlet-api:3.1.0">

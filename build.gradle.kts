@@ -1,5 +1,9 @@
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+
 plugins {
     kotlin("jvm") version "1.2.70"
+
+    id("com.github.ben-manes.versions") version "0.20.0"
 }
 
 object Versions {
@@ -10,7 +14,7 @@ object Versions {
 
     // test
     const val spek2 = "2.0.0-alpha.2"
-    const val kotlinTest = "3.1.9"
+    const val kotlinTest = "3.1.10"
     const val fuel = "1.15.0"
 }
 
@@ -47,5 +51,23 @@ tasks {
     withType<Wrapper> {
         gradleVersion = "4.10.1"
         distributionType = Wrapper.DistributionType.ALL
+    }
+
+    withType<DependencyUpdatesTask> {
+        resolutionStrategy {
+            componentSelection {
+                all {
+                    if (candidate.group == "org.spekframework.spek2") {
+                        return@all
+                    }
+
+                    listOf("alpha", "beta", "rc", "cr", "m")
+                        .asSequence()
+                        .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-]*") }
+                        .any { it.matches(candidate.version) }
+                        .let { if (it) reject("Release candidate") }
+                }
+            }
+        }
     }
 }
