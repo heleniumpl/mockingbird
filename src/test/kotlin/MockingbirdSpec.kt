@@ -69,14 +69,10 @@ class MockingbirdSpec : Spek({
 
         val mock by memoized { Mockingbird() }
 
-        context("when route is registered") {
+        context("when HelloWorldMock is registered") {
             beforeEach {
                 mock
-                    .route {
-                        get("/hello_world") { _, _ ->
-                            "Hello World!"
-                        }
-                    }
+                    .register(HelloWorldMock)
                     .start()
             }
 

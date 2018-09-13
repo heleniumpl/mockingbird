@@ -9,12 +9,13 @@ private val logger = KotlinLogging.logger {}
 
 class Mockingbird(port: Int = 0) {
 
-    private val server: Service = ignite()
+    val server: Service = ignite()
         .port(port)
 
-    fun route(registrar: Service.() -> Unit): Mockingbird {
-        server.registrar()
-        return this
+    fun register(vararg mocks: Mock) = also {
+        mocks.forEach { mock ->
+            mock.register()(this)
+        }
     }
 
     fun start(): Mockingbird = try {
