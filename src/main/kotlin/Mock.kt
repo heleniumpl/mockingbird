@@ -19,6 +19,12 @@ open class DslMock(private val init: DslMock.() -> Unit) : Mock {
         }
     }
 
+    fun post(uri: String, route: () -> Route) {
+        routes += {
+            post(uri, route())
+        }
+    }
+
     override fun register(): Mockingbird.() -> Unit = {
         this@DslMock.init()
         routes.forEach { route ->

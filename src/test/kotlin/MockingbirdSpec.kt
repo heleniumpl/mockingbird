@@ -72,7 +72,7 @@ class MockingbirdSpec : Spek({
         context("when HelloWorldMock is registered") {
             beforeEach {
                 mock
-                    .register(HelloWorldMock)
+                    .mocks(HelloWorldMock)
                     .start()
             }
 

@@ -12,7 +12,7 @@ class Mockingbird(port: Int = 0) {
     val server: Service = ignite()
         .port(port)
 
-    fun register(vararg mocks: Mock) = also {
+    fun mocks(vararg mocks: Mock) = also {
         mocks.forEach { mock ->
             mock.register()(this)
         }
