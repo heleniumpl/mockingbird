@@ -5,7 +5,10 @@ import spark.Request
 import spark.Response
 import spark.Route
 
-class GenericRoute(private val context: Context) : Route {
+class GenericRoute(
+    private val context: Context,
+    private val metaModel: MetaModel
+) : Route {
 
     override fun handle(request: Request, response: Response): Any {
         val body = request.body()
@@ -13,7 +16,7 @@ class GenericRoute(private val context: Context) : Route {
         val model = Model(bodyAsObject)
         val modelUnpacked = model.embeddedModel("data")
         val created = context
-            .collection("contact")
+            .collection(metaModel)
             .create(modelUnpacked)
         val packed = Model(mapOf("data" to created.asMap()))
 

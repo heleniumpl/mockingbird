@@ -1,29 +1,27 @@
 package pl.helenium.mockingbird
 
+import pl.helenium.mockingbird.MetaModel.MetaModelDsl
 import spark.Route
-import spark.Service
 
-open class DslMock(context: Context, builder: DslMock.() -> Unit) {
+open class DslMock(private val context: Context, builder: DslMock.() -> Unit) {
 
-    private val routes = mutableListOf<Service.() -> Unit>()
+    lateinit var metaModel: MetaModel
+        private set
 
     init {
         builder()
-        routes.forEach { route ->
-            context.server.route()
-        }
+    }
+
+    fun metaModel(name: String, dsl: MetaModelDsl.() -> Unit) {
+        this.metaModel = MetaModel(name).apply { dsl().apply(dsl) }
     }
 
     fun get(uri: String, route: () -> Route) {
-        routes += {
-            get(uri, route())
-        }
+        context.server.get(uri, route())
     }
 
     fun post(uri: String, route: () -> Route) {
-        routes += {
-            post(uri, route())
-        }
+        context.server.post(uri, route())
     }
 
 }

@@ -6,8 +6,14 @@ import pl.helenium.mockingbird.GenericRoute
 
 class ContactsMock(context: Context) : DslMock(context, {
 
+    metaModel("contact") {
+        properties {
+            id("id")
+        }
+    }
+
     post("/v2/contacts") {
-        GenericRoute(context)
+        GenericRoute(context, metaModel)
     }
 
 })
