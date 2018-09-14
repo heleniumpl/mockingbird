@@ -10,8 +10,13 @@ class Mockingbird(port: Int = 0) {
 
     val context = object : Context {
 
+        private val modelCollections = mutableMapOf<String, ModelCollection>()
+            .withDefault { ModelCollection() }
+
         override val server = ignite()
             .port(port)!!
+
+        override fun collection(metaModel: String) = modelCollections.getValue(metaModel)
 
     }
 

@@ -1,6 +1,5 @@
 package pl.helenium.mockingbird
 
-import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import mu.KotlinLogging
 import spark.Request
@@ -15,12 +14,15 @@ class GenericRoute(private val context: Context) : Route {
         val body = request.body()
         logger.info { "Received request: ${request.requestMethod()} ${request.uri()} <- $body" }
 
-        val bodyAsObject: Map<String, Any?> =
-            ObjectMapper().readValue<Map<String, Any?>>(body, object : TypeReference<Map<String, Any?>>() {})
+        val bodyAsObject: Map<String, Any?> = ObjectMapper().readMap(body)
         val model = Model(bodyAsObject)
         val modelUnpacked = model.embeddedModel("data")
+        val created = context
+            .collection("contact")
+            .create(modelUnpacked)
+        val packed = Model(mapOf("data" to created.asMap()))
 
-        return ObjectMapper().writeValueAsString(bodyAsObject)
+        return ObjectMapper().writeValueAsString(packed.asMap())
     }
 
 }

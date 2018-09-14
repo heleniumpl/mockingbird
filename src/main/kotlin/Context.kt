@@ -6,4 +6,6 @@ interface Context {
 
     val server: Service
 
+    fun collection(metaModel: String): ModelCollection
+
 }

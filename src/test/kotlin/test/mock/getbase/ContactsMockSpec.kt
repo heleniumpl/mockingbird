@@ -1,12 +1,12 @@
 package pl.helenium.mockingbird.test.mock.getbase
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.kittinunf.fuel.httpPost
 import io.kotlintest.shouldBe
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.lifecycle.CachingMode.SCOPE
 import org.spekframework.spek2.style.specification.describe
-import pl.helenium.mockingbird.Mockingbird
-import pl.helenium.mockingbird.status
+import pl.helenium.mockingbird.*
 
 class ContactsMockSpec : Spek({
 
@@ -26,6 +26,7 @@ class ContactsMockSpec : Spek({
                     // language=json
                     .body("""{
   "data": {
+    "first_name": "Marc",
     "last_name": "Marquez"
   }
 }""")
@@ -34,6 +35,13 @@ class ContactsMockSpec : Spek({
 
             it("returns 200") {
                 response.status() shouldBe 200
+            }
+
+            it("response contains all the properties") {
+                val model = Model(ObjectMapper().readMap(response.body())).embeddedModel("data")
+
+                model["first_name"] shouldBe "Marc"
+                model["last_name"] shouldBe "Marquez"
             }
 
         }
