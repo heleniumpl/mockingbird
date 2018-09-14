@@ -12,7 +12,7 @@ open class Model(private val data: Map<String, Any?>) {
     fun <K, V> embeddedMap(path: String) = data[path] as Map<K, V>
 
     @Suppress("UNCHECKED_CAST")
-    fun <T> property(property: String) = data[property] as T
+    fun <T> getProperty(property: String) = data[property] as T
 
     fun asMap(): Map<String, Any?> = data
 

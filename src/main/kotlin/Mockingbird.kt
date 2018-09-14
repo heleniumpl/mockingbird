@@ -6,7 +6,10 @@ import kotlin.system.measureTimeMillis
 
 private val logger = KotlinLogging.logger {}
 
-class Mockingbird(port: Int = 0) {
+class Mockingbird(
+    port: Int = 0,
+    logRequests: Boolean = true
+) {
 
     val context = object : Context {
 
@@ -16,11 +19,13 @@ class Mockingbird(port: Int = 0) {
         override val server = ignite()
             .port(port)!!
             .apply {
-                before { request, _ ->
-                    logger.info { "IN ${request.requestMethod()} ${request.uri()} <- ${request.body()}" }
-                }
-                after { request, response ->
-                    logger.info { "OUT ${request.requestMethod()} ${request.uri()} -> HTTP ${response.status()} & ${response.body()}" }
+                if (logRequests) {
+                    before { request, _ ->
+                        logger.info { "IN ${request.requestMethod()} ${request.uri()} <- ${request.body()}" }
+                    }
+                    after { request, response ->
+                        logger.info { "OUT ${request.requestMethod()} ${request.uri()} -> HTTP ${response.status()} & ${response.body()}" }
+                    }
                 }
             }
 

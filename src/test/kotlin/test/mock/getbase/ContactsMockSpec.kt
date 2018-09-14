@@ -75,29 +75,29 @@ class ContactsMockSpec : Spek({
             it("response contains all the properties") {
                 assertSoftly {
                     with(model) {
-                        property<Long>("contact_id") shouldBe 1L
-                        property<String>("first_name") shouldBe "Mark"
-                        property<String>("last_name") shouldBe "Johnson"
-                        property<String>("title") shouldBe "CEO"
-                        property<String>("description") shouldBe "I know him via Tom"
-                        property<String>("industry") shouldBe "Design Services"
-                        property<String>("website") shouldBe "http://www.designservice.com"
-                        property<String>("email") shouldBe "mark@designservices.com"
-                        property<String>("phone") shouldBe "508-778-6516"
-                        property<String>("mobile") shouldBe "508-778-6516"
-                        property<String>("fax") shouldBe "+44-208-1234567"
-                        property<String>("twitter") shouldBe "mjohnson"
-                        property<String>("facebook") shouldBe "mjohnson"
-                        property<String>("linkedin") shouldBe "mjohnson"
-                        property<String>("skype") shouldBe "mjohnson"
+                        getProperty<Long>("contact_id") shouldBe 1L
+                        getProperty<String>("first_name") shouldBe "Mark"
+                        getProperty<String>("last_name") shouldBe "Johnson"
+                        getProperty<String>("title") shouldBe "CEO"
+                        getProperty<String>("description") shouldBe "I know him via Tom"
+                        getProperty<String>("industry") shouldBe "Design Services"
+                        getProperty<String>("website") shouldBe "http://www.designservice.com"
+                        getProperty<String>("email") shouldBe "mark@designservices.com"
+                        getProperty<String>("phone") shouldBe "508-778-6516"
+                        getProperty<String>("mobile") shouldBe "508-778-6516"
+                        getProperty<String>("fax") shouldBe "+44-208-1234567"
+                        getProperty<String>("twitter") shouldBe "mjohnson"
+                        getProperty<String>("facebook") shouldBe "mjohnson"
+                        getProperty<String>("linkedin") shouldBe "mjohnson"
+                        getProperty<String>("skype") shouldBe "mjohnson"
                     }
 
                     with(model.embeddedModel("address")) {
-                        property<String>("line1") shouldBe "2726 Smith Street"
-                        property<String>("city") shouldBe "Hyannis"
-                        property<String>("postal_code") shouldBe "02601"
-                        property<String>("state") shouldBe "MA"
-                        property<String>("country") shouldBe "US"
+                        getProperty<String>("line1") shouldBe "2726 Smith Street"
+                        getProperty<String>("city") shouldBe "Hyannis"
+                        getProperty<String>("postal_code") shouldBe "02601"
+                        getProperty<String>("state") shouldBe "MA"
+                        getProperty<String>("country") shouldBe "US"
                     }
 
                     model.embeddedList<String>("tags").shouldContainExactly("contractor", "early-adopter")
@@ -107,7 +107,7 @@ class ContactsMockSpec : Spek({
             }
 
             it("has ID") {
-                model.property<Long>("id") shouldBeGreaterThan 0
+                model.getProperty<Long>("id") shouldBeGreaterThan 0
             }
 
         }
