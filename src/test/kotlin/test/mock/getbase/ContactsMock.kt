@@ -13,7 +13,8 @@ class ContactsMock(context: Context) : DslMock(context, {
         }
     }
 
-    post("/v2/contacts") {
+    post(
+        "/v2/contacts",
         Create(
             context,
             metaModel,
@@ -29,6 +30,6 @@ class ContactsMock(context: Context) : DslMock(context, {
                 )
             }
         )
-    }
+    )
 
 })

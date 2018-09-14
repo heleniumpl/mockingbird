@@ -16,12 +16,12 @@ open class DslMock(private val context: Context, builder: DslMock.() -> Unit) {
         this.metaModel = MetaModel(name).apply { dsl().apply(dsl) }
     }
 
-    fun get(uri: String, route: () -> Route) {
-        context.server.get(uri, route())
+    fun get(uri: String, route: Route) {
+        context.server.get(uri, route)
     }
 
-    fun post(uri: String, route: () -> Route) {
-        context.server.post(uri, route())
+    fun post(uri: String, route: Route) {
+        context.server.post(uri, route)
     }
 
 }
