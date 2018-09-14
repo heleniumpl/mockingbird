@@ -6,25 +6,31 @@ import kotlin.system.measureTimeMillis
 
 private val logger = KotlinLogging.logger {}
 
-class Mockingbird(port: Int = 0) : Context {
+class Mockingbird(port: Int = 0) {
 
-    override val server = ignite()
-        .port(port)!!
+    val context = object : Context {
+
+        override val server = ignite()
+            .port(port)!!
+
+    }
 
     fun mocks(vararg registrants: (Context) -> Any?) = also {
         registrants.forEach { registrant ->
-            registrant(this)
+            registrant(context)
         }
     }
 
     fun start(): Mockingbird = try {
         logger.info("Starting Mockingbird server...")
         measureTimeMillis {
-            server.run {
-                init()
-                awaitInitialization()
-            }
-        }.let { logger.info { "Mockingbird server started on port ${server.port()} in ${it}ms" } }
+            context
+                .server
+                .run {
+                    init()
+                    awaitInitialization()
+                }
+        }.let { logger.info { "Mockingbird server started on port ${context.server.port()} in ${it}ms" } }
         this
     } catch (e: Exception) {
         logger.error("Failed to start Mockingbird server!", e)
@@ -33,7 +39,9 @@ class Mockingbird(port: Int = 0) : Context {
 
     fun stop() = try {
         logger.info("Stopping Mockingbird server...")
-        server.stop()
+        context
+            .server
+            .stop()
     } catch (e: Exception) {
         logger.warn("Failed to stop Mockingbird server!", e)
     }
