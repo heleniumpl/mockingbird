@@ -9,7 +9,7 @@ import spark.Route
 
 private val logger = KotlinLogging.logger {}
 
-class GenericRoute : Route {
+class GenericRoute(private val context: Context) : Route {
 
     override fun handle(request: Request, response: Response): Any {
         val body = request.body()
@@ -17,6 +17,8 @@ class GenericRoute : Route {
 
         val bodyAsObject: Map<String, Any?> =
             ObjectMapper().readValue<Map<String, Any?>>(body, object : TypeReference<Map<String, Any?>>() {})
+        val model = Model(bodyAsObject)
+        val modelUnpacked = model.embeddedModel("data")
 
         return ObjectMapper().writeValueAsString(bodyAsObject)
     }

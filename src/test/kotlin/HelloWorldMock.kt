@@ -2,7 +2,7 @@ package pl.helenium.mockingbird
 
 import spark.Route
 
-object HelloWorldMock : DslMock({
+class HelloWorldMock(context: Context) : DslMock(context, {
 
     get("/hello_world") {
         Route { _, _ ->

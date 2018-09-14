@@ -3,15 +3,16 @@ package pl.helenium.mockingbird
 import spark.Route
 import spark.Service
 
-interface Mock {
-
-    fun register(): (Mockingbird) -> Unit
-
-}
-
-open class DslMock(private val init: DslMock.() -> Unit) : Mock {
+open class DslMock(context: Context, builder: DslMock.() -> Unit) {
 
     private val routes = mutableListOf<Service.() -> Unit>()
+
+    init {
+        builder()
+        routes.forEach { route ->
+            context.server.route()
+        }
+    }
 
     fun get(uri: String, route: () -> Route) {
         routes += {
@@ -22,13 +23,6 @@ open class DslMock(private val init: DslMock.() -> Unit) : Mock {
     fun post(uri: String, route: () -> Route) {
         routes += {
             post(uri, route())
-        }
-    }
-
-    override fun register(): Context.() -> Unit = {
-        this@DslMock.init()
-        routes.forEach { route ->
-            server.route()
         }
     }
 

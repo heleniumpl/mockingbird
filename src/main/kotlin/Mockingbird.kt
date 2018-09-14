@@ -11,9 +11,9 @@ class Mockingbird(port: Int = 0) : Context {
     override val server = ignite()
         .port(port)!!
 
-    fun mocks(vararg mocks: Mock) = also {
-        mocks.forEach { mock ->
-            mock.register()(this)
+    fun mocks(vararg registrants: (Context) -> Any?) = also {
+        registrants.forEach { registrant ->
+            registrant(this)
         }
     }
 

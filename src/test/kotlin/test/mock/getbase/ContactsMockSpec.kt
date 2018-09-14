@@ -14,7 +14,7 @@ class ContactsMockSpec : Spek({
 
         val mock by memoized {
             Mockingbird()
-                .mocks(ContactsMock)
+                .mocks(::ContactsMock)
                 .start()
         }
 

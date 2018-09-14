@@ -1,12 +1,13 @@
 package pl.helenium.mockingbird.test.mock.getbase
 
+import pl.helenium.mockingbird.Context
 import pl.helenium.mockingbird.DslMock
 import pl.helenium.mockingbird.GenericRoute
 
-object ContactsMock : DslMock({
+class ContactsMock(context: Context) : DslMock(context, {
 
     post("/v2/contacts") {
-        GenericRoute()
+        GenericRoute(context)
     }
 
 })
