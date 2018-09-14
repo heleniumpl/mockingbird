@@ -15,6 +15,14 @@ class Mockingbird(port: Int = 0) {
 
         override val server = ignite()
             .port(port)!!
+            .apply {
+                before { request, _ ->
+                    logger.info { "IN ${request.requestMethod()} ${request.uri()} <- ${request.body()}" }
+                }
+                after { request, response ->
+                    logger.info { "OUT ${request.requestMethod()} ${request.uri()} -> HTTP ${response.status()} & ${response.body()}" }
+                }
+            }
 
         override fun collection(metaModel: String) = modelCollections.getValue(metaModel)
 
