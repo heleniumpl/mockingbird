@@ -21,7 +21,7 @@ class ContactsMockSpec : Spek({
         context("when contact is created") {
 
             val response by memoized(mode = SCOPE) {
-                "http://localhost:${mock.port()}/v2/contacts"
+                "http://localhost:${mock.server.port()}/v2/contacts"
                     .httpPost()
                     // language=json
                     .body("""{

@@ -22,11 +22,11 @@ class MockingbirdSpec : Spek({
             val mock by memoized { Mockingbird().start() }
 
             it("starts on random free port > 1024") {
-                mock.port().shouldBeGreaterThan(1024)
+                mock.server.port().shouldBeGreaterThan(1024)
             }
 
             it("handles HTTP") {
-                ensureHandlesHttp(mock.port())
+                ensureHandlesHttp(mock.server.port())
             }
 
             afterEach { mock.stop() }
@@ -37,11 +37,11 @@ class MockingbirdSpec : Spek({
             val mock by memoized { Mockingbird(freePort).start() }
 
             it("starts on given port") {
-                mock.port() shouldBe freePort
+                mock.server.port() shouldBe freePort
             }
 
             it("handles HTTP") {
-                ensureHandlesHttp(mock.port())
+                ensureHandlesHttp(mock.server.port())
             }
 
             afterEach { mock.stop() }
@@ -51,12 +51,12 @@ class MockingbirdSpec : Spek({
             val mocks by memoized { List(5) { Mockingbird() }.map(Mockingbird::start) }
 
             it("every mock should have different port") {
-                mocks.map(Mockingbird::port).shouldBeUnique()
+                mocks.map { it.server.port() }.shouldBeUnique()
             }
 
             it("handles HTTP") {
                 mocks.forEach {
-                    ensureHandlesHttp(it.port())
+                    ensureHandlesHttp(it.server.port())
                 }
             }
 
@@ -77,7 +77,7 @@ class MockingbirdSpec : Spek({
             }
 
             val response by memoized {
-                "http://localhost:${mock.port()}/hello_world"
+                "http://localhost:${mock.server.port()}/hello_world"
                     .httpGet()
                     .responseString()
             }

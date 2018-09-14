@@ -1,16 +1,15 @@
 package pl.helenium.mockingbird
 
 import mu.KotlinLogging
-import spark.Service
 import spark.Service.ignite
 import kotlin.system.measureTimeMillis
 
 private val logger = KotlinLogging.logger {}
 
-class Mockingbird(port: Int = 0) {
+class Mockingbird(port: Int = 0) : Context {
 
-    val server: Service = ignite()
-        .port(port)
+    override val server = ignite()
+        .port(port)!!
 
     fun mocks(vararg mocks: Mock) = also {
         mocks.forEach { mock ->
@@ -25,7 +24,7 @@ class Mockingbird(port: Int = 0) {
                 init()
                 awaitInitialization()
             }
-        }.let { logger.info { "Mockingbird server started on port ${port()} in ${it}ms" } }
+        }.let { logger.info { "Mockingbird server started on port ${server.port()} in ${it}ms" } }
         this
     } catch (e: Exception) {
         logger.error("Failed to start Mockingbird server!", e)
@@ -38,7 +37,5 @@ class Mockingbird(port: Int = 0) {
     } catch (e: Exception) {
         logger.warn("Failed to stop Mockingbird server!", e)
     }
-
-    fun port() = server.port()
 
 }

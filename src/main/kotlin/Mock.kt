@@ -25,7 +25,7 @@ open class DslMock(private val init: DslMock.() -> Unit) : Mock {
         }
     }
 
-    override fun register(): Mockingbird.() -> Unit = {
+    override fun register(): Context.() -> Unit = {
         this@DslMock.init()
         routes.forEach { route ->
             server.route()
