@@ -1,6 +1,6 @@
 package pl.helenium.mockingbird
 
-class Model(private val data: Map<String, Any?>) {
+open class Model(private val data: Map<String, Any?>) {
 
     @Suppress("UNCHECKED_CAST")
     fun embeddedModel(path: String) = Model(data[path] as Map<String, Any?>)
@@ -11,8 +11,19 @@ class Model(private val data: Map<String, Any?>) {
     @Suppress("UNCHECKED_CAST")
     fun <K, V> embeddedMap(path: String) = data[path] as Map<K, V>
 
-    operator fun get(property: String) = data[property]
+    @Suppress("UNCHECKED_CAST")
+    fun <T> property(property: String) = data[property] as T
 
-    fun asMap() : Map<String, Any?> = data
+    fun asMap(): Map<String, Any?> = data
 
 }
+
+class MutableModel(private val data: MutableMap<String, Any?>) : Model(data) {
+
+    fun setProperty(property: String, value: Any?) {
+        data[property] = value
+    }
+
+}
+
+fun Model.toMutable() = MutableModel(asMap().toMutableMap())

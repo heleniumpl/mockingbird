@@ -5,6 +5,7 @@ import com.github.kittinunf.fuel.httpPost
 import io.kotlintest.assertSoftly
 import io.kotlintest.matchers.collections.shouldContainExactly
 import io.kotlintest.matchers.maps.shouldContainExactly
+import io.kotlintest.matchers.numerics.shouldBeGreaterThan
 import io.kotlintest.shouldBe
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.lifecycle.CachingMode.SCOPE
@@ -65,41 +66,48 @@ class ContactsMockSpec : Spek({
                     .responseString()
             }
 
+            val model by memoized(mode = SCOPE) { Model(ObjectMapper().readMap(response.body())).embeddedModel("data") }
+
             it("returns 200") {
                 response.status() shouldBe 200
             }
 
             it("response contains all the properties") {
-                val model = Model(ObjectMapper().readMap(response.body())).embeddedModel("data")
-
                 assertSoftly {
-                    model["contact_id"] shouldBe 1L
-                    model["first_name"] shouldBe "Mark"
-                    model["last_name"] shouldBe "Johnson"
-                    model["title"] shouldBe "CEO"
-                    model["description"] shouldBe "I know him via Tom"
-                    model["industry"] shouldBe "Design Services"
-                    model["website"] shouldBe "http://www.designservice.com"
-                    model["email"] shouldBe "mark@designservices.com"
-                    model["phone"] shouldBe "508-778-6516"
-                    model["mobile"] shouldBe "508-778-6516"
-                    model["fax"] shouldBe "+44-208-1234567"
-                    model["twitter"] shouldBe "mjohnson"
-                    model["facebook"] shouldBe "mjohnson"
-                    model["linkedin"] shouldBe "mjohnson"
-                    model["skype"] shouldBe "mjohnson"
+                    with(model) {
+                        property<Long>("contact_id") shouldBe 1L
+                        property<String>("first_name") shouldBe "Mark"
+                        property<String>("last_name") shouldBe "Johnson"
+                        property<String>("title") shouldBe "CEO"
+                        property<String>("description") shouldBe "I know him via Tom"
+                        property<String>("industry") shouldBe "Design Services"
+                        property<String>("website") shouldBe "http://www.designservice.com"
+                        property<String>("email") shouldBe "mark@designservices.com"
+                        property<String>("phone") shouldBe "508-778-6516"
+                        property<String>("mobile") shouldBe "508-778-6516"
+                        property<String>("fax") shouldBe "+44-208-1234567"
+                        property<String>("twitter") shouldBe "mjohnson"
+                        property<String>("facebook") shouldBe "mjohnson"
+                        property<String>("linkedin") shouldBe "mjohnson"
+                        property<String>("skype") shouldBe "mjohnson"
+                    }
 
-                    val address = model.embeddedModel("address")
-                    address["line1"] shouldBe "2726 Smith Street"
-                    address["city"] shouldBe "Hyannis"
-                    address["postal_code"] shouldBe "02601"
-                    address["state"] shouldBe "MA"
-                    address["country"] shouldBe "US"
+                    with(model.embeddedModel("address")) {
+                        property<String>("line1") shouldBe "2726 Smith Street"
+                        property<String>("city") shouldBe "Hyannis"
+                        property<String>("postal_code") shouldBe "02601"
+                        property<String>("state") shouldBe "MA"
+                        property<String>("country") shouldBe "US"
+                    }
 
                     model.embeddedList<String>("tags").shouldContainExactly("contractor", "early-adopter")
                     model.embeddedMap<String, String>("custom_fields")
                         .shouldContainExactly(mapOf("referral_website" to "http://www.example.com"))
                 }
+            }
+
+            it("has ID") {
+                model.property<Long>("id") shouldBeGreaterThan 0
             }
 
         }
