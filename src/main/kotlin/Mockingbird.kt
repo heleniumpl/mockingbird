@@ -37,26 +37,27 @@ class Mockingbird(
 
     }
 
-    fun mocks(vararg registrants: (Context) -> Any?) = also {
+    fun mocks(vararg registrants: (Context) -> Any?) = apply {
         registrants.forEach { registrant ->
             registrant(context)
         }
     }
 
-    fun start(): Mockingbird = try {
-        logger.info("Starting Mockingbird server...")
-        measureTimeMillis {
-            context
-                .server
-                .run {
-                    init()
-                    awaitInitialization()
-                }
-        }.let { logger.info { "Mockingbird server started on port ${context.server.port()} in ${it}ms" } }
-        this
-    } catch (e: Exception) {
-        logger.error("Failed to start Mockingbird server!", e)
-        throw e
+    fun start(): Mockingbird = apply {
+        try {
+            logger.info("Starting Mockingbird server...")
+            measureTimeMillis {
+                context
+                    .server
+                    .run {
+                        init()
+                        awaitInitialization()
+                    }
+            }.let { logger.info { "Mockingbird server started on port ${context.server.port()} in ${it}ms" } }
+        } catch (e: Exception) {
+            logger.error("Failed to start Mockingbird server!", e)
+            throw e
+        }
     }
 
     fun stop() = try {
