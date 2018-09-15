@@ -13,7 +13,9 @@ open class DslMock(private val context: Context, builder: DslMock.() -> Unit) {
     }
 
     fun metaModel(name: String, dsl: MetaModelDsl.() -> Unit) {
-        this.metaModel = MetaModel(name).apply { dsl().apply(dsl) }
+        this.metaModel = MetaModel(name)
+            .apply { dsl().apply(dsl) }
+            .also(context::registerMetaModel)
     }
 
     fun get(uri: String, route: Route) {

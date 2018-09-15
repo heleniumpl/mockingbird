@@ -9,8 +9,8 @@ import io.kotlintest.matchers.collections.shouldHaveSize
 import io.kotlintest.matchers.maps.shouldContainExactly
 import io.kotlintest.matchers.numerics.shouldBeGreaterThan
 import io.kotlintest.shouldBe
+import io.kotlintest.shouldNotBe
 import org.spekframework.spek2.Spek
-import org.spekframework.spek2.lifecycle.CachingMode.SCOPE
 import org.spekframework.spek2.style.specification.describe
 import pl.helenium.mockingbird.*
 
@@ -50,7 +50,7 @@ private const val exampleModel = """{
 }"""
 
 @Suppress("ConvertCallChainIntoSequence")
-class ContactsMockSpec : Spek({
+object ContactsMockSpec : Spek({
 
     describe("POST contact") {
 
@@ -60,16 +60,20 @@ class ContactsMockSpec : Spek({
                 .start()
         }
 
+        val context by memoized { mock.context }
+
+        val metaModel by memoized { context.metaModel("contact") }
+
         fun createContact(body: String = exampleModel) = "http://localhost:${mock.context.server.port()}/v2/contacts"
             .httpPost()
-            .body(exampleModel)
+            .body(body)
             .responseString()
 
         context("when contact is created") {
 
-            val response by memoized(mode = SCOPE) { createContact() }
+            val response by memoized { createContact() }
 
-            val model by memoized(mode = SCOPE) { Model(ObjectMapper().readMap(response.body())) }
+            val model by memoized { Model(ObjectMapper().readMap(response.body())) }
 
             it("returns 200") {
                 response.status() shouldBe 200
@@ -110,9 +114,7 @@ class ContactsMockSpec : Spek({
             }
 
             it("has ID") {
-                model
-                    .embeddedModel("data")
-                    .getProperty<Long>("id") shouldBeGreaterThan 0
+                model.id() shouldBeGreaterThan 0
             }
 
             it("has meta type") {
@@ -121,13 +123,19 @@ class ContactsMockSpec : Spek({
                     .getProperty<String>("type") shouldBe "contact"
             }
 
+            it("is available through collection") {
+                context
+                    .collection(metaModel)
+                    .get(model.id()) shouldNotBe null
+            }
+
         }
 
         context("when multiple contacts are created") {
 
-            val responses by memoized(mode = SCOPE) { List(5) { createContact() } }
+            val responses by memoized { List(5) { createContact() } }
 
-            val models by memoized(mode = SCOPE) {
+            val models by memoized {
                 responses
                     .map(StringResponse::body)
                     .map { Model(ObjectMapper().readMap(it)) }
@@ -141,15 +149,22 @@ class ContactsMockSpec : Spek({
 
             it("every created model should have distinct ID") {
                 models
-                    .map { it.embeddedModel("data") }
-                    .map { it.getProperty<Long>("id") }
+                    .map(Model::id)
                     .distinct() shouldHaveSize 5
             }
 
-            afterEach { mock.stop() }
+            it("every created model should be available through Collection") {
+                models
+                    .map(Model::id)
+                    .mapNotNull { context.collection(metaModel).get(it) } shouldHaveSize 5
+            }
 
         }
+
+        afterEach { mock.stop() }
 
     }
 
 })
+
+private fun Model.id() = embeddedModel("data").getProperty<Long>("id")

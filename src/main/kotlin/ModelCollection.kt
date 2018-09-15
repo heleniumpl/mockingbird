@@ -8,9 +8,11 @@ class ModelCollection(private val metaModel: MetaModel) {
         val mutableModel = model.toMutable()
         val idProperty = metaModel.id()
         val generatedId = idProperty.generate() ?: throw IllegalStateException("ID property has no generator specified!")
-        mutableModel[idProperty.name] = generatedId
+        mutableModel.setProperty(idProperty.name, generatedId)
         models[generatedId.toString()] = mutableModel
         return mutableModel
     }
+
+    fun get(id: Any): Model? = models[id.toString()]
 
 }

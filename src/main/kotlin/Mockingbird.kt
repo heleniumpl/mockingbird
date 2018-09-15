@@ -11,16 +11,29 @@ class Mockingbird(
     logRequests: Boolean = true
 ) {
 
+    private val server = ignite()
+        .port(port)!!
+        .apply(configureRequestLogging(logRequests))
+
+    private val metaModels = mutableMapOf<String, MetaModel>()
+
+    private val modelCollections = mutableMapOf<MetaModel, ModelCollection>()
+
     val context = object : Context {
 
-        private val modelCollections = mutableMapOf<MetaModel, ModelCollection>()
-            .withDefault { ModelCollection(it) }
+        override val server = this@Mockingbird.server
 
-        override val server = ignite()
-            .port(port)!!
-            .apply(configureRequestLogging(logRequests))
+        override val port = server.port()
 
-        override fun collection(metaModel: MetaModel) = modelCollections.getValue(metaModel)
+        override fun registerMetaModel(metaModel: MetaModel) {
+            metaModels[metaModel.name] = metaModel
+        }
+
+        override fun metaModel(name: String) =
+            metaModels[name] ?: throw IllegalArgumentException("No MetaModel could be found for name $name!")
+
+        override fun collection(metaModel: MetaModel) =
+            modelCollections.computeIfAbsent(metaModel, ::ModelCollection)
 
     }
 
