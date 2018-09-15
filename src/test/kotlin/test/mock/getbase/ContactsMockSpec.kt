@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.kittinunf.fuel.httpPost
 import io.kotlintest.assertSoftly
 import io.kotlintest.matchers.collections.shouldContainExactly
+import io.kotlintest.matchers.collections.shouldHaveSingleElement
+import io.kotlintest.matchers.collections.shouldHaveSize
 import io.kotlintest.matchers.maps.shouldContainExactly
 import io.kotlintest.matchers.numerics.shouldBeGreaterThan
 import io.kotlintest.shouldBe
@@ -12,24 +14,8 @@ import org.spekframework.spek2.lifecycle.CachingMode.SCOPE
 import org.spekframework.spek2.style.specification.describe
 import pl.helenium.mockingbird.*
 
-class ContactsMockSpec : Spek({
-
-    describe("POST contact") {
-
-        val mock by memoized {
-            Mockingbird()
-                .mocks(::ContactsMock)
-                .start()
-        }
-
-        context("when contact is created") {
-
-            val response by memoized(mode = SCOPE) {
-                "http://localhost:${mock.context.server.port()}/v2/contacts"
-                    .httpPost()
-                    // language=json
-                    .body(
-                        """{
+// language=json
+private const val exampleModel = """{
   "data": {
     "contact_id": 1,
     "first_name": "Mark",
@@ -62,9 +48,26 @@ class ContactsMockSpec : Spek({
     }
   }
 }"""
-                    )
-                    .responseString()
-            }
+
+@Suppress("ConvertCallChainIntoSequence")
+class ContactsMockSpec : Spek({
+
+    describe("POST contact") {
+
+        val mock by memoized {
+            Mockingbird()
+                .mocks(::ContactsMock)
+                .start()
+        }
+
+        fun createContact(body: String = exampleModel) = "http://localhost:${mock.context.server.port()}/v2/contacts"
+            .httpPost()
+            .body(exampleModel)
+            .responseString()
+
+        context("when contact is created") {
+
+            val response by memoized(mode = SCOPE) { createContact() }
 
             val model by memoized(mode = SCOPE) { Model(ObjectMapper().readMap(response.body())) }
 
@@ -120,7 +123,32 @@ class ContactsMockSpec : Spek({
 
         }
 
-        afterEach { mock.stop() }
+        context("when multiple contacts are created") {
+
+            val responses by memoized(mode = SCOPE) { List(5) { createContact() } }
+
+            val models by memoized(mode = SCOPE) {
+                responses
+                    .map(StringResponse::body)
+                    .map { Model(ObjectMapper().readMap(it)) }
+            }
+
+            it("every create returns 200") {
+                responses
+                    .map(StringResponse::status)
+                    .distinct() shouldHaveSingleElement 200
+            }
+
+            it("every created model should have distinct ID") {
+                models
+                    .map { it.embeddedModel("data") }
+                    .map { it.getProperty<Long>("id") }
+                    .distinct() shouldHaveSize 5
+            }
+
+            afterEach { mock.stop() }
+
+        }
 
     }
 

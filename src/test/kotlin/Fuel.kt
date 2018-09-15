@@ -5,6 +5,8 @@ import com.github.kittinunf.fuel.core.Request
 import com.github.kittinunf.fuel.core.Response
 import com.github.kittinunf.result.Result
 
-fun Triple<Request, Response, Result<*, FuelError>>.status() = second.statusCode
+typealias StringResponse = Triple<Request, Response, Result<String, FuelError>>
 
-fun Triple<Request, Response, Result<String, FuelError>>.body() = third.get()
+fun StringResponse.status() = second.statusCode
+
+fun StringResponse.body() = third.get()
