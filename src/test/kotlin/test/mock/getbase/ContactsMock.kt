@@ -1,23 +1,22 @@
 package pl.helenium.mockingbird.test.mock.getbase
 
-import pl.helenium.mockingbird.Context
-import pl.helenium.mockingbird.Create
-import pl.helenium.mockingbird.DslMock
-import pl.helenium.mockingbird.Model
+import pl.helenium.mockingbird.*
 
 class ContactsMock(context: Context) : DslMock(context, {
 
     metaModel("contact") {
         properties {
             id("id")
+                .generator(LongGenerator)
         }
     }
 
     post(
         "/v2/contacts",
-        Create(
-            context,
-            metaModel,
+        Rest(
+            context = context,
+            metaModel = metaModel,
+            restHandler = RestCreateHandler(),
             unwrapper = { it.embeddedModel("data") },
             wrapper = {
                 Model(
@@ -28,7 +27,8 @@ class ContactsMock(context: Context) : DslMock(context, {
                         )
                     )
                 )
-            }
+            },
+            requestWriter = ::jsonRequestWriter
         )
     )
 

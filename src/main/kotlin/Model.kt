@@ -20,7 +20,7 @@ open class Model(private val data: Map<String, Any?>) {
 
 class MutableModel(private val data: MutableMap<String, Any?>) : Model(data) {
 
-    fun setProperty(property: String, value: Any?) {
+    operator fun set(property: String, value: Any?) {
         data[property] = value
     }
 
