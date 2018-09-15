@@ -4,11 +4,13 @@ import spark.Route
 
 class HelloWorldMock(context: Context) : DslMock(context, {
 
-    get(
-        "/hello_world",
-        Route { _, _ ->
-            "Hello World!"
+    routes {
+        get {
+            uri = "/hello_world"
+            handler = Route { _, _ ->
+                "Hello World!"
+            }
         }
-    )
+    }
 
 })

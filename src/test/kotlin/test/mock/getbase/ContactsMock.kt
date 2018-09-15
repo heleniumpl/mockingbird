@@ -11,25 +11,31 @@ class ContactsMock(context: Context) : DslMock(context, {
         }
     }
 
-    post(
-        "/v2/contacts",
-        Rest(
-            context = context,
-            metaModel = metaModel,
-            restHandler = RestCreateHandler(),
-            unwrapper = { it.embeddedModel("data") },
-            wrapper = {
-                Model(
-                    mapOf(
-                        "data" to it.asMap(),
-                        "meta" to mapOf(
-                            "type" to metaModel.name
-                        )
-                    )
-                )
-            },
-            requestWriter = ::jsonRequestWriter
-        )
-    )
+    routes {
+        post {
+            uri = "/v2/contacts"
+            handler = Rest(
+                context = context,
+                metaModel = metaModel,
+                restHandler = RestCreateHandler(),
+                unwrapper = dataMetaUnwrapper(),
+                wrapper = dataMetaWrapper(metaModel),
+                requestWriter = ::jsonRequestWriter
+            )
+        }
+    }
 
 })
+
+private fun dataMetaUnwrapper(): (Model) -> Model = { it.embeddedModel("data") }
+
+private fun dataMetaWrapper(metaModel: MetaModel): (Model) -> Model = {
+    Model(
+        mapOf(
+            "data" to it.asMap(),
+            "meta" to mapOf(
+                "type" to metaModel.name
+            )
+        )
+    )
+}
