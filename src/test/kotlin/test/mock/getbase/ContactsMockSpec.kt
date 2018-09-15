@@ -66,7 +66,7 @@ class ContactsMockSpec : Spek({
                     .responseString()
             }
 
-            val model by memoized(mode = SCOPE) { Model(ObjectMapper().readMap(response.body())).embeddedModel("data") }
+            val model by memoized(mode = SCOPE) { Model(ObjectMapper().readMap(response.body())) }
 
             it("returns 200") {
                 response.status() shouldBe 200
@@ -74,7 +74,7 @@ class ContactsMockSpec : Spek({
 
             it("response contains all the properties") {
                 assertSoftly {
-                    with(model) {
+                    with(model.embeddedModel("data")) {
                         getProperty<Long>("contact_id") shouldBe 1L
                         getProperty<String>("first_name") shouldBe "Mark"
                         getProperty<String>("last_name") shouldBe "Johnson"
@@ -90,24 +90,32 @@ class ContactsMockSpec : Spek({
                         getProperty<String>("facebook") shouldBe "mjohnson"
                         getProperty<String>("linkedin") shouldBe "mjohnson"
                         getProperty<String>("skype") shouldBe "mjohnson"
-                    }
 
-                    with(model.embeddedModel("address")) {
-                        getProperty<String>("line1") shouldBe "2726 Smith Street"
-                        getProperty<String>("city") shouldBe "Hyannis"
-                        getProperty<String>("postal_code") shouldBe "02601"
-                        getProperty<String>("state") shouldBe "MA"
-                        getProperty<String>("country") shouldBe "US"
-                    }
+                        with(embeddedModel("address")) {
+                            getProperty<String>("line1") shouldBe "2726 Smith Street"
+                            getProperty<String>("city") shouldBe "Hyannis"
+                            getProperty<String>("postal_code") shouldBe "02601"
+                            getProperty<String>("state") shouldBe "MA"
+                            getProperty<String>("country") shouldBe "US"
+                        }
 
-                    model.embeddedList<String>("tags").shouldContainExactly("contractor", "early-adopter")
-                    model.embeddedMap<String, String>("custom_fields")
-                        .shouldContainExactly(mapOf("referral_website" to "http://www.example.com"))
+                        embeddedList<String>("tags").shouldContainExactly("contractor", "early-adopter")
+                        embeddedMap<String, String>("custom_fields")
+                            .shouldContainExactly(mapOf("referral_website" to "http://www.example.com"))
+                    }
                 }
             }
 
             it("has ID") {
-                model.getProperty<Long>("id") shouldBeGreaterThan 0
+                model
+                    .embeddedModel("data")
+                    .getProperty<Long>("id") shouldBeGreaterThan 0
+            }
+
+            it("has meta type") {
+                model
+                    .embeddedModel("meta")
+                    .getProperty<String>("type") shouldBe "contact"
             }
 
         }
