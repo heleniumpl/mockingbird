@@ -1,6 +1,5 @@
 package pl.helenium.mockingbird.test.mock.getbase
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.kittinunf.fuel.httpPost
 import io.kotlintest.assertSoftly
 import io.kotlintest.matchers.collections.shouldContainExactly
@@ -73,7 +72,7 @@ object ContactsMockSpec : Spek({
 
             val response by memoized { createContact() }
 
-            val model by memoized { Model(ObjectMapper().readMap(response.body())) }
+            val model by memoized { Model(objectMapper.readMap(response.body())) }
 
             it("returns 200") {
                 response.status() shouldBe 200
@@ -138,7 +137,7 @@ object ContactsMockSpec : Spek({
             val models by memoized {
                 responses
                     .map(StringResponse::body)
-                    .map { Model(ObjectMapper().readMap(it)) }
+                    .map { Model(objectMapper.readMap(it)) }
             }
 
             it("every create returns 200") {

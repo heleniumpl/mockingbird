@@ -20,3 +20,4 @@
 * embedded collections
 * mock aggregator
 * complex path expr for getting property
+* model deep copy

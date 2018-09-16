@@ -1,6 +1,5 @@
 package pl.helenium.mockingbird
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import spark.Request
 import spark.Response
 import spark.Route
@@ -44,8 +43,8 @@ class RestCreateHandler : RestHandler<Model> {
 
 }
 
-fun jsonRequestParser(body: String) = Model(ObjectMapper().readMap(body))
+fun jsonRequestParser(body: String) = Model(objectMapper.readMap(body))
 
-fun jsonRequestWriter(model: Model) = ObjectMapper().writeValueAsString(model.asMap())!!
+fun jsonRequestWriter(model: Model) = objectMapper.writeValueAsString(model.asMap())!!
 
 fun <T> identity(arg: T) = arg
