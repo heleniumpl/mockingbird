@@ -11,6 +11,7 @@ import io.kotlintest.matchers.numerics.shouldBeGreaterThan
 import io.kotlintest.shouldBe
 import io.kotlintest.shouldNotBe
 import org.spekframework.spek2.Spek
+import org.spekframework.spek2.style.specification.Suite
 import org.spekframework.spek2.style.specification.describe
 import pl.helenium.mockingbird.*
 import java.util.concurrent.ThreadLocalRandom
@@ -76,56 +77,13 @@ object ContactsMockSpec : Spek({
                     response.status() shouldBe 200
                 }
 
-                it("response contains all the properties") {
-                    assertSoftly {
-                        with(response.model().embeddedModel("data")) {
-                            getProperty<Long>("contact_id") shouldBe 1L
-                            getProperty<String>("first_name") shouldBe "Mark"
-                            getProperty<String>("last_name") shouldBe "Johnson"
-                            getProperty<String>("title") shouldBe "CEO"
-                            getProperty<String>("description") shouldBe "I know him via Tom"
-                            getProperty<String>("industry") shouldBe "Design Services"
-                            getProperty<String>("website") shouldBe "http://www.designservice.com"
-                            getProperty<String>("email") shouldBe "mark@designservices.com"
-                            getProperty<String>("phone") shouldBe "508-778-6516"
-                            getProperty<String>("mobile") shouldBe "508-778-6516"
-                            getProperty<String>("fax") shouldBe "+44-208-1234567"
-                            getProperty<String>("twitter") shouldBe "mjohnson"
-                            getProperty<String>("facebook") shouldBe "mjohnson"
-                            getProperty<String>("linkedin") shouldBe "mjohnson"
-                            getProperty<String>("skype") shouldBe "mjohnson"
-
-                            with(embeddedModel("address")) {
-                                getProperty<String>("line1") shouldBe "2726 Smith Street"
-                                getProperty<String>("city") shouldBe "Hyannis"
-                                getProperty<String>("postal_code") shouldBe "02601"
-                                getProperty<String>("state") shouldBe "MA"
-                                getProperty<String>("country") shouldBe "US"
-                            }
-
-                            embeddedList<String>("tags").shouldContainExactly("contractor", "early-adopter")
-                            embeddedMap<String, String>("custom_fields")
-                                .shouldContainExactly(mapOf("referral_website" to "http://www.example.com"))
-                        }
-                    }
-                }
-
-                it("has ID") {
-                    response.model().data().id() shouldBeGreaterThan 0
-                }
-
-                it("has meta type") {
-                    response
-                        .model()
-                        .meta()
-                        .getProperty<String>("type") shouldBe "contact"
-                }
-
                 it("is available through collection") {
                     context
                         .collection(metaModel)
                         .get(response.model().data().id()) shouldNotBe null
                 }
+
+                behavesLikeRemoteContact(response)
 
             }
 
@@ -175,11 +133,15 @@ object ContactsMockSpec : Spek({
 
             context("when contact exists") {
 
-                val contact by memoized { mock.createContact().model().data() }
+                val response by memoized { mock.createContact() }
+
+                val contact by memoized { response.model().data() }
 
                 it("returns 200") {
                     mock.getContact(contact.id()).status() shouldBe 200
                 }
+
+                behavesLikeRemoteContact(response)
 
             }
 
@@ -190,6 +152,53 @@ object ContactsMockSpec : Spek({
     }
 
 })
+
+private fun Suite.behavesLikeRemoteContact(response: StringResponse) {
+    it("response contains all the properties") {
+        assertSoftly {
+            with(response.model().data()) {
+                getProperty<Long>("contact_id") shouldBe 1L
+                getProperty<String>("first_name") shouldBe "Mark"
+                getProperty<String>("last_name") shouldBe "Johnson"
+                getProperty<String>("title") shouldBe "CEO"
+                getProperty<String>("description") shouldBe "I know him via Tom"
+                getProperty<String>("industry") shouldBe "Design Services"
+                getProperty<String>("website") shouldBe "http://www.designservice.com"
+                getProperty<String>("email") shouldBe "mark@designservices.com"
+                getProperty<String>("phone") shouldBe "508-778-6516"
+                getProperty<String>("mobile") shouldBe "508-778-6516"
+                getProperty<String>("fax") shouldBe "+44-208-1234567"
+                getProperty<String>("twitter") shouldBe "mjohnson"
+                getProperty<String>("facebook") shouldBe "mjohnson"
+                getProperty<String>("linkedin") shouldBe "mjohnson"
+                getProperty<String>("skype") shouldBe "mjohnson"
+
+                kotlin.with(embeddedModel("address")) {
+                    getProperty<String>("line1") shouldBe "2726 Smith Street"
+                    getProperty<String>("city") shouldBe "Hyannis"
+                    getProperty<String>("postal_code") shouldBe "02601"
+                    getProperty<String>("state") shouldBe "MA"
+                    getProperty<String>("country") shouldBe "US"
+                }
+
+                embeddedList<String>("tags").shouldContainExactly("contractor", "early-adopter")
+                embeddedMap<String, String>("custom_fields")
+                    .shouldContainExactly(kotlin.collections.mapOf("referral_website" to "http://www.example.com"))
+            }
+        }
+    }
+
+    it("has ID") {
+        response.model().data().id() shouldBeGreaterThan 0
+    }
+
+    it("has meta type") {
+        response
+            .model()
+            .meta()
+            .getProperty<String>("type") shouldBe "contact"
+    }
+}
 
 private fun StringResponse.model() = Model(objectMapper.readMap(body()))
 

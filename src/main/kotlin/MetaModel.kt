@@ -16,7 +16,7 @@ data class MetaModel(val name: String) {
 
         inner class PropertiesDsl {
 
-            fun id(name: String) = Property(name)
+            fun id(name: String = "id") = Property(name)
                 .id()
                 .also { properties.add(it) }
 

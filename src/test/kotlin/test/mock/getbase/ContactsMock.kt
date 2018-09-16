@@ -6,8 +6,7 @@ class ContactsMock(context: Context) : DslMock(context, {
 
     metaModel("contact") {
         properties {
-            id("id")
-                .generator(LongGenerator)
+            id().generator(LongGenerator)
         }
     }
 
@@ -39,7 +38,7 @@ class ContactsMock(context: Context) : DslMock(context, {
 
 })
 
-private fun emptyModel(body: String) = Model()
+private fun emptyModel(@Suppress("UNUSED_PARAMETER") body: String) = Model()
 
 private fun dataMetaUnwrapper(): (Model) -> Model = { it.embeddedModel("data") }
 
