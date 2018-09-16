@@ -23,9 +23,23 @@ class ContactsMock(context: Context) : DslMock(context, {
                 requestWriter = ::jsonRequestWriter
             )
         }
+
+        get {
+            uri = "/v2/contacts/:id"
+            handler = Rest(
+                context = context,
+                metaModel = metaModel,
+                requestParser = ::emptyModel,
+                restHandler = RestListHandler(),
+                wrapper = dataMetaWrapper(metaModel),
+                requestWriter = ::jsonRequestWriter
+            )
+        }
     }
 
 })
+
+private fun emptyModel(body: String) = Model()
 
 private fun dataMetaUnwrapper(): (Model) -> Model = { it.embeddedModel("data") }
 

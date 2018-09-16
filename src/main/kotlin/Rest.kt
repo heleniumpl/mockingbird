@@ -43,6 +43,21 @@ class RestCreateHandler : RestHandler<Model> {
 
 }
 
+class RestListHandler : RestHandler<Model> {
+
+    override fun handle(
+        request: Request,
+        response: Response,
+        context: Context,
+        metaModel: MetaModel,
+        model: Model
+    ): Model =
+        context
+            .collection(metaModel)
+            .get(request.params("id")) ?: throw NotFoundException()
+
+}
+
 fun jsonRequestParser(body: String) = Model(objectMapper.readMap(body))
 
 fun jsonRequestWriter(model: Model) = objectMapper.writeValueAsString(model.asMap())!!

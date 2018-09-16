@@ -1,7 +1,7 @@
 package pl.helenium.mockingbird
 
 @Suppress("UNCHECKED_CAST")
-open class Model(private val data: Map<String, Any?>) {
+open class Model(private val data: Map<String, Any?> = mapOf()) {
 
     fun embeddedModel(path: String) = Model(data[path] as Map<String, Any?>)
 

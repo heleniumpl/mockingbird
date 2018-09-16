@@ -8,7 +8,7 @@ private val logger = KotlinLogging.logger {}
 
 private val requestId = AtomicLong(1)
 
-fun configureRequestLogging(logRequests: Boolean): Service.() -> Unit = {
+fun Service.configureRequestLogging(logRequests: Boolean) = apply {
     if (logRequests) {
         before { request, _ ->
             request.attribute("id", requestId.getAndIncrement())

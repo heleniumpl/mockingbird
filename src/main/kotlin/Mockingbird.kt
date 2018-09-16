@@ -8,12 +8,10 @@ private val logger = KotlinLogging.logger {}
 
 class Mockingbird(
     port: Int = 0,
-    logRequests: Boolean = true
+    private val logRequests: Boolean = true
 ) {
 
-    private val server = ignite()
-        .port(port)!!
-        .apply(configureRequestLogging(logRequests))
+    private val server = ignite().port(port)!!
 
     private val metaModels = mutableMapOf<String, MetaModel>()
 
@@ -23,7 +21,7 @@ class Mockingbird(
 
         override val server = this@Mockingbird.server
 
-        override val port = server.port()
+        override val port by lazy { server.port() }
 
         override fun registerMetaModel(metaModel: MetaModel) {
             metaModels[metaModel.name] = metaModel
@@ -43,15 +41,16 @@ class Mockingbird(
         }
     }
 
-    fun start(): Mockingbird = apply {
+    fun start() = apply {
         try {
             logger.info("Starting Mockingbird server...")
             measureTimeMillis {
-                context
-                    .server
-                    .run {
+                server
+                    .apply {
+                        configureRequestLogging(logRequests)
                         init()
                         awaitInitialization()
+                        configureExceptionHandling()
                     }
             }.let { logger.info { "Mockingbird server started on port ${context.server.port()} in ${it}ms" } }
         } catch (e: Exception) {
@@ -62,9 +61,7 @@ class Mockingbird(
 
     fun stop() = try {
         logger.info("Stopping Mockingbird server...")
-        context
-            .server
-            .stop()
+        server.stop()
     } catch (e: Exception) {
         logger.warn("Failed to stop Mockingbird server!", e)
     }
