@@ -43,6 +43,21 @@ class RestCreateHandler : RestHandler<Model> {
 
 }
 
+class RestListHandler : RestHandler<Collection<Model>> {
+
+    override fun handle(
+        request: Request,
+        response: Response,
+        context: Context,
+        metaModel: MetaModel,
+        model: Model
+    ): Collection<Model> =
+        context
+            .collection(metaModel)
+            .list()
+
+}
+
 class RestGetHandler : RestHandler<Model> {
 
     override fun handle(

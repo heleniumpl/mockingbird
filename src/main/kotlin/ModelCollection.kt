@@ -13,6 +13,8 @@ class ModelCollection(private val metaModel: MetaModel) {
         return mutableModel
     }
 
+    fun list(): Collection<Model> = models.values
+
     fun get(id: Any): Model? = models[id.toString()]
 
     fun delete(id: Any) = models.remove(id.toString())

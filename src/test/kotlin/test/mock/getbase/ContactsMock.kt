@@ -24,6 +24,19 @@ class ContactsMock(context: Context) : DslMock(context, {
         }
 
         get {
+            uri = "/v2/contacts"
+            handler = Rest(
+                context = context,
+                metaModel = metaModel,
+                requestParser = ::emptyModel,
+                restHandler = RestListHandler(),
+                wrapper = collectionTransformer(dataMetaWrapper(metaModel))
+                        then ::itemsWrapper,
+                requestWriter = ::jsonRequestWriter
+            )
+        }
+
+        get {
             uri = "/v2/contacts/:id"
             handler = Rest(
                 context = context,
@@ -63,4 +76,18 @@ private fun dataMetaWrapper(metaModel: MetaModel): (Model) -> Model = {
             )
         )
     )
+}
+
+private fun itemsWrapper(items: Collection<Model>) = Model(
+    mapOf(
+        "items" to items,
+        "meta" to mapOf(
+            "type" to "collection",
+            "count" to items.size
+        )
+    )
+)
+
+private fun collectionTransformer(elementTransformer: (Model) -> Model): (Collection<Model>) -> Collection<Model> = {
+    it.map(elementTransformer)
 }

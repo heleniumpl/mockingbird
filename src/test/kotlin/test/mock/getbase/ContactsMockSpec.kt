@@ -124,6 +124,30 @@ object ContactsMockSpec : Spek({
 
         }
 
+        describe("GET contacts") {
+
+            context("when no contact exists") {
+
+                val response by memoized { mock.getContacts() }
+
+                it("returns 200") {
+                    response.status() shouldBe 200
+                }
+
+                it("has items envelope") {
+                    with(response.model()) {
+                        items() shouldHaveSize 0
+                        with(meta()) {
+                            getProperty<String>("type") shouldBe "collection"
+                            getProperty<Long>("count") shouldBe 0
+                        }
+                    }
+                }
+
+            }
+
+        }
+
         describe("GET contact") {
 
             context("when contact does not exist") {
@@ -245,6 +269,8 @@ private fun StringResponse.model() = Model(objectMapper.readMap(body()))
 
 private fun Model.data() = embeddedModel("data")
 
+private fun Model.items() = embeddedModelList("items")
+
 private fun Model.meta() = embeddedModel("meta")
 
 private fun Model.id() = getProperty<Long>("id")
@@ -253,6 +279,11 @@ private fun Mockingbird.createContact(body: String = exampleModel) =
     "http://localhost:${context.server.port()}/v2/contacts"
         .httpPost()
         .body(body)
+        .responseString()
+
+private fun Mockingbird.getContacts() =
+    "http://localhost:${context.server.port()}/v2/contacts"
+        .httpGet()
         .responseString()
 
 private fun Mockingbird.getContact(id: Long) =
