@@ -23,9 +23,11 @@ open class DslMock(private val context: Context, builder: DslMock.() -> Unit) {
 
     inner class RoutesDsl {
 
-        fun get(dsl: MethodDsl.() -> Unit) = MethodDsl(Service::get).execute(dsl)
+        fun get(dsl: MethodDsl.() -> Unit) = MethodDsl(Service::get)(dsl)
 
-        fun post(dsl: MethodDsl.() -> Unit) = MethodDsl(Service::post).execute(dsl)
+        fun post(dsl: MethodDsl.() -> Unit) = MethodDsl(Service::post)(dsl)
+
+        fun delete(dsl: MethodDsl.() -> Unit) = MethodDsl(Service::delete)(dsl)
 
         inner class MethodDsl(val addRoute: Service.(String, Route) -> Unit) {
 
@@ -33,7 +35,7 @@ open class DslMock(private val context: Context, builder: DslMock.() -> Unit) {
 
             lateinit var handler: Route
 
-            fun execute(dsl: MethodDsl.() -> Unit) {
+            operator fun invoke(dsl: MethodDsl.() -> Unit) {
                 dsl()
                 context.server.addRoute(uri, handler)
             }

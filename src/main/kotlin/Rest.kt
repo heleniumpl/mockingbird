@@ -11,10 +11,10 @@ class Rest<M, R>(
     private val unwrapper: (Model) -> Model = ::identity,
     private val restHandler: RestHandler<M>,
     private val wrapper: (M) -> R,
-    private val requestWriter: (R) -> Any
+    private val requestWriter: (R) -> Any?
 ) : Route {
 
-    override fun handle(request: Request, response: Response): Any {
+    override fun handle(request: Request, response: Response): Any? {
         val inModel = unwrapper(requestParser(request.body()))
         val outModel = restHandler.handle(request, response, context, metaModel, inModel)
         return requestWriter(wrapper(outModel))
@@ -43,7 +43,7 @@ class RestCreateHandler : RestHandler<Model> {
 
 }
 
-class RestListHandler : RestHandler<Model> {
+class RestGetHandler : RestHandler<Model> {
 
     override fun handle(
         request: Request,
@@ -54,7 +54,24 @@ class RestListHandler : RestHandler<Model> {
     ): Model =
         context
             .collection(metaModel)
-            .get(request.params("id")) ?: throw NotFoundException()
+            .get(request.params("id"))
+            ?: throw NotFoundException()
+
+}
+
+class RestDeleteHandler : RestHandler<Model> {
+
+    override fun handle(
+        request: Request,
+        response: Response,
+        context: Context,
+        metaModel: MetaModel,
+        model: Model
+    ) = context
+        .collection(metaModel)
+        .delete(request.params("id"))
+        ?.also { response.status(204) }
+        ?: throw NotFoundException()
 
 }
 

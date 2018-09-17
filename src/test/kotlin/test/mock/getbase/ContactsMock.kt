@@ -29,9 +29,21 @@ class ContactsMock(context: Context) : DslMock(context, {
                 context = context,
                 metaModel = metaModel,
                 requestParser = ::emptyModel,
-                restHandler = RestListHandler(),
+                restHandler = RestGetHandler(),
                 wrapper = dataMetaWrapper(metaModel),
                 requestWriter = ::jsonRequestWriter
+            )
+        }
+
+        delete {
+            uri = "/v2/contacts/:id"
+            handler = Rest(
+                context = context,
+                metaModel = metaModel,
+                requestParser = ::emptyModel,
+                restHandler = RestDeleteHandler(),
+                wrapper = ::identity,
+                requestWriter = { "" }
             )
         }
     }

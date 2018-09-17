@@ -1,5 +1,6 @@
 package pl.helenium.mockingbird.test.mock.getbase
 
+import com.github.kittinunf.fuel.httpDelete
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
 import io.kotlintest.assertSoftly
@@ -8,6 +9,8 @@ import io.kotlintest.matchers.collections.shouldHaveSingleElement
 import io.kotlintest.matchers.collections.shouldHaveSize
 import io.kotlintest.matchers.maps.shouldContainExactly
 import io.kotlintest.matchers.numerics.shouldBeGreaterThan
+import io.kotlintest.matchers.string.beEmpty
+import io.kotlintest.should
 import io.kotlintest.shouldBe
 import io.kotlintest.shouldNotBe
 import org.spekframework.spek2.Spek
@@ -147,6 +150,44 @@ object ContactsMockSpec : Spek({
 
         }
 
+        describe("DELETE contact") {
+
+            context("when contact does not exist") {
+
+                it("returns 404") {
+                    mock.deleteContact(randomLong()).status() shouldBe 404
+                }
+
+            }
+
+            context("when contact exists") {
+
+                val contact by memoized { mock.createContact().model().data() }
+
+                val response by memoized { mock.deleteContact(contact.id()) }
+
+                it("returns 204") {
+                    response.status() shouldBe 204
+                }
+
+                it("response body should be empty") {
+                    response.body() should beEmpty()
+                }
+
+                it("model is no longer available through API") {
+                    response
+                    mock.getContact(contact.id()).status() shouldBe 404
+                }
+
+                it("model is no longer available through Collection") {
+                    response
+                    mock.context.collection(metaModel).get(contact.id()) shouldBe null
+                }
+
+            }
+
+        }
+
         afterEach { mock.stop() }
 
     }
@@ -217,6 +258,11 @@ private fun Mockingbird.createContact(body: String = exampleModel) =
 private fun Mockingbird.getContact(id: Long) =
     "http://localhost:${context.server.port()}/v2/contacts/$id"
         .httpGet()
+        .responseString()
+
+private fun Mockingbird.deleteContact(id: Long) =
+    "http://localhost:${context.server.port()}/v2/contacts/$id"
+        .httpDelete()
         .responseString()
 
 private fun randomLong() = ThreadLocalRandom
