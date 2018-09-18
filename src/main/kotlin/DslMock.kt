@@ -27,6 +27,8 @@ open class DslMock(private val context: Context, builder: DslMock.() -> Unit) {
 
         fun post(dsl: MethodDsl.() -> Unit) = MethodDsl(Service::post)(dsl)
 
+        fun put(dsl: MethodDsl.() -> Unit) = MethodDsl(Service::put)(dsl)
+
         fun delete(dsl: MethodDsl.() -> Unit) = MethodDsl(Service::delete)(dsl)
 
         inner class MethodDsl(val addRoute: Service.(String, Route) -> Unit) {

@@ -10,15 +10,13 @@
     * filtering
     * sorting
     * paging
-  * GET on single object
   * PUT
-  * DELETE
 * ID generation
 * lifecycle handlers
 * response headers
-* response status
 * embedded collections
 * mock aggregator
 * complex path expr for getting property
 * model deep copy
 * multiple ports
+* exception in response body

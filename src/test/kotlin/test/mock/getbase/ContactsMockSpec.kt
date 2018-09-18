@@ -3,6 +3,7 @@ package pl.helenium.mockingbird.test.mock.getbase
 import com.github.kittinunf.fuel.httpDelete
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
+import com.github.kittinunf.fuel.httpPut
 import io.kotlintest.assertSoftly
 import io.kotlintest.matchers.collections.shouldContainExactly
 import io.kotlintest.matchers.collections.shouldHaveSingleElement
@@ -174,6 +175,34 @@ object ContactsMockSpec : Spek({
 
         }
 
+        describe("PUT contact") {
+
+            context("when contact does not exist") {
+
+                it("returns 404") {
+                    mock.putContact(randomLong(), emptyMap()).status() shouldBe 404
+                }
+
+            }
+
+            context("when contact exists") {
+
+                val contact by memoized { mock.createContact().model().data() }
+
+                context("when empty update is done") {
+
+                    val response by memoized { mock.putContact(contact.id(), emptyMap())}
+
+                    it("returns 200") {
+                        response.status() shouldBe 200
+                    }
+
+                }
+
+            }
+
+        }
+
         describe("DELETE contact") {
 
             context("when contact does not exist") {
@@ -289,6 +318,12 @@ private fun Mockingbird.getContacts() =
 private fun Mockingbird.getContact(id: Long) =
     "http://localhost:${context.server.port()}/v2/contacts/$id"
         .httpGet()
+        .responseString()
+
+private fun Mockingbird.putContact(id: Long, body: Map<String, Any?>) =
+    "http://localhost:${context.server.port()}/v2/contacts/$id"
+        .httpPut()
+        .body(objectMapper.writeValueAsString(mapOf("data" to body)))
         .responseString()
 
 private fun Mockingbird.deleteContact(id: Long) =

@@ -74,6 +74,20 @@ class RestGetHandler : RestHandler<Model> {
 
 }
 
+class RestUpdateHandler : RestHandler<Model> {
+
+    override fun handle(
+        request: Request,
+        response: Response,
+        context: Context,
+        metaModel: MetaModel,
+        model: Model
+    ): Model =
+        context
+            .collection(metaModel)
+            .update(request.params("id"), model)
+}
+
 class RestDeleteHandler : RestHandler<Model> {
 
     override fun handle(
