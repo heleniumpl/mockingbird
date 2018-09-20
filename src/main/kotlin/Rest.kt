@@ -85,7 +85,7 @@ class RestUpdateHandler : RestHandler<Model> {
     ): Model =
         context
             .collection(metaModel)
-            .update(request.params("id"), model)
+            .update(request.params("id"), model, RestUpdater)
 }
 
 class RestDeleteHandler : RestHandler<Model> {

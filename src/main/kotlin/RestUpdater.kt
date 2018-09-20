@@ -6,6 +6,12 @@ interface Updater {
 
 }
 
+object NaiveUpdater : Updater {
+
+    override fun update(target: Model, source: Model) = source.toMutable()
+
+}
+
 object RestUpdater : Updater {
 
     override fun update(target: Model, source: Model): MutableModel = target
