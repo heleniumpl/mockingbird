@@ -197,6 +197,67 @@ object ContactsMockSpec : Spek({
                         response.status() shouldBe 200
                     }
 
+                    it("existing attributes are preserved") {
+                        with(response.model().data()) {
+                            assertSoftly {
+                                getProperty<Long>("contact_id") shouldBe 1
+                                embeddedModel("address").asMap() shouldBe mapOf(
+                                    "line1" to "2726 Smith Street",
+                                    "city" to "Hyannis",
+                                    "postal_code" to "02601",
+                                    "state" to "MA",
+                                    "country" to "US"
+                                )
+                                embeddedList<String>("tags") shouldBe listOf(
+                                    "contractor",
+                                    "early-adopter"
+                                )
+                            }
+                        }
+                    }
+
+                }
+
+                context("when significant update is done") {
+
+                    val response by memoized {
+                        mock.putContact(
+                            contact.id(), mapOf(
+                                "contact_id" to 42,
+                                "address" to mapOf(
+                                    "city" to "Kraków",
+                                    "state" to null
+                                ),
+                                "tags" to listOf(
+                                    "developer"
+                                )
+
+                            )
+                        )
+                    }
+
+                    it("returns 200") {
+                        response.status() shouldBe 200
+                    }
+
+                    it("attributes are changed") {
+                        with(response.model().data()) {
+                            assertSoftly {
+                                getProperty<Long>("contact_id") shouldBe 42
+                                embeddedModel("address").asMap() shouldBe mapOf(
+                                    "line1" to "2726 Smith Street",
+                                    "city" to "Kraków",
+                                    "postal_code" to "02601",
+                                    "state" to null,
+                                    "country" to "US"
+                                )
+                                embeddedList<String>("tags") shouldBe listOf(
+                                    "developer"
+                                )
+                            }
+                        }
+                    }
+
                 }
 
             }

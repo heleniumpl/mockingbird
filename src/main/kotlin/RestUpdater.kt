@@ -1,8 +1,14 @@
 package pl.helenium.mockingbird
 
-class RestUpdater {
+interface Updater {
 
-    fun update(target: MutableModel, source: Model) {
+    fun update(target: MutableModel, source: Model)
+
+}
+
+object RestUpdater : Updater {
+
+    override fun update(target: MutableModel, source: Model) {
         source
             .asMap()
             .forEach { (prop, newValue) ->

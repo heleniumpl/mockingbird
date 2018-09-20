@@ -10,13 +10,16 @@
     * filtering
     * sorting
     * paging
-  * PUT
+  * ~~PUT~~
 * ID generation
 * lifecycle handlers
 * response headers
 * embedded collections
 * mock aggregator
 * complex path expr for getting property
-* model deep copy
+* ~~model deep copy~~
 * multiple ports
 * exception in response body
+* reorganize packages & file contents
+* reconsider how mocks are being implemented
+* fill all exception messages

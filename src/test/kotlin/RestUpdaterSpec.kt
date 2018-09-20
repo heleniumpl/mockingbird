@@ -9,7 +9,7 @@ object RestUpdaterSpec : Spek({
 
     describe("Updates model") {
 
-        val updater by memoized { RestUpdater() }
+        val updater by memoized { RestUpdater }
 
         val targetMap by memoized {
             mapOf(

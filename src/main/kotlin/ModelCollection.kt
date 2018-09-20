@@ -19,10 +19,12 @@ class ModelCollection(private val metaModel: MetaModel) {
 
     fun get(id: Any): Model? = models[id.toString()]
 
-    fun update(id: Any, model: Model): Model {
-        models[id.toString()] ?: throw NotFoundException()
-
-        return model.also { models[id.toString()] = it }
+    fun update(id: Any, model: Model, updater: Updater = RestUpdater): Model {
+        return models[id.toString()]
+            ?.toMutable()
+            ?.also { updater.update(it, model) }
+            ?.also { models[id.toString()] = it }
+            ?: throw NotFoundException()
     }
 
     fun delete(id: Any) = models.remove(id.toString())
