@@ -191,7 +191,7 @@ object ContactsMockSpec : Spek({
 
                 context("when empty update is done") {
 
-                    val response by memoized { mock.putContact(contact.id(), emptyMap())}
+                    val response by memoized { mock.putContact(contact.id(), emptyMap()) }
 
                     it("returns 200") {
                         response.status() shouldBe 200
@@ -228,12 +228,12 @@ object ContactsMockSpec : Spek({
                 }
 
                 it("model is no longer available through API") {
-                    response
+                    @Suppress("UNUSED_EXPRESSION") response
                     mock.getContact(contact.id()).status() shouldBe 404
                 }
 
                 it("model is no longer available through Collection") {
-                    response
+                    @Suppress("UNUSED_EXPRESSION") response
                     mock.context.collection(metaModel).get(contact.id()) shouldBe null
                 }
 
@@ -276,7 +276,7 @@ private fun Suite.behavesLikeRemoteContact(response: StringResponse) {
                 }
 
                 embeddedList<String>("tags").shouldContainExactly("contractor", "early-adopter")
-                embeddedMap<String, String>("custom_fields")
+                embeddedModel("custom_fields").asMap()
                     .shouldContainExactly(kotlin.collections.mapOf("referral_website" to "http://www.example.com"))
             }
         }
@@ -335,4 +335,3 @@ private fun randomLong() = ThreadLocalRandom
     .current()
     .nextLong()
     .absoluteValue
-
