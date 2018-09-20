@@ -28,29 +28,31 @@ open class Model(private val data: Map<String, Any?> = mapOf()) {
 
     open fun <T> maybeEmbeddedList(path: String) = data[path] as? List<T>
 
+    override fun toString() = "Model(data=$data)"
+
 }
 
 @Suppress("UNCHECKED_CAST")
-class MutableModel(private val data: MutableMap<String, Any?>) : Model(data) {
+class MutableModel(data: MutableMap<String, Any?>) : Model(data) {
 
     fun setProperty(property: String, value: Any?) {
-        data[property] = value
+        asMap()[property] = value
     }
 
-    override fun asMap() = data
+    override fun asMap() = super.asMap() as MutableMap<String, Any?>
 
     override fun embeddedModel(path: String) = maybeEmbeddedModel(path) ?: throw IllegalArgumentException()
 
-    override fun maybeEmbeddedModel(path: String) = data[path]?.let { MutableModel(it as MutableMap<String, Any?>) }
+    override fun maybeEmbeddedModel(path: String) = asMap()[path]?.let { MutableModel(it as MutableMap<String, Any?>) }
 
     override fun embeddedModelList(path: String) = maybeEmbeddedModelList(path) ?: throw IllegalArgumentException()
 
     override fun maybeEmbeddedModelList(path: String) =
-        data[path]?.let { it as List<MutableMap<String, Any?>> }?.map(::MutableModel)
+        asMap()[path]?.let { it as List<MutableMap<String, Any?>> }?.map(::MutableModel)
 
     override fun <T> embeddedList(path: String) = maybeEmbeddedList<T>(path) ?: throw IllegalArgumentException()
 
-    override fun <T> maybeEmbeddedList(path: String) = data[path] as? MutableList<T>
+    override fun <T> maybeEmbeddedList(path: String) = asMap()[path] as? MutableList<T>
 
 }
 

@@ -2,19 +2,21 @@ package pl.helenium.mockingbird
 
 interface Updater {
 
-    fun update(target: MutableModel, source: Model)
+    fun update(target: Model, source: Model): MutableModel
 
 }
 
 object RestUpdater : Updater {
 
-    override fun update(target: MutableModel, source: Model) {
-        source
-            .asMap()
-            .forEach { (prop, newValue) ->
-                handleProperty(target, prop, newValue)
-            }
-    }
+    override fun update(target: Model, source: Model): MutableModel = target
+        .toMutable()
+        .also { doUpdate(it, source) }
+
+    private fun doUpdate(target: MutableModel, source: Model) = source
+        .asMap()
+        .forEach { (prop, newValue) ->
+            handleProperty(target, prop, newValue)
+        }
 
     @Suppress("UNCHECKED_CAST")
     private fun handleProperty(target: MutableModel, property: String, newValue: Any?) {
@@ -29,7 +31,7 @@ object RestUpdater : Updater {
         if (newValue is List<*> && !target.isList(property)) throw IllegalArgumentException()
 
         if (target.isMap(property)) {
-            update(target.embeddedModel(property), Model(newValue as Map<String, Any?>))
+            doUpdate(target.embeddedModel(property), Model(newValue as Map<String, Any?>))
             return
         }
 

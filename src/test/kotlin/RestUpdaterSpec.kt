@@ -36,16 +36,16 @@ object RestUpdaterSpec : Spek({
             )
         }
 
-        val target by memoized { Model(targetMap).toMutable() }
+        val target by memoized { Model(targetMap) }
 
         it("empty update should not change the model") {
-            updater.update(target, Model(emptyMap()))
+            val updated = updater.update(target, Model(emptyMap()))
 
-            target.getProperty<Int>("number") shouldBe 1234
+            updated.getProperty<Int>("number") shouldBe 1234
         }
 
         it("new attributes should be added to the model") {
-            updater.update(
+            val updated = updater.update(
                 target, Model(
                     mapOf(
                         "newOne" to "newSimple",
@@ -54,13 +54,13 @@ object RestUpdaterSpec : Spek({
                 )
             )
 
-            target.getProperty<Int>("number") shouldBe 1234
-            target.getProperty<String>("newOne") shouldBe "newSimple"
-            target.embeddedList<String>("newTwo") shouldBe listOf("one", "two")
+            updated.getProperty<Int>("number") shouldBe 1234
+            updated.getProperty<String>("newOne") shouldBe "newSimple"
+            updated.embeddedList<String>("newTwo") shouldBe listOf("one", "two")
         }
 
         it("existing simple attribute should be set to null") {
-            updater.update(
+            val updated = updater.update(
                 target, Model(
                     mapOf(
                         "boolean" to null
@@ -68,12 +68,12 @@ object RestUpdaterSpec : Spek({
                 )
             )
 
-            target.getProperty<Boolean>("boolean") shouldBe null
-            target.getProperty<String>("string") shouldBe "some string"
+            updated.getProperty<Boolean>("boolean") shouldBe null
+            updated.getProperty<String>("string") shouldBe "some string"
         }
 
         it("existing map attribute should be set to null") {
-            updater.update(
+            val updated = updater.update(
                 target, Model(
                     mapOf(
                         "map" to null
@@ -81,12 +81,12 @@ object RestUpdaterSpec : Spek({
                 )
             )
 
-            target.maybeEmbeddedModel("map") shouldBe null
-            target.getProperty<String>("string") shouldBe "some string"
+            updated.maybeEmbeddedModel("map") shouldBe null
+            updated.getProperty<String>("string") shouldBe "some string"
         }
 
         it("existing list attribute should be set to null") {
-            updater.update(
+            val updated = updater.update(
                 target, Model(
                     mapOf(
                         "list" to null
@@ -94,12 +94,12 @@ object RestUpdaterSpec : Spek({
                 )
             )
 
-            target.maybeEmbeddedList<String>("list") shouldBe null
-            target.getProperty<String>("string") shouldBe "some string"
+            updated.maybeEmbeddedList<String>("list") shouldBe null
+            updated.getProperty<String>("string") shouldBe "some string"
         }
 
         it("existing simple attribute should be set to new value") {
-            updater.update(
+            val updated = updater.update(
                 target, Model(
                     mapOf(
                         "null" to "no longer null"
@@ -107,12 +107,12 @@ object RestUpdaterSpec : Spek({
                 )
             )
 
-            target.getProperty<String>("null") shouldBe "no longer null"
-            target.getProperty<String>("string") shouldBe "some string"
+            updated.getProperty<String>("null") shouldBe "no longer null"
+            updated.getProperty<String>("string") shouldBe "some string"
         }
 
         it("new key should be added to existing map") {
-            updater.update(
+            val updated = updater.update(
                 target, Model(
                     mapOf(
                         "map" to mapOf(
@@ -122,16 +122,16 @@ object RestUpdaterSpec : Spek({
                 )
             )
 
-            with(target.embeddedModel("map")) {
+            with(updated.embeddedModel("map")) {
                 getProperty<String>("newKey") shouldBe "newValue"
                 getProperty<String>("direct") shouldBe "direct"
                 embeddedList<String>("embeddedList") shouldBe listOf("a", "b")
             }
-            target.getProperty<String>("string") shouldBe "some string"
+            updated.getProperty<String>("string") shouldBe "some string"
         }
 
         it("new key should be added to existing embedded map") {
-            updater.update(
+            val updated = updater.update(
                 target, Model(
                     mapOf(
                         "map" to mapOf(
@@ -143,7 +143,7 @@ object RestUpdaterSpec : Spek({
                 )
             )
 
-            with(target.embeddedModel("map")) {
+            with(updated.embeddedModel("map")) {
                 with(embeddedModel("embeddedMap")) {
                     getProperty<String>("newKey") shouldBe "newValue"
                     getProperty<Int>("a") shouldBe 1
@@ -151,11 +151,11 @@ object RestUpdaterSpec : Spek({
                 getProperty<String>("direct") shouldBe "direct"
                 embeddedList<String>("embeddedList") shouldBe listOf("a", "b")
             }
-            target.getProperty<String>("string") shouldBe "some string"
+            updated.getProperty<String>("string") shouldBe "some string"
         }
 
         it("content of existing list should be replaced") {
-            updater.update(
+            val updated = updater.update(
                 target, Model(
                     mapOf(
                         "list" to listOf(
@@ -166,12 +166,12 @@ object RestUpdaterSpec : Spek({
                 )
             )
 
-            target.embeddedList<Int>("list") shouldBe listOf(1, 2)
-            target.getProperty<String>("string") shouldBe "some string"
+            updated.embeddedList<Int>("list") shouldBe listOf(1, 2)
+            updated.getProperty<String>("string") shouldBe "some string"
         }
 
         it("content of existing embedded list should be replaced") {
-            updater.update(
+            val updated = updater.update(
                 target, Model(
                     mapOf(
                         "map" to mapOf(
@@ -181,8 +181,8 @@ object RestUpdaterSpec : Spek({
                 )
             )
 
-            target.embeddedModel("map").embeddedList<Int>("embeddedList") shouldBe listOf(1, 2)
-            target.embeddedModel("map").getProperty<String>("direct") shouldBe "direct"
+            updated.embeddedModel("map").embeddedList<Int>("embeddedList") shouldBe listOf(1, 2)
+            updated.embeddedModel("map").getProperty<String>("direct") shouldBe "direct"
         }
 
         it("should not be possible to replace list with map") {

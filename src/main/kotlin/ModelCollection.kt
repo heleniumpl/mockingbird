@@ -21,8 +21,7 @@ class ModelCollection(private val metaModel: MetaModel) {
 
     fun update(id: Any, model: Model, updater: Updater = RestUpdater): Model {
         return models[id.toString()]
-            ?.toMutable()
-            ?.also { updater.update(it, model) }
+            ?.let { updater.update(it, model) }
             ?.also { models[id.toString()] = it }
             ?: throw NotFoundException()
     }
