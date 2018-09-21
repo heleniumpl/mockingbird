@@ -21,9 +21,8 @@ import pl.helenium.mockingbird.Mockingbird
 import pl.helenium.mockingbird.json.defaultObjectMapper
 import pl.helenium.mockingbird.json.readStringKeyMap
 import pl.helenium.mockingbird.model.Model
-import pl.helenium.mockingbird.test.util.StringResponse
-import pl.helenium.mockingbird.test.util.body
-import pl.helenium.mockingbird.test.util.status
+import pl.helenium.mockingbird.test.util.StatusAndBody
+import pl.helenium.mockingbird.test.util.execute
 import java.util.concurrent.ThreadLocalRandom
 import kotlin.math.absoluteValue
 
@@ -84,7 +83,7 @@ object ContactsMockSpec : Spek({
                 val response by memoized { mock.createContact() }
 
                 it("returns 200") {
-                    response.status() shouldBe 200
+                    response.status shouldBe 200
                 }
 
                 it("is available through collection") {
@@ -103,13 +102,13 @@ object ContactsMockSpec : Spek({
 
                 val models by memoized {
                     responses
-                        .map(StringResponse::body)
+                        .map(StatusAndBody::body)
                         .map { Model(defaultObjectMapper.readStringKeyMap(it)) }
                 }
 
                 it("every create returns 200") {
                     responses
-                        .map(StringResponse::status)
+                        .map(StatusAndBody::status)
                         .distinct() shouldHaveSingleElement 200
                 }
 
@@ -138,7 +137,7 @@ object ContactsMockSpec : Spek({
                 val response by memoized { mock.getContacts() }
 
                 it("returns 200") {
-                    response.status() shouldBe 200
+                    response.status shouldBe 200
                 }
 
                 it("has items envelope") {
@@ -157,13 +156,7 @@ object ContactsMockSpec : Spek({
 
         describe("GET contact") {
 
-            context("when contact does not exist") {
-
-                it("returns 404") {
-                    mock.getContact(randomLong()).status() shouldBe 404
-                }
-
-            }
+            whenContactDoesNotExist { mock.getContact(it) }
 
             context("when contact exists") {
 
@@ -172,7 +165,7 @@ object ContactsMockSpec : Spek({
                 val contact by memoized { response.model().data() }
 
                 it("returns 200") {
-                    mock.getContact(contact.id()).status() shouldBe 200
+                    mock.getContact(contact.id()).status shouldBe 200
                 }
 
                 behavesLikeRemoteContact(response)
@@ -183,13 +176,7 @@ object ContactsMockSpec : Spek({
 
         describe("PUT contact") {
 
-            context("when contact does not exist") {
-
-                it("returns 404") {
-                    mock.putContact(randomLong(), emptyMap()).status() shouldBe 404
-                }
-
-            }
+            whenContactDoesNotExist { mock.putContact(it, emptyMap()) }
 
             context("when contact exists") {
 
@@ -200,7 +187,7 @@ object ContactsMockSpec : Spek({
                     val response by memoized { mock.putContact(contact.id(), emptyMap()) }
 
                     it("returns 200") {
-                        response.status() shouldBe 200
+                        response.status shouldBe 200
                     }
 
                     it("existing attributes are preserved") {
@@ -243,7 +230,7 @@ object ContactsMockSpec : Spek({
                     }
 
                     it("returns 200") {
-                        response.status() shouldBe 200
+                        response.status shouldBe 200
                     }
 
                     it("attributes are changed") {
@@ -272,13 +259,7 @@ object ContactsMockSpec : Spek({
 
         describe("DELETE contact") {
 
-            context("when contact does not exist") {
-
-                it("returns 404") {
-                    mock.deleteContact(randomLong()).status() shouldBe 404
-                }
-
-            }
+            whenContactDoesNotExist { mock.deleteContact(it) }
 
             context("when contact exists") {
 
@@ -287,16 +268,16 @@ object ContactsMockSpec : Spek({
                 val response by memoized { mock.deleteContact(contact.id()) }
 
                 it("returns 204") {
-                    response.status() shouldBe 204
+                    response.status shouldBe 204
                 }
 
                 it("response body should be empty") {
-                    response.body() should beEmpty()
+                    response.body should beEmpty()
                 }
 
                 it("model is no longer available through API") {
                     @Suppress("UNUSED_EXPRESSION") response
-                    mock.getContact(contact.id()).status() shouldBe 404
+                    mock.getContact(contact.id()).status shouldBe 404
                 }
 
                 it("model is no longer available through Collection") {
@@ -314,7 +295,26 @@ object ContactsMockSpec : Spek({
 
 })
 
-private fun Suite.behavesLikeRemoteContact(response: StringResponse) {
+private fun Suite.whenContactDoesNotExist(action: (id: Long) -> StatusAndBody) {
+    context("when contact does not exist") {
+
+        val id by memoized { randomLong() }
+
+        val response by memoized { action(id) }
+
+        it("returns 404") {
+            response.status shouldBe 404
+        }
+
+        it("returns proper message") {
+            response.body shouldBe "Model contact#$id not found!"
+        }
+
+    }
+
+}
+
+private fun Suite.behavesLikeRemoteContact(response: StatusAndBody) {
     it("response contains all the properties") {
         assertSoftly {
             with(response.model().data()) {
@@ -361,7 +361,7 @@ private fun Suite.behavesLikeRemoteContact(response: StringResponse) {
     }
 }
 
-private fun StringResponse.model() = Model(defaultObjectMapper.readStringKeyMap(body()))
+private fun StatusAndBody.model() = Model(defaultObjectMapper.readStringKeyMap(body))
 
 private fun Model.data() = embeddedModel("data")
 
@@ -375,28 +375,28 @@ private fun Mockingbird.createContact(body: String = exampleModel) =
     "http://localhost:${context.server.port()}/v2/contacts"
         .httpPost()
         .body(body)
-        .responseString()
+        .execute()
 
 private fun Mockingbird.getContacts() =
     "http://localhost:${context.server.port()}/v2/contacts"
         .httpGet()
-        .responseString()
+        .execute()
 
 private fun Mockingbird.getContact(id: Long) =
     "http://localhost:${context.server.port()}/v2/contacts/$id"
         .httpGet()
-        .responseString()
+        .execute()
 
 private fun Mockingbird.putContact(id: Long, body: Map<String, Any?>) =
     "http://localhost:${context.server.port()}/v2/contacts/$id"
         .httpPut()
         .body(defaultObjectMapper.writeValueAsString(mapOf("data" to body)))
-        .responseString()
+        .execute()
 
 private fun Mockingbird.deleteContact(id: Long) =
     "http://localhost:${context.server.port()}/v2/contacts/$id"
         .httpDelete()
-        .responseString()
+        .execute()
 
 private fun randomLong() = ThreadLocalRandom
     .current()

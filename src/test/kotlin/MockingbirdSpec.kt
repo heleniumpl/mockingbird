@@ -7,9 +7,8 @@ import io.kotlintest.shouldBe
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 import pl.helenium.mockingbird.test.mock.HelloWorldMock
-import pl.helenium.mockingbird.test.util.body
+import pl.helenium.mockingbird.test.util.execute
 import pl.helenium.mockingbird.test.util.freeTcpPort
-import pl.helenium.mockingbird.test.util.status
 
 class MockingbirdSpec : Spek({
 
@@ -18,8 +17,8 @@ class MockingbirdSpec : Spek({
         fun ensureHandlesHttp(port: Int) {
             "http://localhost:$port/not_existing_uri"
                 .httpGet()
-                .responseString()
-                .status() shouldBe 404
+                .execute()
+                .status shouldBe 404
         }
 
         context("when mock is started with no given port") {
@@ -83,15 +82,15 @@ class MockingbirdSpec : Spek({
             val response by memoized {
                 "http://localhost:${mock.context.server.port()}/hello_world"
                     .httpGet()
-                    .responseString()
+                    .execute()
             }
 
             it("returns 200") {
-                response.status() shouldBe 200
+                response.status shouldBe 200
             }
 
             it("returns configured response text") {
-                response.body() shouldBe "Hello World!"
+                response.body shouldBe "Hello World!"
             }
 
         }

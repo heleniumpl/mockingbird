@@ -1,12 +1,13 @@
 package pl.helenium.mockingbird.test.util
 
-import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.core.Request
-import com.github.kittinunf.fuel.core.Response
-import com.github.kittinunf.result.Result
+import kotlin.text.Charsets.UTF_8
 
-typealias StringResponse = Triple<Request, Response, Result<String, FuelError>>
+data class StatusAndBody(val status: Int, val body: String)
 
-fun StringResponse.status() = second.statusCode
-
-fun StringResponse.body() = third.get()
+fun Request.execute() = response().second.run {
+    StatusAndBody(
+        statusCode,
+        data.toString(UTF_8)
+    )
+}
