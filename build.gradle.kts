@@ -9,8 +9,8 @@ plugins {
 object Versions {
     const val logback = "1.2.3"
     const val kotlinLogging = "1.6.10"
-    const val spark = "2.7.2"
-    const val jackson = "2.9.6"
+    const val spark = "2.8.0"
+    const val jackson = "2.9.7"
 
     // test
     const val spek2 = "2.0.0-alpha.2"
