@@ -1,6 +1,5 @@
 package pl.helenium.mockingbird.model
 
-import pl.helenium.mockingbird.exception.NotFoundException
 import java.util.concurrent.ConcurrentHashMap
 
 class ModelCollection(private val metaModel: MetaModel) {
@@ -21,11 +20,10 @@ class ModelCollection(private val metaModel: MetaModel) {
 
     fun get(id: Any): Model? = models[id.toString()]
 
-    fun update(id: Any, update: Model, updater: Updater = NaiveUpdater): Model {
-        return models.computeIfPresent(id.toString()) { _, existingModel ->
+    fun update(id: Any, update: Model, updater: Updater = NaiveUpdater) =
+        models.computeIfPresent(id.toString()) { _, existingModel ->
             updater.update(existingModel, update)
-        } ?: throw NotFoundException()
-    }
+        }
 
     fun delete(id: Any) = models.remove(id.toString())
 

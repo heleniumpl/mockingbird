@@ -1,21 +1,14 @@
 package pl.helenium.mockingbird.definition.rest
 
 import pl.helenium.mockingbird.Context
-import pl.helenium.mockingbird.exception.NotFoundException
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.Model
 import spark.Request
 import spark.Response
 
-class RestCreateHandler : RestHandler<Model> {
+class RestCreateHandler(context: Context, metaModel: MetaModel) : RestHandler<Model>(context, metaModel) {
 
-    override fun handle(
-        request: Request,
-        response: Response,
-        context: Context,
-        metaModel: MetaModel,
-        model: Model
-    ): Model =
+    override fun handle(request: Request, response: Response, model: Model) =
         context
             .collection(metaModel)
             .create(model)
@@ -25,63 +18,41 @@ class RestCreateHandler : RestHandler<Model> {
 // FIXME add support for filtering
 // FIXME add support for sorting
 // FIXME add support for paging
-class RestListHandler : RestHandler<Collection<Model>> {
+class RestListHandler(context: Context, metaModel: MetaModel) : RestHandler<Collection<Model>>(context, metaModel) {
 
-    override fun handle(
-        request: Request,
-        response: Response,
-        context: Context,
-        metaModel: MetaModel,
-        model: Model
-    ): Collection<Model> =
+    override fun handle(request: Request, response: Response, model: Model) =
         context
             .collection(metaModel)
             .list()
 
 }
 
-class RestGetHandler : RestHandler<Model> {
+class RestGetHandler(context: Context, metaModel: MetaModel) : RestHandler<Model>(context, metaModel) {
 
-    override fun handle(
-        request: Request,
-        response: Response,
-        context: Context,
-        metaModel: MetaModel,
-        model: Model
-    ): Model =
+    override fun handle(request: Request, response: Response, model: Model) =
         context
             .collection(metaModel)
-            .get(request.params("id"))
-            ?: throw NotFoundException()
+            .get(request.id())
+            ?: notFound(request)
 
 }
 
-class RestUpdateHandler : RestHandler<Model> {
+class RestUpdateHandler(context: Context, metaModel: MetaModel) : RestHandler<Model>(context, metaModel) {
 
-    override fun handle(
-        request: Request,
-        response: Response,
-        context: Context,
-        metaModel: MetaModel,
-        model: Model
-    ): Model =
+    override fun handle(request: Request, response: Response, model: Model) =
         context
             .collection(metaModel)
-            .update(request.params("id"), model, RestUpdater)
+            .update(request.id(), model, RestUpdater)
+            ?: notFound(request)
 }
 
-class RestDeleteHandler : RestHandler<Model> {
+class RestDeleteHandler(context: Context, metaModel: MetaModel) : RestHandler<Model>(context, metaModel) {
 
-    override fun handle(
-        request: Request,
-        response: Response,
-        context: Context,
-        metaModel: MetaModel,
-        model: Model
-    ) = context
-        .collection(metaModel)
-        .delete(request.params("id"))
-        ?.also { response.status(204) }
-        ?: throw NotFoundException()
+    override fun handle(request: Request, response: Response, model: Model) =
+        context
+            .collection(metaModel)
+            .delete(request.id())
+            ?.also { response.status(204) }
+            ?: notFound(request)
 
 }

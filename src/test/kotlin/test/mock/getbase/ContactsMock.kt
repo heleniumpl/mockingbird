@@ -27,9 +27,7 @@ class ContactsMock(context: Context) : DslMock(context, {
         post {
             uri = "/v2/contacts"
             handler = RestRoute(
-                context = context,
-                metaModel = metaModel,
-                restHandler = RestCreateHandler(),
+                restHandler = RestCreateHandler(context, metaModel),
                 unwrapper = dataMetaUnwrapper(),
                 wrapper = dataMetaWrapper(metaModel),
                 requestWriter = ::jsonRequestWriter
@@ -39,10 +37,8 @@ class ContactsMock(context: Context) : DslMock(context, {
         get {
             uri = "/v2/contacts"
             handler = RestRoute(
-                context = context,
-                metaModel = metaModel,
                 requestParser = ::emptyModel,
-                restHandler = RestListHandler(),
+                restHandler = RestListHandler(context, metaModel),
                 wrapper = collectionTransformer(dataMetaWrapper(metaModel))
                         then ::itemsWrapper,
                 requestWriter = ::jsonRequestWriter
@@ -52,10 +48,8 @@ class ContactsMock(context: Context) : DslMock(context, {
         get {
             uri = "/v2/contacts/:id"
             handler = RestRoute(
-                context = context,
-                metaModel = metaModel,
                 requestParser = ::emptyModel,
-                restHandler = RestGetHandler(),
+                restHandler = RestGetHandler(context, metaModel),
                 wrapper = dataMetaWrapper(metaModel),
                 requestWriter = ::jsonRequestWriter
             )
@@ -64,9 +58,7 @@ class ContactsMock(context: Context) : DslMock(context, {
         put {
             uri = "/v2/contacts/:id"
             handler = RestRoute(
-                context = context,
-                metaModel = metaModel,
-                restHandler = RestUpdateHandler(),
+                restHandler = RestUpdateHandler(context, metaModel),
                 unwrapper = dataMetaUnwrapper(),
                 wrapper = dataMetaWrapper(metaModel),
                 requestWriter = ::jsonRequestWriter
@@ -76,10 +68,8 @@ class ContactsMock(context: Context) : DslMock(context, {
         delete {
             uri = "/v2/contacts/:id"
             handler = RestRoute(
-                context = context,
-                metaModel = metaModel,
                 requestParser = ::emptyModel,
-                restHandler = RestDeleteHandler(),
+                restHandler = RestDeleteHandler(context, metaModel),
                 wrapper = ::identity,
                 requestWriter = { "" }
             )
