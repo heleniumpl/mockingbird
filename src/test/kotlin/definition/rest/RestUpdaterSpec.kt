@@ -1,9 +1,10 @@
-package pl.helenium.mockingbird
+package pl.helenium.mockingbird.definition.rest
 
 import io.kotlintest.shouldBe
 import io.kotlintest.shouldThrowExactly
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
+import pl.helenium.mockingbird.model.Model
 
 object RestUpdaterSpec : Spek({
 

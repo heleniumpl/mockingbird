@@ -17,7 +17,13 @@ import io.kotlintest.shouldNotBe
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.Suite
 import org.spekframework.spek2.style.specification.describe
-import pl.helenium.mockingbird.*
+import pl.helenium.mockingbird.Mockingbird
+import pl.helenium.mockingbird.json.defaultObjectMapper
+import pl.helenium.mockingbird.json.readStringKeyMap
+import pl.helenium.mockingbird.model.Model
+import pl.helenium.mockingbird.test.util.StringResponse
+import pl.helenium.mockingbird.test.util.body
+import pl.helenium.mockingbird.test.util.status
 import java.util.concurrent.ThreadLocalRandom
 import kotlin.math.absoluteValue
 
@@ -98,7 +104,7 @@ object ContactsMockSpec : Spek({
                 val models by memoized {
                     responses
                         .map(StringResponse::body)
-                        .map { Model(objectMapper.readMap(it)) }
+                        .map { Model(defaultObjectMapper.readStringKeyMap(it)) }
                 }
 
                 it("every create returns 200") {
@@ -355,7 +361,7 @@ private fun Suite.behavesLikeRemoteContact(response: StringResponse) {
     }
 }
 
-private fun StringResponse.model() = Model(objectMapper.readMap(body()))
+private fun StringResponse.model() = Model(defaultObjectMapper.readStringKeyMap(body()))
 
 private fun Model.data() = embeddedModel("data")
 
@@ -384,7 +390,7 @@ private fun Mockingbird.getContact(id: Long) =
 private fun Mockingbird.putContact(id: Long, body: Map<String, Any?>) =
     "http://localhost:${context.server.port()}/v2/contacts/$id"
         .httpPut()
-        .body(objectMapper.writeValueAsString(mapOf("data" to body)))
+        .body(defaultObjectMapper.writeValueAsString(mapOf("data" to body)))
         .responseString()
 
 private fun Mockingbird.deleteContact(id: Long) =

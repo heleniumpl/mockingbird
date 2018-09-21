@@ -1,32 +1,11 @@
-package pl.helenium.mockingbird
+package pl.helenium.mockingbird.definition.rest
 
+import pl.helenium.mockingbird.Context
+import pl.helenium.mockingbird.exception.NotFoundException
+import pl.helenium.mockingbird.model.MetaModel
+import pl.helenium.mockingbird.model.Model
 import spark.Request
 import spark.Response
-import spark.Route
-
-class Rest<M, R>(
-    private val context: Context,
-    private val metaModel: MetaModel,
-    private val requestParser: (String) -> Model = ::jsonRequestParser,
-    private val unwrapper: (Model) -> Model = ::identity,
-    private val restHandler: RestHandler<M>,
-    private val wrapper: (M) -> R,
-    private val requestWriter: (R) -> Any?
-) : Route {
-
-    override fun handle(request: Request, response: Response): Any? {
-        val inModel = unwrapper(requestParser(request.body()))
-        val outModel = restHandler.handle(request, response, context, metaModel, inModel)
-        return requestWriter(wrapper(outModel))
-    }
-
-}
-
-interface RestHandler<M> {
-
-    fun handle(request: Request, response: Response, context: Context, metaModel: MetaModel, model: Model): M
-
-}
 
 class RestCreateHandler : RestHandler<Model> {
 
@@ -43,6 +22,9 @@ class RestCreateHandler : RestHandler<Model> {
 
 }
 
+// FIXME add support for filtering
+// FIXME add support for sorting
+// FIXME add support for paging
 class RestListHandler : RestHandler<Collection<Model>> {
 
     override fun handle(
@@ -103,9 +85,3 @@ class RestDeleteHandler : RestHandler<Model> {
         ?: throw NotFoundException()
 
 }
-
-fun jsonRequestParser(body: String) = Model(objectMapper.readMap(body))
-
-fun jsonRequestWriter(model: Model) = objectMapper.writeValueAsString(model.asMap())!!
-
-fun <T> identity(arg: T) = arg

@@ -39,7 +39,7 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectCodeStyleConfiguration">
-    <option name="PREFERRED_PROJECT_CODE_STYLE" value="Default (2)" />
+    <option name="PREFERRED_PROJECT_CODE_STYLE" value="Default" />
     <code_scheme name="Project" version="173">
       <XML>
         <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true" />

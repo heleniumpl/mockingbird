@@ -1,4 +1,4 @@
-package pl.helenium.mockingbird
+package pl.helenium.mockingbird.model
 
 @Suppress("UNCHECKED_CAST")
 open class Model(private val data: Map<String, Any?> = mapOf()) {

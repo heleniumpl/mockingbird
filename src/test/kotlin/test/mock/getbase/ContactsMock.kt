@@ -1,6 +1,19 @@
 package pl.helenium.mockingbird.test.mock.getbase
 
-import pl.helenium.mockingbird.*
+import pl.helenium.mockingbird.Context
+import pl.helenium.mockingbird.definition.DslMock
+import pl.helenium.mockingbird.definition.identity
+import pl.helenium.mockingbird.definition.rest.RestCreateHandler
+import pl.helenium.mockingbird.definition.rest.RestDeleteHandler
+import pl.helenium.mockingbird.definition.rest.RestGetHandler
+import pl.helenium.mockingbird.definition.rest.RestListHandler
+import pl.helenium.mockingbird.definition.rest.RestRoute
+import pl.helenium.mockingbird.definition.rest.RestUpdateHandler
+import pl.helenium.mockingbird.definition.then
+import pl.helenium.mockingbird.json.jsonRequestWriter
+import pl.helenium.mockingbird.model.LongGenerator
+import pl.helenium.mockingbird.model.MetaModel
+import pl.helenium.mockingbird.model.Model
 
 class ContactsMock(context: Context) : DslMock(context, {
 
@@ -13,7 +26,7 @@ class ContactsMock(context: Context) : DslMock(context, {
     routes {
         post {
             uri = "/v2/contacts"
-            handler = Rest(
+            handler = RestRoute(
                 context = context,
                 metaModel = metaModel,
                 restHandler = RestCreateHandler(),
@@ -25,7 +38,7 @@ class ContactsMock(context: Context) : DslMock(context, {
 
         get {
             uri = "/v2/contacts"
-            handler = Rest(
+            handler = RestRoute(
                 context = context,
                 metaModel = metaModel,
                 requestParser = ::emptyModel,
@@ -38,7 +51,7 @@ class ContactsMock(context: Context) : DslMock(context, {
 
         get {
             uri = "/v2/contacts/:id"
-            handler = Rest(
+            handler = RestRoute(
                 context = context,
                 metaModel = metaModel,
                 requestParser = ::emptyModel,
@@ -50,7 +63,7 @@ class ContactsMock(context: Context) : DslMock(context, {
 
         put {
             uri = "/v2/contacts/:id"
-            handler = Rest(
+            handler = RestRoute(
                 context = context,
                 metaModel = metaModel,
                 restHandler = RestUpdateHandler(),
@@ -62,7 +75,7 @@ class ContactsMock(context: Context) : DslMock(context, {
 
         delete {
             uri = "/v2/contacts/:id"
-            handler = Rest(
+            handler = RestRoute(
                 context = context,
                 metaModel = metaModel,
                 requestParser = ::emptyModel,

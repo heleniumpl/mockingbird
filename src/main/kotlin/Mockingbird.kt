@@ -1,6 +1,11 @@
 package pl.helenium.mockingbird
 
 import mu.KotlinLogging
+import pl.helenium.mockingbird.model.MetaModel
+import pl.helenium.mockingbird.model.ModelCollection
+import pl.helenium.mockingbird.server.configureExceptionHandling
+import pl.helenium.mockingbird.server.configureRequestLogging
+import spark.Service
 import spark.Service.ignite
 import kotlin.system.measureTimeMillis
 
@@ -11,7 +16,7 @@ class Mockingbird(
     private val logRequests: Boolean = true
 ) {
 
-    private val server = ignite().port(port)!!
+    private val server: Service = ignite().port(port)
 
     private val metaModels = mutableMapOf<String, MetaModel>()
 

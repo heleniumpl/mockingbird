@@ -1,4 +1,4 @@
-package pl.helenium.mockingbird
+package pl.helenium.mockingbird.test.util
 
 import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.core.Request

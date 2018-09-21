@@ -1,5 +1,6 @@
-package pl.helenium.mockingbird
+package pl.helenium.mockingbird.server
 
+import pl.helenium.mockingbird.exception.NotFoundException
 import spark.Service
 
 fun Service.configureExceptionHandling() = apply {

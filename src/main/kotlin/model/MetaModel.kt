@@ -1,6 +1,4 @@
-package pl.helenium.mockingbird
-
-import java.util.concurrent.atomic.AtomicLong
+package pl.helenium.mockingbird.model
 
 data class MetaModel(val name: String) {
 
@@ -37,13 +35,5 @@ class Property(val name: String) {
     fun id() = apply { id = true }
 
     fun generator(generator: () -> Any?) = apply { this.generate = generator }
-
-}
-
-object LongGenerator: () -> Any? {
-
-    private val sequence = AtomicLong(1)
-
-    override fun invoke(): Any? = sequence.getAndIncrement()
 
 }

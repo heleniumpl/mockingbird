@@ -1,5 +1,7 @@
-package pl.helenium.mockingbird
+package pl.helenium.mockingbird.test.mock
 
+import pl.helenium.mockingbird.Context
+import pl.helenium.mockingbird.definition.DslMock
 import spark.Route
 
 class HelloWorldMock(context: Context) : DslMock(context, {

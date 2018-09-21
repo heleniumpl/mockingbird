@@ -1,16 +1,9 @@
-package pl.helenium.mockingbird
+package pl.helenium.mockingbird.definition.rest
 
-interface Updater {
-
-    fun update(target: Model, source: Model): MutableModel
-
-}
-
-object NaiveUpdater : Updater {
-
-    override fun update(target: Model, source: Model) = source.toMutable()
-
-}
+import pl.helenium.mockingbird.model.Model
+import pl.helenium.mockingbird.model.MutableModel
+import pl.helenium.mockingbird.model.Updater
+import pl.helenium.mockingbird.model.toMutable
 
 object RestUpdater : Updater {
 
@@ -31,6 +24,7 @@ object RestUpdater : Updater {
             return
         }
 
+        // FIXME give messages to exceptions
         if (target.isMap(property) && newValue !is Map<*, *>) throw IllegalArgumentException()
         if (target.isList(property) && newValue !is List<*>) throw IllegalArgumentException()
         if (newValue is Map<*, *> && !target.isMap(property)) throw IllegalArgumentException()

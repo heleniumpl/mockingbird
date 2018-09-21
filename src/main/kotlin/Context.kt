@@ -1,5 +1,7 @@
 package pl.helenium.mockingbird
 
+import pl.helenium.mockingbird.model.MetaModel
+import pl.helenium.mockingbird.model.ModelCollection
 import spark.Service
 
 interface Context {

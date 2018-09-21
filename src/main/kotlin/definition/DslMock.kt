@@ -1,6 +1,8 @@
-package pl.helenium.mockingbird
+package pl.helenium.mockingbird.definition
 
-import pl.helenium.mockingbird.MetaModel.MetaModelDsl
+import pl.helenium.mockingbird.Context
+import pl.helenium.mockingbird.model.MetaModel
+import pl.helenium.mockingbird.model.MetaModel.MetaModelDsl
 import spark.Route
 import spark.Service
 
@@ -21,6 +23,7 @@ open class DslMock(private val context: Context, builder: DslMock.() -> Unit) {
 
     fun routes(dsl: RoutesDsl.() -> Unit) = RoutesDsl().dsl()
 
+    // all DSL helper classes should be in one place
     inner class RoutesDsl {
 
         fun get(dsl: MethodDsl.() -> Unit) = MethodDsl(Service::get)(dsl)
