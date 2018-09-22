@@ -1,6 +1,6 @@
 package pl.helenium.mockingbird.definition
 
-import pl.helenium.mockingbird.Context
+import pl.helenium.mockingbird.model.Context
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.MetaModel.MetaModelDsl
 import spark.Route

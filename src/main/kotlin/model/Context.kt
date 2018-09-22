@@ -1,11 +1,5 @@
-package pl.helenium.mockingbird
+package pl.helenium.mockingbird.model
 
-import pl.helenium.mockingbird.model.Actor
-import pl.helenium.mockingbird.model.Actors
-import pl.helenium.mockingbird.model.Authorization
-import pl.helenium.mockingbird.model.MetaModel
-import pl.helenium.mockingbird.model.MetaModels
-import pl.helenium.mockingbird.model.ModelCollection
 import spark.Service
 
 interface Context {
@@ -18,7 +12,7 @@ interface Context {
 
     val metaModels: MetaModels
 
-    fun collection(metaModel: MetaModel): ModelCollection
+    val modelCollections: ModelCollections
 
 }
 

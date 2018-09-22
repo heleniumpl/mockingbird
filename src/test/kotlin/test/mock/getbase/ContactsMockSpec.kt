@@ -91,7 +91,8 @@ object ContactsMockSpec : Spek({
 
                 it("is available through collection") {
                     context
-                        .collection(metaModel)
+                        .modelCollections
+                        .byMetaModel(metaModel)
                         .get(response.model().data().id()) shouldNotBe null
                 }
 
@@ -126,7 +127,12 @@ object ContactsMockSpec : Spek({
                     models
                         .map(Model::data)
                         .map(Model::id)
-                        .mapNotNull { context.collection(metaModel).get(it) } shouldHaveSize 5
+                        .mapNotNull {
+                            context
+                                .modelCollections
+                                .byMetaModel(metaModel)
+                                .get(it)
+                        } shouldHaveSize 5
                 }
 
             }
@@ -285,7 +291,11 @@ object ContactsMockSpec : Spek({
 
                 it("model is no longer available through Collection") {
                     @Suppress("UNUSED_EXPRESSION") response
-                    mock.context.collection(metaModel).get(contact.id()) shouldBe null
+                    mock
+                        .context
+                        .modelCollections
+                        .byMetaModel(metaModel)
+                        .get(contact.id()) shouldBe null
                 }
 
             }

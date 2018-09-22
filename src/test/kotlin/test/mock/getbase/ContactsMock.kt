@@ -1,6 +1,5 @@
 package pl.helenium.mockingbird.test.mock.getbase
 
-import pl.helenium.mockingbird.Context
 import pl.helenium.mockingbird.definition.DslMock
 import pl.helenium.mockingbird.definition.identity
 import pl.helenium.mockingbird.definition.rest.RestCreateHandler
@@ -11,6 +10,7 @@ import pl.helenium.mockingbird.definition.rest.RestRoute
 import pl.helenium.mockingbird.definition.rest.RestUpdateHandler
 import pl.helenium.mockingbird.definition.then
 import pl.helenium.mockingbird.json.jsonRequestWriter
+import pl.helenium.mockingbird.model.Context
 import pl.helenium.mockingbird.model.LongGenerator
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.Model

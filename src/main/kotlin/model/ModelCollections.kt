@@ -2,6 +2,15 @@ package pl.helenium.mockingbird.model
 
 import java.util.concurrent.ConcurrentHashMap
 
+class ModelCollections {
+
+    private val modelCollections = mutableMapOf<MetaModel, ModelCollection>()
+
+    fun byMetaModel(metaModel: MetaModel) =
+        modelCollections.computeIfAbsent(metaModel, ::ModelCollection)
+
+}
+
 class ModelCollection(private val metaModel: MetaModel) {
 
     private val models = ConcurrentHashMap<String, Model>()

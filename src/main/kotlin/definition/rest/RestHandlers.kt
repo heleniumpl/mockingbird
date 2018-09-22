@@ -1,6 +1,6 @@
 package pl.helenium.mockingbird.definition.rest
 
-import pl.helenium.mockingbird.Context
+import pl.helenium.mockingbird.model.Context
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.Model
 import spark.Request

@@ -1,9 +1,9 @@
 package pl.helenium.mockingbird.test.mock
 
-import pl.helenium.mockingbird.Context
 import pl.helenium.mockingbird.definition.DslMock
 import pl.helenium.mockingbird.exception.unauthorized
 import pl.helenium.mockingbird.model.Authorization
+import pl.helenium.mockingbird.model.Context
 import spark.Request
 import spark.Route
 

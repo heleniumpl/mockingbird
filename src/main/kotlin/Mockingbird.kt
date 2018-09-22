@@ -2,9 +2,10 @@ package pl.helenium.mockingbird
 
 import mu.KotlinLogging
 import pl.helenium.mockingbird.model.Actors
-import pl.helenium.mockingbird.model.MetaModel
+import pl.helenium.mockingbird.model.Context
+import pl.helenium.mockingbird.model.ContextDsl
 import pl.helenium.mockingbird.model.MetaModels
-import pl.helenium.mockingbird.model.ModelCollection
+import pl.helenium.mockingbird.model.ModelCollections
 import pl.helenium.mockingbird.server.configureExceptionHandling
 import pl.helenium.mockingbird.server.configureRequestLogging
 import spark.Service
@@ -30,10 +31,7 @@ class Mockingbird(
 
         override val metaModels = MetaModels()
 
-        private val modelCollections = mutableMapOf<MetaModel, ModelCollection>()
-
-        override fun collection(metaModel: MetaModel) =
-            modelCollections.computeIfAbsent(metaModel, ::ModelCollection)
+        override val modelCollections = ModelCollections()
 
     }
 
