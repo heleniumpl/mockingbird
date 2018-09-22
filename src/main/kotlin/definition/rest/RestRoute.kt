@@ -27,6 +27,7 @@ class RestRoute<M, R>(
 
 }
 
+// FIXME this is not REST-specific
 abstract class RestHandler<M>(
     protected val context: Context,
     protected val metaModel: MetaModel

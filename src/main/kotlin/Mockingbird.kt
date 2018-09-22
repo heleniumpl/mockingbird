@@ -1,6 +1,7 @@
 package pl.helenium.mockingbird
 
 import mu.KotlinLogging
+import pl.helenium.mockingbird.model.Actors
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.ModelCollection
 import pl.helenium.mockingbird.server.configureExceptionHandling
@@ -18,15 +19,17 @@ class Mockingbird(
 
     private val server: Service = ignite().port(port)
 
-    private val metaModels = mutableMapOf<String, MetaModel>()
-
-    private val modelCollections = mutableMapOf<MetaModel, ModelCollection>()
-
     val context = object : Context {
 
         override val server = this@Mockingbird.server
 
         override val port by lazy { server.port() }
+
+        override val actors = Actors()
+
+        private val metaModels = mutableMapOf<String, MetaModel>()
+
+        private val modelCollections = mutableMapOf<MetaModel, ModelCollection>()
 
         override fun registerMetaModel(metaModel: MetaModel) {
             metaModels[metaModel.name] = metaModel
@@ -40,11 +43,7 @@ class Mockingbird(
 
     }
 
-    fun mocks(vararg registrants: (Context) -> Any?) = apply {
-        registrants.forEach { registrant ->
-            registrant(context)
-        }
-    }
+    fun setup(dsl: ContextDsl.() -> Unit) = apply { ContextDsl(context).dsl() }
 
     fun start() = apply {
         try {

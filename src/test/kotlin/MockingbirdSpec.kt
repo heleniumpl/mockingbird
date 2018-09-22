@@ -1,5 +1,6 @@
 package pl.helenium.mockingbird
 
+import com.github.kittinunf.fuel.core.Request
 import com.github.kittinunf.fuel.httpGet
 import io.kotlintest.matchers.collections.shouldBeUnique
 import io.kotlintest.matchers.numerics.shouldBeGreaterThan
@@ -75,7 +76,9 @@ class MockingbirdSpec : Spek({
 
         val mock by memoized {
             Mockingbird()
-                .mocks(::HelloWorldMock)
+                .setup {
+                    mocks(::HelloWorldMock)
+                }
                 .start()
         }
 
@@ -115,6 +118,87 @@ class MockingbirdSpec : Spek({
                     this should contain("at pl.helenium.mockingbird")
                     this should contain("""\(HelloWorldMock.kt:\d+\)""".toRegex())
                 }
+            }
+
+        }
+
+        afterEach { mock.stop() }
+
+    }
+
+    describe("authorization") {
+
+        val mock by memoized {
+            Mockingbird()
+                .setup {
+                    mocks(::HelloWorldMock)
+                    actors {
+                        scope("hello world") {
+                            actor(
+                                id = "ceo@helloworld.com",
+                                authorization = "very_hello_world_token",
+                                name = "Hello World CEO"
+                            )
+                        }
+                        scope("goodbye world") {
+                            actor(
+                                id = "ceo@goodbyeworld.com",
+                                authorization = "very_goodbye_world_token",
+                                name = "Goodbye World CEO"
+                            )
+                        }
+                    }
+                }
+                .start()
+        }
+
+        mapOf<String, (Request) -> Unit>(
+            "when no authorization is provided" to { _ -> },
+            "when wrong authorization is provided" to { r ->
+                r.header("Authorization" to "Bearer wrong_token")
+            },
+            "when authorization without Bearer prefix is provided" to { r ->
+                r.header("Authorization" to "very_hello_world_token")
+            },
+            "when authorization from different scope is provided" to { r ->
+                r.header("Authorization" to "Bearer very_goodbye_world_token")
+            }
+        ).forEach { desc, requestBuilder ->
+            context(desc) {
+
+                val response by memoized {
+                    "http://localhost:${mock.context.server.port()}/hello_world/authorized"
+                        .httpGet()
+                        .apply { requestBuilder(this) }
+                        .execute()
+                }
+
+                it("returns 401") {
+                    response.status shouldBe 401
+                }
+
+                it("returns proper body") {
+                    response.body shouldBe "You are unauthorized!"
+                }
+
+            }
+        }
+
+        context("when valid authorization is provided") {
+
+            val response by memoized {
+                "http://localhost:${mock.context.server.port()}/hello_world/authorized"
+                    .httpGet()
+                    .header("Authorization" to "Bearer very_hello_world_token")
+                    .execute()
+            }
+
+            it("returns 200") {
+                response.status shouldBe 200
+            }
+
+            it("returns proper body") {
+                response.body shouldBe "Hello Hello World CEO!"
             }
 
         }

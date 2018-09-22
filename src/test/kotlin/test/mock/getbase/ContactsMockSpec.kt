@@ -69,7 +69,9 @@ object ContactsMockSpec : Spek({
 
         val mock by memoized {
             Mockingbird()
-                .mocks(::ContactsMock)
+                .setup {
+                    mocks(::ContactsMock)
+                }
                 .start()
         }
 

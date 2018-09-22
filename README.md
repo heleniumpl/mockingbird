@@ -2,26 +2,27 @@
 
 ## TODO
 
-* Request validation
-* Authentication
-  * context of user
-* Support for
+* Features
+  * Request validation
+  * Authentication
+    * context of user
   * GET on collection
     * filtering
     * sorting
     * paging
-  * ~~PUT~~
-* ID generation
-* lifecycle handlers
-* response headers
-* embedded collections
-* mock aggregator
-* complex path expr for getting property
-* ~~model deep copy~~
-* multiple ports
-* ~~exception in response body~~
-* reorganize packages & file contents
-* reconsider how mocks are being implemented
-* fill all exception messages
-* documentation
-* abstraction for server
+  * lifecycle handlers
+    * embedded collections
+  * response headers
+  * mock aggregator
+  * complex path expr for getting property
+  * multiple ports
+  
+* Code quality
+  * reorganize packages & file contents
+  * reconsider how mocks are being implemented
+  * fill all exception messages
+  * abstraction for server
+  * code coverage
+  * logging
+
+* Documentation
