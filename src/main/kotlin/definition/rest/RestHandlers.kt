@@ -8,10 +8,7 @@ import spark.Response
 
 class RestCreateHandler(context: Context, metaModel: MetaModel) : RestHandler<Model>(context, metaModel) {
 
-    override fun handle(request: Request, response: Response, model: Model) =
-        context
-            .collection(metaModel)
-            .create(model)
+    override fun handle(request: Request, response: Response, model: Model) = collection().create(model)
 
 }
 
@@ -20,19 +17,14 @@ class RestCreateHandler(context: Context, metaModel: MetaModel) : RestHandler<Mo
 // FIXME add support for paging
 class RestListHandler(context: Context, metaModel: MetaModel) : RestHandler<Collection<Model>>(context, metaModel) {
 
-    override fun handle(request: Request, response: Response, model: Model) =
-        context
-            .collection(metaModel)
-            .list()
+    override fun handle(request: Request, response: Response, model: Model) = collection().list()
 
 }
 
 class RestGetHandler(context: Context, metaModel: MetaModel) : RestHandler<Model>(context, metaModel) {
 
     override fun handle(request: Request, response: Response, model: Model) =
-        context
-            .collection(metaModel)
-            .get(request.id())
+        collection().get(request.id())
             ?: notFound(request)
 
 }
@@ -40,18 +32,14 @@ class RestGetHandler(context: Context, metaModel: MetaModel) : RestHandler<Model
 class RestUpdateHandler(context: Context, metaModel: MetaModel) : RestHandler<Model>(context, metaModel) {
 
     override fun handle(request: Request, response: Response, model: Model) =
-        context
-            .collection(metaModel)
-            .update(request.id(), model, RestUpdater)
+        collection().update(request.id(), model, RestUpdater)
             ?: notFound(request)
 }
 
 class RestDeleteHandler(context: Context, metaModel: MetaModel) : RestHandler<Model>(context, metaModel) {
 
     override fun handle(request: Request, response: Response, model: Model) =
-        context
-            .collection(metaModel)
-            .delete(request.id())
+        collection().delete(request.id())
             ?.also { response.status(204) }
             ?: notFound(request)
 

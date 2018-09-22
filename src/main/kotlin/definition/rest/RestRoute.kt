@@ -32,13 +32,11 @@ abstract class RestHandler<M>(
     protected val metaModel: MetaModel
 ) {
 
-    abstract fun handle(
-        request: Request,
-        response: Response,
-        model: Model
-    ): M
+    abstract fun handle(request: Request, response: Response, model: Model): M
 
-    fun Request.id() = this.params("id") ?: throw IllegalStateException()
+    protected fun collection() = context.collection(metaModel)
+
+    protected fun Request.id() = this.params("id") ?: throw IllegalStateException()
 
     protected fun notFound(request: Request): Nothing = notFound(metaModel, request)
 
