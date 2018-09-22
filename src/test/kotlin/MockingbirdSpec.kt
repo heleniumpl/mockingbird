@@ -3,6 +3,9 @@ package pl.helenium.mockingbird
 import com.github.kittinunf.fuel.httpGet
 import io.kotlintest.matchers.collections.shouldBeUnique
 import io.kotlintest.matchers.numerics.shouldBeGreaterThan
+import io.kotlintest.matchers.startWith
+import io.kotlintest.matchers.string.contain
+import io.kotlintest.should
 import io.kotlintest.shouldBe
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
@@ -70,14 +73,13 @@ class MockingbirdSpec : Spek({
 
     describe("routes") {
 
-        val mock by memoized { Mockingbird() }
+        val mock by memoized {
+            Mockingbird()
+                .mocks(::HelloWorldMock)
+                .start()
+        }
 
-        context("when HelloWorldMock is registered") {
-            beforeEach {
-                mock
-                    .mocks(::HelloWorldMock)
-                    .start()
-            }
+        context("when /hello_world is called") {
 
             val response by memoized {
                 "http://localhost:${mock.context.server.port()}/hello_world"
@@ -91,6 +93,28 @@ class MockingbirdSpec : Spek({
 
             it("returns configured response text") {
                 response.body shouldBe "Hello World!"
+            }
+
+        }
+
+        context("when /hello_world/exception is called") {
+
+            val response by memoized {
+                "http://localhost:${mock.context.server.port()}/hello_world/exception"
+                    .httpGet()
+                    .execute()
+            }
+
+            it("returns 500") {
+                response.status shouldBe 500
+            }
+
+            it("response contains stacktrace") {
+                with(response.body) {
+                    this should startWith("java.lang.RuntimeException: Hello World Exception!")
+                    this should contain("at pl.helenium.mockingbird")
+                    this should contain("""\(HelloWorldMock.kt:\d+\)""".toRegex())
+                }
             }
 
         }

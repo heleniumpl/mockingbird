@@ -26,6 +26,7 @@ import pl.helenium.mockingbird.test.util.execute
 import java.util.concurrent.ThreadLocalRandom
 import kotlin.math.absoluteValue
 
+@Suppress("SpellCheckingInspection")
 // language=json
 private const val exampleModel = """{
   "data": {

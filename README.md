@@ -19,7 +19,9 @@
 * complex path expr for getting property
 * ~~model deep copy~~
 * multiple ports
-* exception in response body
+* ~~exception in response body~~
 * reorganize packages & file contents
 * reconsider how mocks are being implemented
 * fill all exception messages
+* documentation
+* abstraction for server

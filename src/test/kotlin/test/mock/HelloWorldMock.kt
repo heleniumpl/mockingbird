@@ -13,6 +13,13 @@ class HelloWorldMock(context: Context) : DslMock(context, {
                 "Hello World!"
             }
         }
+
+        get {
+            uri = "/hello_world/exception"
+            handler = Route { _, _ ->
+                throw RuntimeException("Hello World Exception!")
+            }
+        }
     }
 
 })

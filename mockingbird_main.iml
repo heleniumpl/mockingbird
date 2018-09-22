@@ -56,8 +56,8 @@
     <orderEntry type="library" name="Gradle: org.jetbrains:annotations:13.0" level="project" />
     <orderEntry type="library" name="Gradle: javax.servlet:javax.servlet-api:3.1.0" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.jetty.websocket:websocket-client:9.4.12.v20180830" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: ch.qos.logback:logback-core:1.2.3" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.jetty:jetty-client:9.4.12.v20180830" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: ch.qos.logback:logback-core:1.2.3" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.jetty:jetty-http:9.4.12.v20180830" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.jetty.websocket:websocket-common:9.4.12.v20180830" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.jetty:jetty-io:9.4.12.v20180830" level="project" />
