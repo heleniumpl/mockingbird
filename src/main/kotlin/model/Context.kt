@@ -19,15 +19,12 @@ interface Context {
 class ContextDsl(private val context: Context) {
 
     // FIXME rethink the way mocks are registered
-    fun mocks(vararg registrants: (Context) -> Any?) = apply {
+    fun mocks(vararg registrants: (Context) -> Any?) =
         registrants.forEach { registrant ->
             registrant(context)
         }
-    }
 
-    fun actors(dsl: ScopesDsl.() -> Unit) = apply {
-        ScopesDsl(context).dsl()
-    }
+    fun actors(dsl: ScopesDsl.() -> Unit) = ScopesDsl(context).dsl()
 
     class ScopesDsl(private val context: Context) {
 
