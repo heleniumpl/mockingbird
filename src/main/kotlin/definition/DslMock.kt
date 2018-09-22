@@ -15,10 +15,11 @@ open class DslMock(private val context: Context, builder: DslMock.() -> Unit) {
         builder()
     }
 
+    // FIXME consider if this is the proper way of registering meta model
     fun metaModel(name: String, dsl: MetaModelDsl.() -> Unit) {
         this.metaModel = MetaModel(name)
             .apply { dsl().apply(dsl) }
-            .also(context::registerMetaModel)
+            .also { context.metaModels.register(it) }
     }
 
     fun routes(dsl: RoutesDsl.() -> Unit) = RoutesDsl().dsl()

@@ -4,6 +4,7 @@ import pl.helenium.mockingbird.model.Actor
 import pl.helenium.mockingbird.model.Actors
 import pl.helenium.mockingbird.model.Authorization
 import pl.helenium.mockingbird.model.MetaModel
+import pl.helenium.mockingbird.model.MetaModels
 import pl.helenium.mockingbird.model.ModelCollection
 import spark.Service
 
@@ -15,9 +16,7 @@ interface Context {
 
     val actors: Actors
 
-    fun registerMetaModel(metaModel: MetaModel)
-
-    fun metaModel(name: String): MetaModel
+    val metaModels: MetaModels
 
     fun collection(metaModel: MetaModel): ModelCollection
 

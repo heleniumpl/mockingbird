@@ -77,7 +77,7 @@ object ContactsMockSpec : Spek({
 
         val context by memoized { mock.context }
 
-        val metaModel by memoized { context.metaModel("contact") }
+        val metaModel by memoized { context.metaModels.byName("contact") }
 
         describe("POST contact") {
 

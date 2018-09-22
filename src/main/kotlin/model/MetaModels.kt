@@ -1,5 +1,18 @@
 package pl.helenium.mockingbird.model
 
+class MetaModels {
+
+    private val metaModels = mutableMapOf<String, MetaModel>()
+
+    fun register(metaModel: MetaModel) {
+        metaModels[metaModel.name] = metaModel
+    }
+
+    fun byName(name: String) =
+        metaModels[name] ?: throw IllegalArgumentException("No MetaModel could be found for name $name!")
+
+}
+
 data class MetaModel(val name: String) {
 
     private val properties = mutableListOf<Property>()

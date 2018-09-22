@@ -3,6 +3,7 @@ package pl.helenium.mockingbird
 import mu.KotlinLogging
 import pl.helenium.mockingbird.model.Actors
 import pl.helenium.mockingbird.model.MetaModel
+import pl.helenium.mockingbird.model.MetaModels
 import pl.helenium.mockingbird.model.ModelCollection
 import pl.helenium.mockingbird.server.configureExceptionHandling
 import pl.helenium.mockingbird.server.configureRequestLogging
@@ -27,16 +28,9 @@ class Mockingbird(
 
         override val actors = Actors()
 
-        private val metaModels = mutableMapOf<String, MetaModel>()
+        override val metaModels = MetaModels()
 
         private val modelCollections = mutableMapOf<MetaModel, ModelCollection>()
-
-        override fun registerMetaModel(metaModel: MetaModel) {
-            metaModels[metaModel.name] = metaModel
-        }
-
-        override fun metaModel(name: String) =
-            metaModels[name] ?: throw IllegalArgumentException("No MetaModel could be found for name $name!")
 
         override fun collection(metaModel: MetaModel) =
             modelCollections.computeIfAbsent(metaModel, ::ModelCollection)
