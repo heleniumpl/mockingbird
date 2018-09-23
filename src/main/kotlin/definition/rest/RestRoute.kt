@@ -6,9 +6,9 @@ import pl.helenium.mockingbird.json.jsonRequestParser
 import pl.helenium.mockingbird.model.Context
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.Model
-import spark.Request
+import pl.helenium.mockingbird.server.RequestAdapter
+import pl.helenium.mockingbird.server.RouteAdapter
 import spark.Response
-import spark.Route
 
 // FIXME this should have more of DSL form
 class RestRoute<M, R>(
@@ -17,9 +17,9 @@ class RestRoute<M, R>(
     private val restHandler: RestHandler<M>,
     private val wrapper: (M) -> R,
     private val requestWriter: (R) -> Any?
-) : Route {
+) : RouteAdapter {
 
-    override fun handle(request: Request, response: Response): Any? {
+    override fun invoke(request: RequestAdapter, response: Response): Any? {
         val inModel = unwrapper(requestParser(request.body()))
         val outModel = restHandler.handle(request, response, inModel)
         return requestWriter(wrapper(outModel))
@@ -33,14 +33,14 @@ abstract class RestHandler<M>(
     protected val metaModel: MetaModel
 ) {
 
-    abstract fun handle(request: Request, response: Response, model: Model): M
+    abstract fun handle(request: RequestAdapter, response: Response, model: Model): M
 
     protected fun collection() = context
         .modelCollections
         .byMetaModel(metaModel)
 
-    protected fun Request.id() = this.params("id") ?: throw IllegalStateException()
+    protected fun RequestAdapter.id() = this.param("id") ?: throw IllegalStateException()
 
-    protected fun notFound(request: Request): Nothing = notFound(metaModel, request)
+    protected fun notFound(request: RequestAdapter): Nothing = notFound(metaModel, request)
 
 }

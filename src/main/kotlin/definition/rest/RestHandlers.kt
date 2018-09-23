@@ -3,12 +3,12 @@ package pl.helenium.mockingbird.definition.rest
 import pl.helenium.mockingbird.model.Context
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.Model
-import spark.Request
+import pl.helenium.mockingbird.server.RequestAdapter
 import spark.Response
 
 class RestCreateHandler(context: Context, metaModel: MetaModel) : RestHandler<Model>(context, metaModel) {
 
-    override fun handle(request: Request, response: Response, model: Model) = collection().create(model)
+    override fun handle(request: RequestAdapter, response: Response, model: Model) = collection().create(model)
 
 }
 
@@ -17,13 +17,13 @@ class RestCreateHandler(context: Context, metaModel: MetaModel) : RestHandler<Mo
 // FIXME add support for paging
 class RestListHandler(context: Context, metaModel: MetaModel) : RestHandler<Collection<Model>>(context, metaModel) {
 
-    override fun handle(request: Request, response: Response, model: Model) = collection().list()
+    override fun handle(request: RequestAdapter, response: Response, model: Model) = collection().list()
 
 }
 
 class RestGetHandler(context: Context, metaModel: MetaModel) : RestHandler<Model>(context, metaModel) {
 
-    override fun handle(request: Request, response: Response, model: Model) =
+    override fun handle(request: RequestAdapter, response: Response, model: Model) =
         collection().get(request.id())
             ?: notFound(request)
 
@@ -31,14 +31,14 @@ class RestGetHandler(context: Context, metaModel: MetaModel) : RestHandler<Model
 
 class RestUpdateHandler(context: Context, metaModel: MetaModel) : RestHandler<Model>(context, metaModel) {
 
-    override fun handle(request: Request, response: Response, model: Model) =
+    override fun handle(request: RequestAdapter, response: Response, model: Model) =
         collection().update(request.id(), model, RestUpdater)
             ?: notFound(request)
 }
 
 class RestDeleteHandler(context: Context, metaModel: MetaModel) : RestHandler<Model>(context, metaModel) {
 
-    override fun handle(request: Request, response: Response, model: Model) =
+    override fun handle(request: RequestAdapter, response: Response, model: Model) =
         collection().delete(request.id())
             ?.also { response.status(204) }
             ?: notFound(request)

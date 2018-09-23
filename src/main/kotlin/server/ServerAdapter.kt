@@ -1,7 +1,6 @@
 package pl.helenium.mockingbird.server
 
 import pl.helenium.mockingbird.model.HttpMethod
-import spark.Route
 
 interface ServerAdapter {
 
@@ -11,6 +10,6 @@ interface ServerAdapter {
 
     fun stop()
 
-    fun defineRoute(method: HttpMethod, uri: String, route: Route)
+    fun defineRoute(method: HttpMethod, uri: String, route: RouteAdapter)
 
 }

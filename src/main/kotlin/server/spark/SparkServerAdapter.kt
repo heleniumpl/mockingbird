@@ -5,6 +5,7 @@ import pl.helenium.mockingbird.model.HttpMethod.DELETE
 import pl.helenium.mockingbird.model.HttpMethod.GET
 import pl.helenium.mockingbird.model.HttpMethod.POST
 import pl.helenium.mockingbird.model.HttpMethod.PUT
+import pl.helenium.mockingbird.server.RouteAdapter
 import pl.helenium.mockingbird.server.ServerAdapter
 import spark.Route
 import spark.Service
@@ -32,11 +33,16 @@ class SparkServerAdapter(
         service.stop()
     }
 
-    override fun defineRoute(method: HttpMethod, uri: String, route: Route) = when (method) {
-        POST -> service.post(uri, route)
-        GET -> service.get(uri, route)
-        PUT -> service.put(uri, route)
-        DELETE -> service.delete(uri, route)
+    override fun defineRoute(method: HttpMethod, uri: String, route: RouteAdapter) {
+        val internalRoute = Route { request, response ->
+            route(SparkRequestAdapter(request), response)
+        }
+        return when (method) {
+            POST -> service.post(uri, internalRoute)
+            GET -> service.get(uri, internalRoute)
+            PUT -> service.put(uri, internalRoute)
+            DELETE -> service.delete(uri, internalRoute)
+        }
     }
 
 }

@@ -8,7 +8,7 @@ import pl.helenium.mockingbird.model.HttpMethod.POST
 import pl.helenium.mockingbird.model.HttpMethod.PUT
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.MetaModel.MetaModelDsl
-import spark.Route
+import pl.helenium.mockingbird.server.RouteAdapter
 
 open class DslMock(private val context: Context, builder: DslMock.() -> Unit) {
 
@@ -43,7 +43,7 @@ open class DslMock(private val context: Context, builder: DslMock.() -> Unit) {
 
             lateinit var uri: String
 
-            lateinit var handler: Route
+            lateinit var handler: RouteAdapter
 
             operator fun invoke(dsl: MethodDsl.() -> Unit) {
                 dsl()

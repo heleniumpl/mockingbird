@@ -4,29 +4,28 @@ import pl.helenium.mockingbird.definition.DslMock
 import pl.helenium.mockingbird.exception.unauthorized
 import pl.helenium.mockingbird.model.Authorization
 import pl.helenium.mockingbird.model.Context
-import spark.Request
-import spark.Route
+import pl.helenium.mockingbird.server.RequestAdapter
 
 class HelloWorldMock(context: Context) : DslMock(context, {
 
     routes {
         get {
             uri = "/hello_world"
-            handler = Route { _, _ ->
+            handler = { _, _ ->
                 "Hello World!"
             }
         }
 
         get {
             uri = "/hello_world/exception"
-            handler = Route { _, _ ->
+            handler = { _, _ ->
                 throw RuntimeException("Hello World Exception!")
             }
         }
 
         get {
             uri = "/hello_world/authorized"
-            handler = Route { request, _ ->
+            handler = { request, _ ->
                 val actor = context.authorize(request) ?: unauthorized()
                 "Hello ${actor.name}!"
             }
@@ -35,11 +34,11 @@ class HelloWorldMock(context: Context) : DslMock(context, {
 
 })
 
-private fun Context.authorize(request: Request) = actors
+private fun Context.authorize(request: RequestAdapter) = actors
     .scope("hello world")
     .authorize(request.authorization())
 
-private fun Request.authorization() = headers("Authorization")
+private fun RequestAdapter.authorization() = header("Authorization")
     ?.takeIf { it.startsWith("Bearer ") }
     ?.removePrefix("Bearer ")
     ?.let(::Authorization)
