@@ -1,19 +1,23 @@
 package pl.helenium.mockingbird.test.mock.getbase
 
+import pl.helenium.mockingbird.definition.Authenticator
 import pl.helenium.mockingbird.definition.DslMock
 import pl.helenium.mockingbird.definition.identity
-import pl.helenium.mockingbird.definition.rest.RestCreateHandler
-import pl.helenium.mockingbird.definition.rest.RestDeleteHandler
-import pl.helenium.mockingbird.definition.rest.RestGetHandler
-import pl.helenium.mockingbird.definition.rest.RestListHandler
-import pl.helenium.mockingbird.definition.rest.RestRoute
-import pl.helenium.mockingbird.definition.rest.RestUpdateHandler
+import pl.helenium.mockingbird.definition.rest.RestCreateOperation
+import pl.helenium.mockingbird.definition.rest.RestDeleteOperation
+import pl.helenium.mockingbird.definition.rest.RestGetOperation
+import pl.helenium.mockingbird.definition.rest.RestHandler
+import pl.helenium.mockingbird.definition.rest.RestListOperation
+import pl.helenium.mockingbird.definition.rest.RestUpdateOperation
 import pl.helenium.mockingbird.definition.then
 import pl.helenium.mockingbird.json.jsonRequestWriter
+import pl.helenium.mockingbird.model.Actor
+import pl.helenium.mockingbird.model.Authorization
 import pl.helenium.mockingbird.model.Context
 import pl.helenium.mockingbird.model.LongGenerator
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.Model
+import pl.helenium.mockingbird.server.Request
 
 class ContactsMock(context: Context) : DslMock(context, {
 
@@ -23,11 +27,15 @@ class ContactsMock(context: Context) : DslMock(context, {
         }
     }
 
-    routes {
+    authenticator(
+        BearerAuthenticator(context, "basePublic")
+    )
+
+    handlers {
         post(
             "/v2/contacts",
-            RestRoute(
-                restHandler = RestCreateHandler(context, metaModel()),
+            RestHandler(
+                restOperation = RestCreateOperation(context, metaModel()),
                 unwrapper = dataMetaUnwrapper(),
                 wrapper = dataMetaWrapper(metaModel()),
                 requestWriter = ::jsonRequestWriter
@@ -36,9 +44,9 @@ class ContactsMock(context: Context) : DslMock(context, {
 
         get(
             "/v2/contacts",
-            RestRoute(
+            RestHandler(
                 requestParser = ::emptyModel,
-                restHandler = RestListHandler(context, metaModel()),
+                restOperation = RestListOperation(context, metaModel()),
                 wrapper = collectionTransformer(dataMetaWrapper(metaModel()))
                         then ::itemsWrapper,
                 requestWriter = ::jsonRequestWriter
@@ -47,9 +55,9 @@ class ContactsMock(context: Context) : DslMock(context, {
 
         get(
             "/v2/contacts/:id",
-            RestRoute(
+            RestHandler(
                 requestParser = ::emptyModel,
-                restHandler = RestGetHandler(context, metaModel()),
+                restOperation = RestGetOperation(context, metaModel()),
                 wrapper = dataMetaWrapper(metaModel()),
                 requestWriter = ::jsonRequestWriter
             )
@@ -57,8 +65,8 @@ class ContactsMock(context: Context) : DslMock(context, {
 
         put(
             "/v2/contacts/:id",
-            RestRoute(
-                restHandler = RestUpdateHandler(context, metaModel()),
+            RestHandler(
+                restOperation = RestUpdateOperation(context, metaModel()),
                 unwrapper = dataMetaUnwrapper(),
                 wrapper = dataMetaWrapper(metaModel()),
                 requestWriter = ::jsonRequestWriter
@@ -67,9 +75,9 @@ class ContactsMock(context: Context) : DslMock(context, {
 
         delete(
             "/v2/contacts/:id",
-            RestRoute(
+            RestHandler(
                 requestParser = ::emptyModel,
-                restHandler = RestDeleteHandler(context, metaModel()),
+                restOperation = RestDeleteOperation(context, metaModel()),
                 wrapper = ::identity,
                 requestWriter = { "" }
             )
@@ -77,6 +85,23 @@ class ContactsMock(context: Context) : DslMock(context, {
     }
 
 })
+
+private class BearerAuthenticator(
+    private val context: Context,
+    private val scope: String
+) : Authenticator {
+
+    override fun invoke(request: Request): Actor? = context
+        .actors
+        .scope(scope)
+        .authorize(request.authorization())
+
+    private fun Request.authorization() = header("Authorization")
+        ?.takeIf { it.startsWith("Bearer ") }
+        ?.removePrefix("Bearer ")
+        ?.let(::Authorization)
+
+}
 
 private fun emptyModel(@Suppress("UNUSED_PARAMETER") body: String) = Model()
 

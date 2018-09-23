@@ -3,32 +3,33 @@ package pl.helenium.mockingbird.definition.rest
 import pl.helenium.mockingbird.definition.identity
 import pl.helenium.mockingbird.exception.notFound
 import pl.helenium.mockingbird.json.jsonRequestParser
+import pl.helenium.mockingbird.model.Actor
 import pl.helenium.mockingbird.model.Context
+import pl.helenium.mockingbird.model.Handler
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.Model
 import pl.helenium.mockingbird.server.Request
 import pl.helenium.mockingbird.server.Response
-import pl.helenium.mockingbird.server.Route
 
 // FIXME this should have more of DSL form
-class RestRoute<M, R>(
+class RestHandler<M, R>(
     private val requestParser: (String) -> Model = ::jsonRequestParser,
     private val unwrapper: (Model) -> Model = ::identity,
-    private val restHandler: RestHandler<M>,
+    private val restOperation: RestOperation<M>,
     private val wrapper: (M) -> R,
     private val requestWriter: (R) -> Any?
-) : Route {
+) : Handler {
 
-    override fun invoke(request: Request, response: Response): Any? {
+    override fun invoke(actor: Actor?, request: Request, response: Response): Any? {
         val inModel = unwrapper(requestParser(request.body()))
-        val outModel = restHandler.handle(request, response, inModel)
+        val outModel = restOperation.handle(request, response, inModel)
         return requestWriter(wrapper(outModel))
     }
 
 }
 
 // FIXME this is not REST-specific
-abstract class RestHandler<M>(
+abstract class RestOperation<M>(
     protected val context: Context,
     protected val metaModel: MetaModel
 ) {

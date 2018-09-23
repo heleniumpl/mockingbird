@@ -1,5 +1,6 @@
 package pl.helenium.mockingbird.model
 
+import pl.helenium.mockingbird.model.Actors.Scope
 import pl.helenium.mockingbird.server.Server
 
 class Context(private val server: Server) {
@@ -13,7 +14,7 @@ class Context(private val server: Server) {
 
     val modelCollections = ModelCollections()
 
-    val routes = Routes(server)
+    val handlers = Handlers(server)
 
 }
 
@@ -37,7 +38,7 @@ class ContextDsl(private val context: Context) {
 
     }
 
-    class ScopeDsl(private val scope: Actors.Scope) {
+    class ScopeDsl(private val scope: Scope) {
 
         fun actor(id: String, authorization: String, name: String = id) {
             scope.register(Actor(id, Authorization(authorization), name))

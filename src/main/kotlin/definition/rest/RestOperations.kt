@@ -6,7 +6,7 @@ import pl.helenium.mockingbird.model.Model
 import pl.helenium.mockingbird.server.Request
 import pl.helenium.mockingbird.server.Response
 
-class RestCreateHandler(context: Context, metaModel: MetaModel) : RestHandler<Model>(context, metaModel) {
+class RestCreateOperation(context: Context, metaModel: MetaModel) : RestOperation<Model>(context, metaModel) {
 
     override fun handle(request: Request, response: Response, model: Model) = collection().create(model)
 
@@ -15,13 +15,13 @@ class RestCreateHandler(context: Context, metaModel: MetaModel) : RestHandler<Mo
 // FIXME add support for filtering
 // FIXME add support for sorting
 // FIXME add support for paging
-class RestListHandler(context: Context, metaModel: MetaModel) : RestHandler<Collection<Model>>(context, metaModel) {
+class RestListOperation(context: Context, metaModel: MetaModel) : RestOperation<Collection<Model>>(context, metaModel) {
 
     override fun handle(request: Request, response: Response, model: Model) = collection().list()
 
 }
 
-class RestGetHandler(context: Context, metaModel: MetaModel) : RestHandler<Model>(context, metaModel) {
+class RestGetOperation(context: Context, metaModel: MetaModel) : RestOperation<Model>(context, metaModel) {
 
     override fun handle(request: Request, response: Response, model: Model) =
         collection()
@@ -30,7 +30,7 @@ class RestGetHandler(context: Context, metaModel: MetaModel) : RestHandler<Model
 
 }
 
-class RestUpdateHandler(context: Context, metaModel: MetaModel) : RestHandler<Model>(context, metaModel) {
+class RestUpdateOperation(context: Context, metaModel: MetaModel) : RestOperation<Model>(context, metaModel) {
 
     override fun handle(request: Request, response: Response, model: Model) =
         collection()
@@ -38,7 +38,7 @@ class RestUpdateHandler(context: Context, metaModel: MetaModel) : RestHandler<Mo
             ?: notFound(request)
 }
 
-class RestDeleteHandler(context: Context, metaModel: MetaModel) : RestHandler<Model>(context, metaModel) {
+class RestDeleteOperation(context: Context, metaModel: MetaModel) : RestOperation<Model>(context, metaModel) {
 
     override fun handle(request: Request, response: Response, model: Model) =
         collection()

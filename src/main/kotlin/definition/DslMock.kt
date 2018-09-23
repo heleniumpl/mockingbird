@@ -1,6 +1,8 @@
 package pl.helenium.mockingbird.definition
 
+import pl.helenium.mockingbird.model.Actor
 import pl.helenium.mockingbird.model.Context
+import pl.helenium.mockingbird.model.Handler
 import pl.helenium.mockingbird.model.HttpMethod
 import pl.helenium.mockingbird.model.HttpMethod.DELETE
 import pl.helenium.mockingbird.model.HttpMethod.GET
@@ -8,11 +10,15 @@ import pl.helenium.mockingbird.model.HttpMethod.POST
 import pl.helenium.mockingbird.model.HttpMethod.PUT
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.MetaModel.MetaModelDsl
-import pl.helenium.mockingbird.server.Route
+import pl.helenium.mockingbird.server.Request
+
+typealias Authenticator = (Request) -> Actor?
 
 open class DslMock(private val context: Context, builder: DslMock.() -> Unit) {
 
     private var metaModel: MetaModel? = null
+
+    private var authenticator: Authenticator? = null
 
     init {
         builder()
@@ -25,25 +31,29 @@ open class DslMock(private val context: Context, builder: DslMock.() -> Unit) {
             .also { context.metaModels.register(it) }
     }
 
-    fun routes(dsl: RoutesDsl.() -> Unit) = RoutesDsl(context).dsl()
+    fun authenticator(authenticator: Authenticator) {
+        this.authenticator = authenticator
+    }
+
+    fun handlers(dsl: HandlersDsl.() -> Unit) = HandlersDsl().dsl()
 
     fun metaModel(): MetaModel = metaModel
         ?: throw IllegalStateException("MetaModel has to be defined before it is accessed!")
 
-}
+    inner class HandlersDsl {
 
-class RoutesDsl(private val context: Context) {
+        fun post(uri: String, handler: Handler) = register(POST, uri, handler)
 
-    fun post(uri: String, route: Route) = register(POST, uri, route)
+        fun get(uri: String, handler: Handler) = register(GET, uri, handler)
 
-    fun get(uri: String, route: Route) = register(GET, uri, route)
+        fun put(uri: String, handler: Handler) = register(PUT, uri, handler)
 
-    fun put(uri: String, route: Route) = register(PUT, uri, route)
+        fun delete(uri: String, handler: Handler) = register(DELETE, uri, handler)
 
-    fun delete(uri: String, route: Route) = register(DELETE, uri, route)
+        private fun register(method: HttpMethod, uri: String, handler: Handler) = context
+            .handlers
+            .register(method, uri, handler, authenticator)
 
-    private fun register(method: HttpMethod, uri: String, route: Route) = context
-        .routes
-        .register(method, uri, route)
+    }
 
 }

@@ -8,16 +8,16 @@ import pl.helenium.mockingbird.server.Request
 
 class HelloWorldMock(context: Context) : DslMock(context, {
 
-    routes {
-        get("/hello_world") { _, _ ->
+    handlers {
+        get("/hello_world") { _, _, _ ->
             "Hello World!"
         }
 
-        get("/hello_world/exception") { _, _ ->
+        get("/hello_world/exception") { _, _, _ ->
             throw RuntimeException("Hello World Exception!")
         }
 
-        get("/hello_world/authorized") { request, _ ->
+        get("/hello_world/authorized") { _, request, _ ->
             val actor = context.authorize(request) ?: unauthorized()
             "Hello ${actor.name}!"
         }

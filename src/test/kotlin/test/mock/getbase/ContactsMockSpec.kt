@@ -1,5 +1,6 @@
 package pl.helenium.mockingbird.test.mock.getbase
 
+import com.github.kittinunf.fuel.core.Request
 import com.github.kittinunf.fuel.httpDelete
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
@@ -70,6 +71,11 @@ object ContactsMockSpec : Spek({
         val mock by memoized {
             Mockingbird()
                 .setup {
+                    actors {
+                        scope("basePublic") {
+                            actor("ceo@getbase.com", "very_secret_auth_token", "CEO of Base")
+                        }
+                    }
                     mocks(::ContactsMock)
                 }
                 .start()
@@ -387,29 +393,36 @@ private fun Model.id() = getProperty<Long>("id")
 private fun Mockingbird.createContact(body: String = exampleModel) =
     "http://localhost:${context.port}/v2/contacts"
         .httpPost()
+        .header("Authorization" to "Bearer very_secret_auth_token")
         .body(body)
         .execute()
 
 private fun Mockingbird.getContacts() =
     "http://localhost:${context.port}/v2/contacts"
         .httpGet()
+        .authorized()
         .execute()
 
 private fun Mockingbird.getContact(id: Long) =
     "http://localhost:${context.port}/v2/contacts/$id"
         .httpGet()
+        .authorized()
         .execute()
 
 private fun Mockingbird.putContact(id: Long, body: Map<String, Any?>) =
     "http://localhost:${context.port}/v2/contacts/$id"
         .httpPut()
+        .authorized()
         .body(defaultObjectMapper.writeValueAsString(mapOf("data" to body)))
         .execute()
 
 private fun Mockingbird.deleteContact(id: Long) =
     "http://localhost:${context.port}/v2/contacts/$id"
         .httpDelete()
+        .authorized()
         .execute()
+
+private fun Request.authorized() = header("Authorization" to "Bearer very_secret_auth_token")
 
 private fun randomLong() = ThreadLocalRandom
     .current()
