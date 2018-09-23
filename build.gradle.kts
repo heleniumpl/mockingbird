@@ -1,7 +1,7 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 plugins {
-    kotlin("jvm") version "1.2.70"
+    kotlin("jvm") version "1.3.0-rc-57"
 
     id("com.github.ben-manes.versions") version "0.20.0"
 }
@@ -21,11 +21,13 @@ object Versions {
 repositories {
     jcenter()
 
+    maven("https://dl.bintray.com/kotlin/kotlin-eap")
     maven("https://dl.bintray.com/spekframework/spek-dev")
 }
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
+    implementation(group = "org.jetbrains.kotlin", name = "kotlin-reflect")
 
     implementation(group = "io.github.microutils", name = "kotlin-logging", version = Versions.kotlinLogging)
     implementation(group = "com.sparkjava", name = "spark-core", version = Versions.spark)
