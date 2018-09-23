@@ -10,6 +10,7 @@ import io.kotlintest.should
 import io.kotlintest.shouldBe
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
+import pl.helenium.mockingbird.server.spark.SparkServerAdapter
 import pl.helenium.mockingbird.test.mock.HelloWorldMock
 import pl.helenium.mockingbird.test.util.execute
 import pl.helenium.mockingbird.test.util.freeTcpPort
@@ -29,11 +30,11 @@ class MockingbirdSpec : Spek({
             val mock by memoized { Mockingbird().start() }
 
             it("starts on random free port > 1024") {
-                mock.context.server.port().shouldBeGreaterThan(1024)
+                mock.context.port.shouldBeGreaterThan(1024)
             }
 
             it("handles HTTP") {
-                ensureHandlesHttp(mock.context.server.port())
+                ensureHandlesHttp(mock.context.port)
             }
 
             afterEach { mock.stop() }
@@ -41,14 +42,14 @@ class MockingbirdSpec : Spek({
 
         context("when mock is started with given (free) port") {
             val freePort by memoized { freeTcpPort() }
-            val mock by memoized { Mockingbird(freePort).start() }
+            val mock by memoized { Mockingbird(SparkServerAdapter(freePort)).start() }
 
             it("starts on given port") {
-                mock.context.server.port() shouldBe freePort
+                mock.context.port shouldBe freePort
             }
 
             it("handles HTTP") {
-                ensureHandlesHttp(mock.context.server.port())
+                ensureHandlesHttp(mock.context.port)
             }
 
             afterEach { mock.stop() }
@@ -58,12 +59,12 @@ class MockingbirdSpec : Spek({
             val mocks by memoized { List(5) { Mockingbird() }.map(Mockingbird::start) }
 
             it("every mock should have different port") {
-                mocks.map { it.context.server.port() }.shouldBeUnique()
+                mocks.map { it.context.port }.shouldBeUnique()
             }
 
             it("handles HTTP") {
                 mocks.forEach {
-                    ensureHandlesHttp(it.context.server.port())
+                    ensureHandlesHttp(it.context.port)
                 }
             }
 
@@ -85,7 +86,7 @@ class MockingbirdSpec : Spek({
         context("when /hello_world is called") {
 
             val response by memoized {
-                "http://localhost:${mock.context.server.port()}/hello_world"
+                "http://localhost:${mock.context.port}/hello_world"
                     .httpGet()
                     .execute()
             }
@@ -103,7 +104,7 @@ class MockingbirdSpec : Spek({
         context("when /hello_world/exception is called") {
 
             val response by memoized {
-                "http://localhost:${mock.context.server.port()}/hello_world/exception"
+                "http://localhost:${mock.context.port}/hello_world/exception"
                     .httpGet()
                     .execute()
             }
@@ -167,7 +168,7 @@ class MockingbirdSpec : Spek({
             context(desc) {
 
                 val response by memoized {
-                    "http://localhost:${mock.context.server.port()}/hello_world/authorized"
+                    "http://localhost:${mock.context.port}/hello_world/authorized"
                         .httpGet()
                         .apply { requestBuilder(this) }
                         .execute()
@@ -187,7 +188,7 @@ class MockingbirdSpec : Spek({
         context("when valid authorization is provided") {
 
             val response by memoized {
-                "http://localhost:${mock.context.server.port()}/hello_world/authorized"
+                "http://localhost:${mock.context.port}/hello_world/authorized"
                     .httpGet()
                     .header("Authorization" to "Bearer very_hello_world_token")
                     .execute()

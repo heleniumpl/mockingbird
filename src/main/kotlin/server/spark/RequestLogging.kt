@@ -1,4 +1,4 @@
-package pl.helenium.mockingbird.server
+package pl.helenium.mockingbird.server.spark
 
 import mu.KotlinLogging
 import spark.Service

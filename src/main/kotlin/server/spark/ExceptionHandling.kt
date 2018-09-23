@@ -1,4 +1,4 @@
-package pl.helenium.mockingbird.server
+package pl.helenium.mockingbird.server.spark
 
 import pl.helenium.mockingbird.exception.AbstractHttpException
 import pl.helenium.mockingbird.exception.getStackTraceAsString

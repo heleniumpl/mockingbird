@@ -385,29 +385,29 @@ private fun Model.meta() = embeddedModel("meta")
 private fun Model.id() = getProperty<Long>("id")
 
 private fun Mockingbird.createContact(body: String = exampleModel) =
-    "http://localhost:${context.server.port()}/v2/contacts"
+    "http://localhost:${context.port}/v2/contacts"
         .httpPost()
         .body(body)
         .execute()
 
 private fun Mockingbird.getContacts() =
-    "http://localhost:${context.server.port()}/v2/contacts"
+    "http://localhost:${context.port}/v2/contacts"
         .httpGet()
         .execute()
 
 private fun Mockingbird.getContact(id: Long) =
-    "http://localhost:${context.server.port()}/v2/contacts/$id"
+    "http://localhost:${context.port}/v2/contacts/$id"
         .httpGet()
         .execute()
 
 private fun Mockingbird.putContact(id: Long, body: Map<String, Any?>) =
-    "http://localhost:${context.server.port()}/v2/contacts/$id"
+    "http://localhost:${context.port}/v2/contacts/$id"
         .httpPut()
         .body(defaultObjectMapper.writeValueAsString(mapOf("data" to body)))
         .execute()
 
 private fun Mockingbird.deleteContact(id: Long) =
-    "http://localhost:${context.server.port()}/v2/contacts/$id"
+    "http://localhost:${context.port}/v2/contacts/$id"
         .httpDelete()
         .execute()
 
