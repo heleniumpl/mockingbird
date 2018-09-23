@@ -1,7 +1,6 @@
 package pl.helenium.mockingbird.definition
 
 import pl.helenium.mockingbird.model.Context
-import pl.helenium.mockingbird.model.HttpMethod
 import pl.helenium.mockingbird.model.HttpMethod.DELETE
 import pl.helenium.mockingbird.model.HttpMethod.GET
 import pl.helenium.mockingbird.model.HttpMethod.POST
@@ -26,32 +25,18 @@ open class DslMock(private val context: Context, builder: DslMock.() -> Unit) {
             .also { context.metaModels.register(it) }
     }
 
-    fun routes(dsl: RoutesDsl.() -> Unit) = RoutesDsl().dsl()
+    fun routes(dsl: RoutesDsl.() -> Unit) = RoutesDsl(context).dsl()
 
-    // FIXME all DSL helper classes should be in one place
-    inner class RoutesDsl {
+}
 
-        fun get(dsl: MethodDsl.() -> Unit) = MethodDsl(GET)(dsl)
+class RoutesDsl(private val context: Context) {
 
-        fun post(dsl: MethodDsl.() -> Unit) = MethodDsl(POST)(dsl)
+    fun post(uri: String, route: Route) = context.defineRoute(POST, uri, route)
 
-        fun put(dsl: MethodDsl.() -> Unit) = MethodDsl(PUT)(dsl)
+    fun get(uri: String, route: Route) = context.defineRoute(GET, uri, route)
 
-        fun delete(dsl: MethodDsl.() -> Unit) = MethodDsl(DELETE)(dsl)
+    fun put(uri: String, route: Route) = context.defineRoute(PUT, uri, route)
 
-        inner class MethodDsl(private val method: HttpMethod) {
-
-            lateinit var uri: String
-
-            lateinit var handler: Route
-
-            operator fun invoke(dsl: MethodDsl.() -> Unit) {
-                dsl()
-                context.defineRoute(method, uri, handler)
-            }
-
-        }
-
-    }
+    fun delete(uri: String, route: Route) = context.defineRoute(DELETE, uri, route)
 
 }

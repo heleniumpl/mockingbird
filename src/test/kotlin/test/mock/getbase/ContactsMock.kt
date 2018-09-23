@@ -24,56 +24,56 @@ class ContactsMock(context: Context) : DslMock(context, {
     }
 
     routes {
-        post {
-            uri = "/v2/contacts"
-            handler = RestRoute(
+        post(
+            "/v2/contacts",
+            RestRoute(
                 restHandler = RestCreateHandler(context, metaModel),
                 unwrapper = dataMetaUnwrapper(),
                 wrapper = dataMetaWrapper(metaModel),
                 requestWriter = ::jsonRequestWriter
             )
-        }
+        )
 
-        get {
-            uri = "/v2/contacts"
-            handler = RestRoute(
+        get(
+            "/v2/contacts",
+            RestRoute(
                 requestParser = ::emptyModel,
                 restHandler = RestListHandler(context, metaModel),
                 wrapper = collectionTransformer(dataMetaWrapper(metaModel))
                         then ::itemsWrapper,
                 requestWriter = ::jsonRequestWriter
             )
-        }
+        )
 
-        get {
-            uri = "/v2/contacts/:id"
-            handler = RestRoute(
+        get(
+            "/v2/contacts/:id",
+            RestRoute(
                 requestParser = ::emptyModel,
                 restHandler = RestGetHandler(context, metaModel),
                 wrapper = dataMetaWrapper(metaModel),
                 requestWriter = ::jsonRequestWriter
             )
-        }
+        )
 
-        put {
-            uri = "/v2/contacts/:id"
-            handler = RestRoute(
+        put(
+            "/v2/contacts/:id",
+            RestRoute(
                 restHandler = RestUpdateHandler(context, metaModel),
                 unwrapper = dataMetaUnwrapper(),
                 wrapper = dataMetaWrapper(metaModel),
                 requestWriter = ::jsonRequestWriter
             )
-        }
+        )
 
-        delete {
-            uri = "/v2/contacts/:id"
-            handler = RestRoute(
+        delete(
+            "/v2/contacts/:id",
+            RestRoute(
                 requestParser = ::emptyModel,
                 restHandler = RestDeleteHandler(context, metaModel),
                 wrapper = ::identity,
                 requestWriter = { "" }
             )
-        }
+        )
     }
 
 })
