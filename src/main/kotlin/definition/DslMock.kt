@@ -12,8 +12,7 @@ import pl.helenium.mockingbird.server.Route
 
 open class DslMock(private val context: Context, builder: DslMock.() -> Unit) {
 
-    lateinit var metaModel: MetaModel
-        private set
+    private var metaModel: MetaModel? = null
 
     init {
         builder()
@@ -27,6 +26,9 @@ open class DslMock(private val context: Context, builder: DslMock.() -> Unit) {
     }
 
     fun routes(dsl: RoutesDsl.() -> Unit) = RoutesDsl(context).dsl()
+
+    fun metaModel(): MetaModel = metaModel
+        ?: throw IllegalStateException("MetaModel has to be defined before it is accessed!")
 
 }
 
