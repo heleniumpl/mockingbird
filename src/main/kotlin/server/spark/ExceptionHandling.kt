@@ -4,7 +4,7 @@ import pl.helenium.mockingbird.exception.AbstractHttpException
 import pl.helenium.mockingbird.exception.getStackTraceAsString
 import spark.Service
 
-fun Service.configureExceptionHandling() = apply {
+internal fun Service.configureExceptionHandling() = apply {
     exception(AbstractHttpException::class.java) { exception, _, response ->
         response.apply {
             status(exception.status)

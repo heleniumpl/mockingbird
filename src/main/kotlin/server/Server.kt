@@ -10,6 +10,6 @@ interface Server {
 
     fun stop()
 
-    fun defineRoute(method: HttpMethod, uri: String, route: Route)
+    fun registerRoute(method: HttpMethod, uri: String, route: Route)
 
 }

@@ -33,7 +33,7 @@ class SparkServer(
         service.stop()
     }
 
-    override fun defineRoute(method: HttpMethod, uri: String, route: Route) {
+    override fun registerRoute(method: HttpMethod, uri: String, route: Route) {
         val internalRoute = SparkRoute { request, response ->
             route(SparkRequest(request), SparkResponse(response))
         }
