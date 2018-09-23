@@ -1,7 +1,7 @@
 package pl.helenium.mockingbird.exception
 
 import pl.helenium.mockingbird.model.MetaModel
-import pl.helenium.mockingbird.server.RequestAdapter
+import pl.helenium.mockingbird.server.Request
 import java.io.PrintWriter
 import java.io.StringWriter
 
@@ -13,7 +13,7 @@ class NotFoundException(message: String) : AbstractHttpException(404, message)
 
 fun unauthorized(): Nothing = throw Unauthorized()
 
-fun notFound(metaModel: MetaModel, request: RequestAdapter): Nothing =
+fun notFound(metaModel: MetaModel, request: Request): Nothing =
     throw NotFoundException("Model ${metaModel.name}#${request.param("id")} not found!")
 
 fun Throwable.getStackTraceAsString() = StringWriter()

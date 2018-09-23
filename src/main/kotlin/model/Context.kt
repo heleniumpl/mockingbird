@@ -1,12 +1,12 @@
 package pl.helenium.mockingbird.model
 
-import pl.helenium.mockingbird.server.RouteAdapter
-import pl.helenium.mockingbird.server.ServerAdapter
+import pl.helenium.mockingbird.server.Route
+import pl.helenium.mockingbird.server.Server
 
-class Context(private val serverAdapter: ServerAdapter) {
+class Context(private val server: Server) {
 
     val port: Int
-        get() = serverAdapter.port()
+        get() = server.port()
 
     val actors = Actors()
 
@@ -17,8 +17,8 @@ class Context(private val serverAdapter: ServerAdapter) {
     // FIXME should be Routes
     // FIXME should not depend on spark.Route
     // FIXME some enum should be used for method
-    fun defineRoute(method: HttpMethod, uri: String, route: RouteAdapter) {
-        serverAdapter.defineRoute(method, uri, route)
+    fun defineRoute(method: HttpMethod, uri: String, route: Route) {
+        server.defineRoute(method, uri, route)
     }
 
 }

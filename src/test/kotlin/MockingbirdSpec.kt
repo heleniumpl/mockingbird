@@ -10,7 +10,7 @@ import io.kotlintest.should
 import io.kotlintest.shouldBe
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
-import pl.helenium.mockingbird.server.spark.SparkServerAdapter
+import pl.helenium.mockingbird.server.spark.SparkServer
 import pl.helenium.mockingbird.test.mock.HelloWorldMock
 import pl.helenium.mockingbird.test.util.execute
 import pl.helenium.mockingbird.test.util.freeTcpPort
@@ -42,7 +42,7 @@ class MockingbirdSpec : Spek({
 
         context("when mock is started with given (free) port") {
             val freePort by memoized { freeTcpPort() }
-            val mock by memoized { Mockingbird(SparkServerAdapter(freePort)).start() }
+            val mock by memoized { Mockingbird(SparkServer(freePort)).start() }
 
             it("starts on given port") {
                 mock.context.port shouldBe freePort

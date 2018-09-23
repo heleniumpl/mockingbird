@@ -3,15 +3,15 @@ package pl.helenium.mockingbird
 import mu.KotlinLogging
 import pl.helenium.mockingbird.model.Context
 import pl.helenium.mockingbird.model.ContextDsl
-import pl.helenium.mockingbird.server.ServerAdapter
-import pl.helenium.mockingbird.server.spark.SparkServerAdapter
+import pl.helenium.mockingbird.server.Server
+import pl.helenium.mockingbird.server.spark.SparkServer
 import kotlin.system.measureTimeMillis
 
 private val logger = KotlinLogging.logger {}
 
-class Mockingbird(private val serverAdapter: ServerAdapter = SparkServerAdapter()) {
+class Mockingbird(private val server: Server = SparkServer()) {
 
-    val context = Context(serverAdapter)
+    val context = Context(server)
 
     fun setup(dsl: ContextDsl.() -> Unit) = apply { ContextDsl(context).dsl() }
 
@@ -19,7 +19,7 @@ class Mockingbird(private val serverAdapter: ServerAdapter = SparkServerAdapter(
         try {
             logger.info("Starting Mockingbird server...")
             measureTimeMillis {
-                serverAdapter.start()
+                server.start()
             }.let { logger.info { "Mockingbird server started on port ${context.port} in ${it}ms" } }
         } catch (e: Exception) {
             logger.error("Failed to start Mockingbird server!", e)
@@ -29,7 +29,7 @@ class Mockingbird(private val serverAdapter: ServerAdapter = SparkServerAdapter(
 
     fun stop() = try {
         logger.info("Stopping Mockingbird server...")
-        serverAdapter.stop()
+        server.stop()
     } catch (e: Exception) {
         logger.warn("Failed to stop Mockingbird server!", e)
     }

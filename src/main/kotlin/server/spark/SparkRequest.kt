@@ -1,9 +1,9 @@
 package pl.helenium.mockingbird.server.spark
 
-import pl.helenium.mockingbird.server.RequestAdapter
-import spark.Request
+import pl.helenium.mockingbird.server.Request
+import spark.Request as SparkRequest
 
-class SparkRequestAdapter(private val request: Request) : RequestAdapter {
+class SparkRequest(private val request: SparkRequest) : Request {
 
     override fun param(name: String): String? = request.params(name)
 

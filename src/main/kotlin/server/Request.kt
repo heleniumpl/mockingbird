@@ -1,6 +1,6 @@
 package pl.helenium.mockingbird.server
 
-interface RequestAdapter {
+interface Request {
 
     fun param(name: String): String?
 

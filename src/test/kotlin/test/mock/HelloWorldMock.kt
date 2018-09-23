@@ -4,7 +4,7 @@ import pl.helenium.mockingbird.definition.DslMock
 import pl.helenium.mockingbird.exception.unauthorized
 import pl.helenium.mockingbird.model.Authorization
 import pl.helenium.mockingbird.model.Context
-import pl.helenium.mockingbird.server.RequestAdapter
+import pl.helenium.mockingbird.server.Request
 
 class HelloWorldMock(context: Context) : DslMock(context, {
 
@@ -34,11 +34,11 @@ class HelloWorldMock(context: Context) : DslMock(context, {
 
 })
 
-private fun Context.authorize(request: RequestAdapter) = actors
+private fun Context.authorize(request: Request) = actors
     .scope("hello world")
     .authorize(request.authorization())
 
-private fun RequestAdapter.authorization() = header("Authorization")
+private fun Request.authorization() = header("Authorization")
     ?.takeIf { it.startsWith("Bearer ") }
     ?.removePrefix("Bearer ")
     ?.let(::Authorization)

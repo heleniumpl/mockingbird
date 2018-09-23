@@ -1,6 +1,6 @@
 package pl.helenium.mockingbird.server
 
-interface ResponseAdapter {
+interface Response {
 
     fun status(status: Int)
 

@@ -5,16 +5,16 @@ import pl.helenium.mockingbird.model.HttpMethod.DELETE
 import pl.helenium.mockingbird.model.HttpMethod.GET
 import pl.helenium.mockingbird.model.HttpMethod.POST
 import pl.helenium.mockingbird.model.HttpMethod.PUT
-import pl.helenium.mockingbird.server.RouteAdapter
-import pl.helenium.mockingbird.server.ServerAdapter
-import spark.Route
+import pl.helenium.mockingbird.server.Route
+import pl.helenium.mockingbird.server.Server
 import spark.Service
 import spark.Service.ignite
+import spark.Route as SparkRoute
 
-class SparkServerAdapter(
+class SparkServer(
     port: Int = 0,
     private val logRequests: Boolean = true
-) : ServerAdapter {
+) : Server {
 
     private val service: Service = ignite().port(port)
 
@@ -33,9 +33,9 @@ class SparkServerAdapter(
         service.stop()
     }
 
-    override fun defineRoute(method: HttpMethod, uri: String, route: RouteAdapter) {
-        val internalRoute = Route { request, response ->
-            route(SparkRequestAdapter(request), SparkResponseAdapter(response))
+    override fun defineRoute(method: HttpMethod, uri: String, route: Route) {
+        val internalRoute = SparkRoute { request, response ->
+            route(SparkRequest(request), SparkResponse(response))
         }
         return when (method) {
             POST -> service.post(uri, internalRoute)

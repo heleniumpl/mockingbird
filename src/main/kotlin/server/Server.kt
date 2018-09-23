@@ -2,7 +2,7 @@ package pl.helenium.mockingbird.server
 
 import pl.helenium.mockingbird.model.HttpMethod
 
-interface ServerAdapter {
+interface Server {
 
     fun port(): Int
 
@@ -10,6 +10,6 @@ interface ServerAdapter {
 
     fun stop()
 
-    fun defineRoute(method: HttpMethod, uri: String, route: RouteAdapter)
+    fun defineRoute(method: HttpMethod, uri: String, route: Route)
 
 }
