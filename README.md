@@ -21,7 +21,6 @@
   * reorganize packages & file contents
   * reconsider how mocks are being implemented
   * fill all exception messages
-  * abstraction for server
   * code coverage
   * logging
 

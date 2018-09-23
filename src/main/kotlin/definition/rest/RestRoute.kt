@@ -7,8 +7,8 @@ import pl.helenium.mockingbird.model.Context
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.Model
 import pl.helenium.mockingbird.server.RequestAdapter
+import pl.helenium.mockingbird.server.ResponseAdapter
 import pl.helenium.mockingbird.server.RouteAdapter
-import spark.Response
 
 // FIXME this should have more of DSL form
 class RestRoute<M, R>(
@@ -19,7 +19,7 @@ class RestRoute<M, R>(
     private val requestWriter: (R) -> Any?
 ) : RouteAdapter {
 
-    override fun invoke(request: RequestAdapter, response: Response): Any? {
+    override fun invoke(request: RequestAdapter, response: ResponseAdapter): Any? {
         val inModel = unwrapper(requestParser(request.body()))
         val outModel = restHandler.handle(request, response, inModel)
         return requestWriter(wrapper(outModel))
@@ -33,7 +33,7 @@ abstract class RestHandler<M>(
     protected val metaModel: MetaModel
 ) {
 
-    abstract fun handle(request: RequestAdapter, response: Response, model: Model): M
+    abstract fun handle(request: RequestAdapter, response: ResponseAdapter, model: Model): M
 
     protected fun collection() = context
         .modelCollections

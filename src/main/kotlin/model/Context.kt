@@ -2,7 +2,6 @@ package pl.helenium.mockingbird.model
 
 import pl.helenium.mockingbird.server.RouteAdapter
 import pl.helenium.mockingbird.server.ServerAdapter
-import spark.Route
 
 class Context(private val serverAdapter: ServerAdapter) {
 

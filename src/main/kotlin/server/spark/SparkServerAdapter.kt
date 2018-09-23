@@ -35,7 +35,7 @@ class SparkServerAdapter(
 
     override fun defineRoute(method: HttpMethod, uri: String, route: RouteAdapter) {
         val internalRoute = Route { request, response ->
-            route(SparkRequestAdapter(request), response)
+            route(SparkRequestAdapter(request), SparkResponseAdapter(response))
         }
         return when (method) {
             POST -> service.post(uri, internalRoute)

@@ -1,5 +1,3 @@
 package pl.helenium.mockingbird.server
 
-import spark.Response
-
-typealias RouteAdapter = (request: RequestAdapter, response: Response) -> Any?
+typealias RouteAdapter = (request: RequestAdapter, response: ResponseAdapter) -> Any?
