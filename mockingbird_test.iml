@@ -14,8 +14,8 @@
           <option name="loadBuiltInsFromDependencies" value="true" />
           <option name="friendPaths">
             <array>
-              <option value="$MODULE_DIR$/build/classes/java/main" />
               <option value="$MODULE_DIR$/build/classes/kotlin/main" />
+              <option value="$MODULE_DIR$/build/classes/java/main" />
             </array>
           </option>
           <option name="languageVersion" value="1.3" />
@@ -25,14 +25,14 @@
           </option>
           <option name="pluginClasspaths">
             <array>
-              <option value="$APPLICATION_PLUGINS_DIR$/Kotlin/lib/kotlinx-serialization-ide-plugin.jar" />
+              <option value="$APPLICATION_HOME_DIR$/plugins/Kotlin/lib/kotlinx-serialization-ide-plugin.jar" />
             </array>
           </option>
         </compilerArguments>
       </configuration>
     </facet>
   </component>
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_10">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_11">
     <output-test url="file://$MODULE_DIR$/out/test/classes" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/src/test">
@@ -57,8 +57,8 @@
     <orderEntry type="library" name="Gradle: com.github.kittinunf.result:result:1.5.0" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.3.0-rc-57" level="project" />
     <orderEntry type="library" name="Gradle: io.github.microutils:kotlin-logging-common:1.6.10" level="project" />
-    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.25" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: ch.qos.logback:logback-classic:1.2.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.25" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.jetty:jetty-webapp:9.4.12.v20180830" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.jetty.websocket:websocket-server:9.4.12.v20180830" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.jetty:jetty-servlet:9.4.12.v20180830" level="project" />
@@ -73,10 +73,10 @@
     <orderEntry type="library" name="Gradle: org.jetbrains:annotations:13.0" level="project" />
     <orderEntry type="library" name="Gradle: javax.servlet:javax.servlet-api:3.1.0" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.jetty.websocket:websocket-client:9.4.12.v20180830" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: ch.qos.logback:logback-core:1.2.3" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.jetty:jetty-client:9.4.12.v20180830" level="project" />
-    <orderEntry type="library" name="Gradle: org.eclipse.jetty:jetty-http:9.4.12.v20180830" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: ch.qos.logback:logback-core:1.2.3" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.spekframework.spek2:spek-runtime-common:2.0.0-alpha.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.jetty:jetty-http:9.4.12.v20180830" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.jetty.websocket:websocket-common:9.4.12.v20180830" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.jetty:jetty-io:9.4.12.v20180830" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.platform:junit-platform-engine:1.1.1" level="project" />

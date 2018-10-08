@@ -2,19 +2,17 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="mockingbird_main" target="1.10" />
-      <module name="mockingbird_test" target="1.10" />
+      <module name="mockingbird_main" target="11" />
+      <module name="mockingbird_test" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="createEmptyContentRootDirectories" value="true" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleHome" value="$USER_HOME$/.gvm/gradle/current" />
-        <option name="gradleJvm" value="10" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -32,14 +30,11 @@
   <component name="Kotlin2JsCompilerArguments">
     <option name="sourceMapEmbedSources" />
   </component>
-  <component name="KotlinScriptingSettings">
-    <option name="autoReloadEnabled" value="true" />
-  </component>
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
   <component name="ProjectCodeStyleConfiguration">
-    <option name="PREFERRED_PROJECT_CODE_STYLE" value="Default" />
+    <option name="PREFERRED_PROJECT_CODE_STYLE" value="Default (2)" />
     <code_scheme name="Project" version="173">
       <XML>
         <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true" />
@@ -47,17 +42,7 @@
     </code_scheme>
   </component>
   <component name="ProjectDictionaryState">
-    <dictionary name="mmally">
-      <words>
-        <w>helenium</w>
-        <w>kittinunf</w>
-        <w>kotlintest</w>
-        <w>microutils</w>
-        <w>sparkjava</w>
-        <w>spek</w>
-        <w>spekframework</w>
-      </words>
-    </dictionary>
+    <dictionary name="mmally" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -80,8 +65,35 @@
       <module fileurl="file://$PROJECT_DIR$/mockingbird_test.iml" filepath="$PROJECT_DIR$/mockingbird_test.iml" group="mockingbird" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_10" default="false" project-jdk-name="10" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="false" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
+  </component>
+  <component name="RemoteRepositoriesConfiguration">
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Maven Central repository" />
+      <option name="url" value="https://repo1.maven.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="jboss.community" />
+      <option name="name" value="JBoss Community repository" />
+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven2" />
+      <option name="name" value="maven2" />
+      <option name="url" value="https://dl.bintray.com/spekframework/spek-dev" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="BintrayJCenter" />
+      <option name="name" value="BintrayJCenter" />
+      <option name="url" value="https://jcenter.bintray.com/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven" />
+      <option name="name" value="maven" />
+      <option name="url" value="https://dl.bintray.com/kotlin/kotlin-eap" />
+    </remote-repository>
   </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
@@ -377,7 +389,6 @@
     </library>
     <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.0-rc-57">
       <CLASSES>
-        <root url="file://$PROJECT_DIR$/Could not find org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.0-rc-57." />
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.3.0-rc-57/6ef69ea509bb6dfbacb82d78572ca13b5f4d9704/kotlin-stdlib-jdk8-1.3.0-rc-57.jar!/" />
       </CLASSES>
       <JAVADOC />
