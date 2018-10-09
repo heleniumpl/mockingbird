@@ -22,7 +22,7 @@ class RestHandler<M, R>(
 
     override fun invoke(actor: Actor?, request: Request, response: Response): Any? {
         val inModel = unwrapper(requestParser(request.body()))
-        val outModel = restOperation.handle(request, response, inModel)
+        val outModel = restOperation.handle(actor, request, response, inModel)
         return requestWriter(wrapper(outModel))
     }
 
@@ -34,7 +34,7 @@ abstract class RestOperation<M>(
     protected val metaModel: MetaModel
 ) {
 
-    abstract fun handle(request: Request, response: Response, model: Model): M
+    abstract fun handle(actor: Actor?, request: Request, response: Response, model: Model): M
 
     protected fun collection() = context
         .modelCollections
