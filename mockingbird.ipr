@@ -42,7 +42,16 @@
     </code_scheme>
   </component>
   <component name="ProjectDictionaryState">
-    <dictionary name="mmally" />
+    <dictionary name="mmally">
+      <words>
+        <w>kittinunf</w>
+        <w>kotlintest</w>
+        <w>microutils</w>
+        <w>sparkjava</w>
+        <w>spek</w>
+        <w>spekframework</w>
+      </words>
+    </dictionary>
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -360,49 +369,49 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-xml/9.4.12.v20180830/f2fd9d4ae66c613229ed4e984c35bacdec7ee2f0/jetty-xml-9.4.12.v20180830-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.jetbrains.kotlin:kotlin-reflect:1.3.0-rc-57">
+    <library name="Gradle: org.jetbrains.kotlin:kotlin-reflect:1.3.0-rc-146">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.3.0-rc-57/30064bff2b65fa9cf786dd3e8255c7b84a209ea5/kotlin-reflect-1.3.0-rc-57.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.3.0-rc-146/659a01438677548f10d464cfeb6effcf2e205a0c/kotlin-reflect-1.3.0-rc-146.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.3.0-rc-57/c75d5e92610bd5d4ef9910cc15edc6ac8ee1d3e3/kotlin-reflect-1.3.0-rc-57-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.3.0-rc-146/745a1d7e289a195ba191ae6253371cc1eeb81555/kotlin-reflect-1.3.0-rc-146-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.3.0-rc-57" type="kotlin.common">
+    <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.3.0-rc-146" type="kotlin.common">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.0-rc-57/ca64ac4c1710846a21daa81add832c36f29bcaae/kotlin-stdlib-common-1.3.0-rc-57.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.0-rc-146/184630d199051067e98e234796c5202e3b45f3e8/kotlin-stdlib-common-1.3.0-rc-146.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.0-rc-57/67ace1a498d6a522fe5eb0a03a1bafa342717db7/kotlin-stdlib-common-1.3.0-rc-57-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.0-rc-146/fcfc1a9b9583fc324c51654f3208a0415b431a97/kotlin-stdlib-common-1.3.0-rc-146-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.0-rc-57">
+    <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.0-rc-146">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.3.0-rc-57/29a25f754451d4a24bffa17edadef89d8d67f177/kotlin-stdlib-jdk7-1.3.0-rc-57.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.3.0-rc-146/eb41db67a94d8474ec4d5999655e00d50de0ee9/kotlin-stdlib-jdk7-1.3.0-rc-146.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.3.0-rc-57/8d74db6367380767d395705fa3dc80d2c7f28119/kotlin-stdlib-jdk7-1.3.0-rc-57-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.3.0-rc-146/2f66b1cfefb077f4c2913e2d433665ba05a5f95/kotlin-stdlib-jdk7-1.3.0-rc-146-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.0-rc-57">
+    <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.0-rc-146">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.3.0-rc-57/6ef69ea509bb6dfbacb82d78572ca13b5f4d9704/kotlin-stdlib-jdk8-1.3.0-rc-57.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.3.0-rc-146/6f7b195eb2c5b051ce6bc7146b737557441283f3/kotlin-stdlib-jdk8-1.3.0-rc-146.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.3.0-rc-57/b7b939f169ef8eaaa6cab7dcd6ce3642f1f3c43f/kotlin-stdlib-jdk8-1.3.0-rc-57-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.3.0-rc-146/ad4a6d817532712521c382113df793c3de70b937/kotlin-stdlib-jdk8-1.3.0-rc-146-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.3.0-rc-57">
+    <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.3.0-rc-146">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.3.0-rc-57/17cd275070921a36229747a3cffe0bb30608bc24/kotlin-stdlib-1.3.0-rc-57.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.3.0-rc-146/1cb6913a8f3e9a4be9cace01d2a944e9d053fe52/kotlin-stdlib-1.3.0-rc-146.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.3.0-rc-57/41e44a4b0f1427672e6114e36e22ccc733d7c5e1/kotlin-stdlib-1.3.0-rc-57-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.3.0-rc-146/3c5b660b5667bcb05fcc013aeca55bd5e9fbfa5/kotlin-stdlib-1.3.0-rc-146-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: org.jetbrains:annotations:13.0">
@@ -450,49 +459,49 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.25/962153db4a9ea71b79d047dfd1b2a0d80d8f4739/slf4j-api-1.7.25-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.spekframework.spek2:spek-dsl-common:2.0.0-alpha.2" type="kotlin.common">
+    <library name="Gradle: org.spekframework.spek2:spek-dsl-common:2.0.0-rc.1" type="kotlin.common">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spekframework.spek2/spek-dsl-common/2.0.0-alpha.2/d512538fdcc6449cf09899806be56c7b3717f84/spek-dsl-common-2.0.0-alpha.2.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spekframework.spek2/spek-dsl-common/2.0.0-rc.1/ecab481f9bc91fcc70d4d0aeac1019abd3ebd666/spek-dsl-common-2.0.0-rc.1.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spekframework.spek2/spek-dsl-common/2.0.0-alpha.2/7d878b09479d97b7b995d21eedf733e3f047750b/spek-dsl-common-2.0.0-alpha.2-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spekframework.spek2/spek-dsl-common/2.0.0-rc.1/3324a168768578f058ef70b0a6faf028cccd0d25/spek-dsl-common-2.0.0-rc.1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.spekframework.spek2:spek-dsl-jvm:2.0.0-alpha.2">
+    <library name="Gradle: org.spekframework.spek2:spek-dsl-jvm:2.0.0-rc.1">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spekframework.spek2/spek-dsl-jvm/2.0.0-alpha.2/4c7cc80c80cb92e2daa3d4b3f393e9ebc214db84/spek-dsl-jvm-2.0.0-alpha.2.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spekframework.spek2/spek-dsl-jvm/2.0.0-rc.1/101a8c7839683c760c7c61ae068a48e419d21959/spek-dsl-jvm-2.0.0-rc.1.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spekframework.spek2/spek-dsl-jvm/2.0.0-alpha.2/52d58ca2cfaaf2ccbf3261b43d6106eb51e29125/spek-dsl-jvm-2.0.0-alpha.2-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spekframework.spek2/spek-dsl-jvm/2.0.0-rc.1/9e287eec557fa0f439476570785955ef4d67f6f4/spek-dsl-jvm-2.0.0-rc.1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.spekframework.spek2:spek-runner-junit5:2.0.0-alpha.2">
+    <library name="Gradle: org.spekframework.spek2:spek-runner-junit5:2.0.0-rc.1">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spekframework.spek2/spek-runner-junit5/2.0.0-alpha.2/131561375b57ba786f8a7de6827803baa23cf13c/spek-runner-junit5-2.0.0-alpha.2.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spekframework.spek2/spek-runner-junit5/2.0.0-rc.1/f260ee7f7b8179495d5bb693a649bbed1ddd7d3d/spek-runner-junit5-2.0.0-rc.1.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spekframework.spek2/spek-runner-junit5/2.0.0-alpha.2/d89fe740af860cef1e4999e490c6e03f4aae32ab/spek-runner-junit5-2.0.0-alpha.2-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spekframework.spek2/spek-runner-junit5/2.0.0-rc.1/5d33a350d7117090ddd9e2e3d20817002a8447a3/spek-runner-junit5-2.0.0-rc.1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.spekframework.spek2:spek-runtime-common:2.0.0-alpha.2" type="kotlin.common">
+    <library name="Gradle: org.spekframework.spek2:spek-runtime-common:2.0.0-rc.1" type="kotlin.common">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spekframework.spek2/spek-runtime-common/2.0.0-alpha.2/66b95c2c2a76abf62b0354e7e290e7b05895a57/spek-runtime-common-2.0.0-alpha.2.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spekframework.spek2/spek-runtime-common/2.0.0-rc.1/318f0c7c83dcba4f322a42c750f1a24160c383ed/spek-runtime-common-2.0.0-rc.1.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spekframework.spek2/spek-runtime-common/2.0.0-alpha.2/33c542a60554b080a5a5674f3197dabb522a7213/spek-runtime-common-2.0.0-alpha.2-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spekframework.spek2/spek-runtime-common/2.0.0-rc.1/d733bededb2326c0e1b2f86f30046cdc880d7d6c/spek-runtime-common-2.0.0-rc.1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.spekframework.spek2:spek-runtime-jvm:2.0.0-alpha.2">
+    <library name="Gradle: org.spekframework.spek2:spek-runtime-jvm:2.0.0-rc.1">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spekframework.spek2/spek-runtime-jvm/2.0.0-alpha.2/eded81270e783ec6fee1a7bf87fec5a592310711/spek-runtime-jvm-2.0.0-alpha.2.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spekframework.spek2/spek-runtime-jvm/2.0.0-rc.1/c06c67ba9b79e4506bfd4c2f9971254de19d56f2/spek-runtime-jvm-2.0.0-rc.1.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spekframework.spek2/spek-runtime-jvm/2.0.0-alpha.2/3012d87accd1729e85d7832c137ccf8abc1b295f/spek-runtime-jvm-2.0.0-alpha.2-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spekframework.spek2/spek-runtime-jvm/2.0.0-rc.1/c65c171ab0b71d653116adf96352c3b9f30d49fb/spek-runtime-jvm-2.0.0-rc.1-sources.jar!/" />
       </SOURCES>
     </library>
   </component>

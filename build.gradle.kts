@@ -42,7 +42,6 @@ dependencies {
     testRuntimeOnly(group = "org.spekframework.spek2", name = "spek-runner-junit5", version = Versions.spek2)
 }
 
-
 tasks {
     withType<Test> {
         useJUnitPlatform {
@@ -59,9 +58,13 @@ tasks {
         resolutionStrategy {
             componentSelection {
                 all {
-                    if (candidate.group == "org.spekframework.spek2") {
-                        return@all
-                    }
+                    if (candidate.group in setOf(
+                            "org.spekframework.spek2",
+                            "org.jetbrains.kotlin",
+                            "org.jetbrains.kotlin.jvm"
+                        )
+                    ) return@all
+
 
                     listOf("alpha", "beta", "rc", "cr", "m")
                         .asSequence()
