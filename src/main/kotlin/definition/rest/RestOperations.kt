@@ -37,7 +37,7 @@ class RestUpdateOperation(context: Context, metaModel: MetaModel) : RestOperatio
 
     override fun handle(actor: Actor?, request: Request, response: Response, model: Model) =
         collection()
-            .update(request.id(), model, RestUpdater)
+            .update(actor, request.id(), model, RestUpdater)
             ?: notFound(request)
 }
 

@@ -6,7 +6,7 @@ import pl.helenium.mockingbird.model.LifecycleHandler
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.MutableModel
 
-class CreatorLifecycleHandler : LifecycleHandler {
+object CreatorLifecycleHandler : LifecycleHandler {
 
     override fun preCreate(
         context: Context,

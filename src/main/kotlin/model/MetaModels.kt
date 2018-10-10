@@ -29,7 +29,7 @@ data class MetaModel(val name: String) {
 
         fun properties(dsl: PropertiesDsl.() -> Unit) = PropertiesDsl().dsl()
 
-        fun lifecycle(dsl: LifecycleDsl.() -> Unit) = LifecycleDsl().dsl()
+        fun lifecycleHandlers(dsl: LifecycleHandlersDsl.() -> Unit) = LifecycleHandlersDsl().dsl()
 
         inner class PropertiesDsl {
 
@@ -39,9 +39,9 @@ data class MetaModel(val name: String) {
 
         }
 
-        inner class LifecycleDsl {
+        inner class LifecycleHandlersDsl {
 
-            fun handler(handler: LifecycleHandler) { lifecycleHandlers += handler }
+            operator fun LifecycleHandler.unaryPlus() { lifecycleHandlers += this }
 
         }
 

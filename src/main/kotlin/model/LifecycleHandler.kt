@@ -16,6 +16,20 @@ interface LifecycleHandler {
         model: MutableModel
     ) = Unit
 
+    fun preUpdate(
+        context: Context,
+        metaModel: MetaModel,
+        actor: Actor?,
+        model: MutableModel
+    ) = Unit
+
+    fun postUpdate(
+        context: Context,
+        metaModel: MetaModel,
+        actor: Actor?,
+        model: MutableModel
+    ) = Unit
+
 }
 
 fun Iterable<LifecycleHandler>.preCreate(
@@ -31,3 +45,17 @@ fun Iterable<LifecycleHandler>.postCreate(
     actor: Actor?,
     model: MutableModel
 ) = forEach { it.postCreate(context, metaModel, actor, model) }
+
+fun Iterable<LifecycleHandler>.preUpdate(
+    context: Context,
+    metaModel: MetaModel,
+    actor: Actor?,
+    model: MutableModel
+) = forEach { it.preUpdate(context, metaModel, actor, model) }
+
+fun Iterable<LifecycleHandler>.postUpdate(
+    context: Context,
+    metaModel: MetaModel,
+    actor: Actor?,
+    model: MutableModel
+) = forEach { it.postUpdate(context, metaModel, actor, model) }

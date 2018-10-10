@@ -13,7 +13,7 @@ class ModelCollections(private val context: Context) {
 
 class ModelCollection(private val context: Context, private val metaModel: MetaModel) {
 
-    private val models = ConcurrentHashMap<String, Model>()
+    private val models = ConcurrentHashMap<String, MutableModel>()
 
     fun create(actor: Actor?, model: Model): Model {
         val mutableModel = model.toMutable()
@@ -31,20 +31,29 @@ class ModelCollection(private val context: Context, private val metaModel: MetaM
 
     fun get(id: Any): Model? = models[id.toString()]
 
-    fun update(id: Any, update: Model, updater: Updater = NaiveUpdater) =
+    fun update(actor: Actor?, id: Any, update: Model, updater: Updater = NaiveUpdater) =
         models.computeIfPresent(id.toString()) { _, existingModel ->
-            updater.update(existingModel, update)
+            preUpdate(actor, existingModel)
+            updater
+                .update(existingModel, update)
+                .also { postUpdate(actor, it) }
         }
 
     fun delete(id: Any) = models.remove(id.toString())
 
-    private fun preCreate(actor: Actor?, model: MutableModel) = metaModel
-        .lifecycleHandlers()
+    private fun preCreate(actor: Actor?, model: MutableModel) = lifecycleHandlers()
         .preCreate(context, metaModel, actor, model)
 
-    private fun postCreate(actor: Actor?, model: MutableModel) = metaModel
-        .lifecycleHandlers()
+    private fun postCreate(actor: Actor?, model: MutableModel) = lifecycleHandlers()
         .postCreate(context, metaModel, actor, model)
+
+    private fun preUpdate(actor: Actor?, model: MutableModel) = lifecycleHandlers()
+        .preUpdate(context, metaModel, actor, model)
+
+    private fun postUpdate(actor: Actor?, model: MutableModel) = lifecycleHandlers()
+        .postUpdate(context, metaModel, actor, model)
+
+    private fun lifecycleHandlers() = metaModel.lifecycleHandlers()
 
 }
 

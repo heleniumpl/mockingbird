@@ -24,6 +24,7 @@ import pl.helenium.mockingbird.json.readStringKeyMap
 import pl.helenium.mockingbird.model.Model
 import pl.helenium.mockingbird.test.util.StatusAndBody
 import pl.helenium.mockingbird.test.util.execute
+import java.time.Instant
 import java.util.concurrent.ThreadLocalRandom
 import kotlin.math.absoluteValue
 
@@ -104,6 +105,12 @@ object ContactsMockSpec : Spek({
 
                 it("creator_id is set") {
                     response.model().data().getProperty<Long>("creator_id") shouldBe 12345L
+                }
+
+                it("created_at is set") {
+                    with(response.model().data()) {
+                        getProperty<String>("created_at").toInstant() shouldBe getProperty<String>("updated_at").toInstant()
+                    }
                 }
 
                 behavesLikeRemoteContact(response)
@@ -432,3 +439,5 @@ private fun randomLong() = ThreadLocalRandom
     .current()
     .nextLong()
     .absoluteValue
+
+private fun String.toInstant(): Instant = Instant.parse(this)
