@@ -4,14 +4,11 @@
 
 * Features
   * Request validation
-  * Authentication
-    * context of user
   * GET on collection
     * filtering
     * sorting
     * paging
-  * lifecycle handlers
-    * embedded collections
+  * embedded collections
   * response headers
   * mock aggregator
   * complex path expr for getting property
