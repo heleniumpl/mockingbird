@@ -12,7 +12,7 @@ class Context(private val server: Server) {
 
     val metaModels = MetaModels()
 
-    val modelCollections = ModelCollections()
+    val modelCollections = ModelCollections(this)
 
     val handlers = Handlers(server)
 
@@ -40,7 +40,7 @@ class ContextDsl(private val context: Context) {
 
     class ScopeDsl(private val scope: Scope) {
 
-        fun actor(id: String, authorization: String, name: String = id) {
+        fun actor(id: Any, authorization: String, name: String = id.toString()) {
             scope.register(Actor(id, Authorization(authorization), name))
         }
 

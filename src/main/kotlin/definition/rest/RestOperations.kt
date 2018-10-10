@@ -10,7 +10,7 @@ import pl.helenium.mockingbird.server.Response
 class RestCreateOperation(context: Context, metaModel: MetaModel) : RestOperation<Model>(context, metaModel) {
 
     override fun handle(actor: Actor?, request: Request, response: Response, model: Model) =
-        collection().create(model)
+        collection().create(actor, model)
 
 }
 

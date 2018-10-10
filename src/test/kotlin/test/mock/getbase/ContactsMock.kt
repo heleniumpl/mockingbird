@@ -25,6 +25,9 @@ class ContactsMock(context: Context) : DslMock(context, {
         properties {
             id().generator(LongGenerator)
         }
+        lifecycle {
+            handler(CreatorLifecycleHandler())
+        }
     }
 
     authenticator(

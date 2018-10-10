@@ -73,7 +73,7 @@ object ContactsMockSpec : Spek({
                 .setup {
                     actors {
                         scope("basePublic") {
-                            actor("ceo@getbase.com", "very_secret_auth_token", "CEO of Base")
+                            actor(12345L, "very_secret_auth_token", "CEO of Base")
                         }
                     }
                     mocks(::ContactsMock)
@@ -100,6 +100,10 @@ object ContactsMockSpec : Spek({
                         .modelCollections
                         .byMetaModel(metaModel)
                         .get(response.model().data().id()) shouldNotBe null
+                }
+
+                it("creator_id is set") {
+                    response.model().data().getProperty<Long>("creator_id") shouldBe 12345L
                 }
 
                 behavesLikeRemoteContact(response)

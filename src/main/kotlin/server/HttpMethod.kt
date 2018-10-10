@@ -1,4 +1,4 @@
-package pl.helenium.mockingbird.model
+package pl.helenium.mockingbird.server
 
 enum class HttpMethod {
     POST,

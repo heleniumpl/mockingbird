@@ -2,6 +2,7 @@ package pl.helenium.mockingbird.model
 
 import pl.helenium.mockingbird.definition.Authenticator
 import pl.helenium.mockingbird.exception.unauthorized
+import pl.helenium.mockingbird.server.HttpMethod
 import pl.helenium.mockingbird.server.Request
 import pl.helenium.mockingbird.server.Response
 import pl.helenium.mockingbird.server.Route

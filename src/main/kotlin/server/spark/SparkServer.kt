@@ -1,10 +1,10 @@
 package pl.helenium.mockingbird.server.spark
 
-import pl.helenium.mockingbird.model.HttpMethod
-import pl.helenium.mockingbird.model.HttpMethod.DELETE
-import pl.helenium.mockingbird.model.HttpMethod.GET
-import pl.helenium.mockingbird.model.HttpMethod.POST
-import pl.helenium.mockingbird.model.HttpMethod.PUT
+import pl.helenium.mockingbird.server.HttpMethod
+import pl.helenium.mockingbird.server.HttpMethod.DELETE
+import pl.helenium.mockingbird.server.HttpMethod.GET
+import pl.helenium.mockingbird.server.HttpMethod.POST
+import pl.helenium.mockingbird.server.HttpMethod.PUT
 import pl.helenium.mockingbird.server.Route
 import pl.helenium.mockingbird.server.Server
 import spark.Service

@@ -1,7 +1,5 @@
 package pl.helenium.mockingbird.server
 
-import pl.helenium.mockingbird.model.HttpMethod
-
 interface Server {
 
     fun port(): Int

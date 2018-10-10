@@ -27,7 +27,7 @@ class Actors {
 }
 
 data class Actor(
-    val id: String,
+    val id: Any,
     val authorization: Authorization,
     val name: String
 )

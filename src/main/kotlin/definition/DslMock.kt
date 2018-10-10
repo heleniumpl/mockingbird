@@ -3,13 +3,13 @@ package pl.helenium.mockingbird.definition
 import pl.helenium.mockingbird.model.Actor
 import pl.helenium.mockingbird.model.Context
 import pl.helenium.mockingbird.model.Handler
-import pl.helenium.mockingbird.model.HttpMethod
-import pl.helenium.mockingbird.model.HttpMethod.DELETE
-import pl.helenium.mockingbird.model.HttpMethod.GET
-import pl.helenium.mockingbird.model.HttpMethod.POST
-import pl.helenium.mockingbird.model.HttpMethod.PUT
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.MetaModel.MetaModelDsl
+import pl.helenium.mockingbird.server.HttpMethod
+import pl.helenium.mockingbird.server.HttpMethod.DELETE
+import pl.helenium.mockingbird.server.HttpMethod.GET
+import pl.helenium.mockingbird.server.HttpMethod.POST
+import pl.helenium.mockingbird.server.HttpMethod.PUT
 import pl.helenium.mockingbird.server.Request
 
 typealias Authenticator = (Request) -> Actor?
