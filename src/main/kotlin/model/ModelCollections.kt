@@ -39,7 +39,12 @@ class ModelCollection(private val context: Context, private val metaModel: MetaM
                 .also { postUpdate(actor, it) }
         }
 
-    fun delete(id: Any) = models.remove(id.toString())
+    fun delete(actor: Actor?, id: Any): Model? {
+        preDelete(actor, models[id.toString()] ?: return null)
+        return models
+            .remove(id.toString())
+            ?.also { postDelete(actor, it) }
+    }
 
     private fun preCreate(actor: Actor?, model: MutableModel) = lifecycleHandlers()
         .preCreate(context, metaModel, actor, model)
@@ -52,6 +57,12 @@ class ModelCollection(private val context: Context, private val metaModel: MetaM
 
     private fun postUpdate(actor: Actor?, model: MutableModel) = lifecycleHandlers()
         .postUpdate(context, metaModel, actor, model)
+
+    private fun preDelete(actor: Actor?, model: Model) = lifecycleHandlers()
+        .preDelete(context, metaModel, actor, model)
+
+    private fun postDelete(actor: Actor?, model: Model) = lifecycleHandlers()
+        .postDelete(context, metaModel, actor, model)
 
     private fun lifecycleHandlers() = metaModel.lifecycleHandlers()
 

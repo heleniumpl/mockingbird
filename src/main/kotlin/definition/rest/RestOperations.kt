@@ -45,7 +45,7 @@ class RestDeleteOperation(context: Context, metaModel: MetaModel) : RestOperatio
 
     override fun handle(actor: Actor?, request: Request, response: Response, model: Model) =
         collection()
-            .delete(request.id())
+            .delete(actor, request.id())
             ?.also { response.status(204) }
             ?: notFound(request)
 

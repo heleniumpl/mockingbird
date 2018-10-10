@@ -30,6 +30,20 @@ interface LifecycleHandler {
         model: MutableModel
     ) = Unit
 
+    fun preDelete(
+        context: Context,
+        metaModel: MetaModel,
+        actor: Actor?,
+        model: Model
+    ) = Unit
+
+    fun postDelete(
+        context: Context,
+        metaModel: MetaModel,
+        actor: Actor?,
+        model: Model
+    ) = Unit
+
 }
 
 fun Iterable<LifecycleHandler>.preCreate(
@@ -59,3 +73,17 @@ fun Iterable<LifecycleHandler>.postUpdate(
     actor: Actor?,
     model: MutableModel
 ) = forEach { it.postUpdate(context, metaModel, actor, model) }
+
+fun Iterable<LifecycleHandler>.preDelete(
+    context: Context,
+    metaModel: MetaModel,
+    actor: Actor?,
+    model: Model
+) = forEach { it.preDelete(context, metaModel, actor, model) }
+
+fun Iterable<LifecycleHandler>.postDelete(
+    context: Context,
+    metaModel: MetaModel,
+    actor: Actor?,
+    model: Model
+) = forEach { it.postDelete(context, metaModel, actor, model) }
