@@ -37,7 +37,7 @@ class ModelCollection(private val context: Context, private val metaModel: MetaM
     fun update(actor: Actor?, id: Any, update: Model, updater: Updater = NaiveUpdater): MutableModel? =
         synchronized(id) {
             val existingModel = models[id.toString()]?.toNewMutable() ?: return null
-            preUpdate(actor, existingModel)
+            preUpdate(actor, existingModel, update)
             metaModel.validate(context, actor, existingModel)
             updater.update(existingModel, update)
             postUpdate(actor, existingModel)
@@ -59,8 +59,8 @@ class ModelCollection(private val context: Context, private val metaModel: MetaM
     private fun postCreate(actor: Actor?, model: MutableModel) = lifecycleHandlers()
         .postCreate(context, metaModel, actor, model)
 
-    private fun preUpdate(actor: Actor?, model: MutableModel) = lifecycleHandlers()
-        .preUpdate(context, metaModel, actor, model)
+    private fun preUpdate(actor: Actor?, model: MutableModel, update: Model) = lifecycleHandlers()
+        .preUpdate(context, metaModel, actor, model, update)
 
     private fun postUpdate(actor: Actor?, model: MutableModel) = lifecycleHandlers()
         .postUpdate(context, metaModel, actor, model)

@@ -4,6 +4,7 @@ import pl.helenium.mockingbird.model.Actor
 import pl.helenium.mockingbird.model.Context
 import pl.helenium.mockingbird.model.LifecycleHandler
 import pl.helenium.mockingbird.model.MetaModel
+import pl.helenium.mockingbird.model.Model
 import pl.helenium.mockingbird.model.MutableModel
 import java.time.temporal.ChronoUnit.SECONDS
 
@@ -20,7 +21,7 @@ object CreatedUpdatedLifecycleHandler : LifecycleHandler {
             }
         }
 
-    override fun preUpdate(context: Context, metaModel: MetaModel, actor: Actor?, model: MutableModel) {
+    override fun preUpdate(context: Context, metaModel: MetaModel, actor: Actor?, model: MutableModel, update: Model) {
         model.setProperty(UPDATED_AT, nowAsIso8601(context))
     }
 
