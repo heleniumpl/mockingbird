@@ -1,5 +1,7 @@
 package pl.helenium.mockingbird.model
 
+import pl.helenium.mockingbird.exception.modelErrors
+
 class MetaModels {
 
     private val metaModels = mutableMapOf<String, MetaModel>()
@@ -19,9 +21,19 @@ data class MetaModel(val name: String) {
 
     private val lifecycleHandlers = mutableListOf<LifecycleHandler>()
 
+    private val validators = mutableListOf<Validator>()
+
     fun id() = properties.find { it.id } ?: throw IllegalStateException("MetaModel $name does not have ID!")
 
     fun lifecycleHandlers(): List<LifecycleHandler> = lifecycleHandlers
+
+    fun validate(context: Context, actor: Actor?, model: Model) {
+        mutableListOf<ModelError>().apply {
+            validators.forEach {
+                it.validate(context, this@MetaModel, actor, model, this)
+            }
+        }.also { modelErrors(it) }
+    }
 
     fun dsl() = MetaModelDsl()
 
@@ -30,6 +42,8 @@ data class MetaModel(val name: String) {
         fun properties(dsl: PropertiesDsl.() -> Unit) = PropertiesDsl().dsl()
 
         fun lifecycleHandlers(dsl: LifecycleHandlersDsl.() -> Unit) = LifecycleHandlersDsl().dsl()
+
+        fun validators(dsl: ValidatorsDsl.() -> Unit) = ValidatorsDsl().dsl()
 
         inner class PropertiesDsl {
 
@@ -42,6 +56,12 @@ data class MetaModel(val name: String) {
         inner class LifecycleHandlersDsl {
 
             operator fun LifecycleHandler.unaryPlus() { lifecycleHandlers += this }
+
+        }
+
+        inner class ValidatorsDsl {
+
+            operator fun Validator.unaryPlus() { validators += this }
 
         }
 

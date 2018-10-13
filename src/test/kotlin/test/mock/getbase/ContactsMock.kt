@@ -17,6 +17,8 @@ import pl.helenium.mockingbird.model.Context
 import pl.helenium.mockingbird.model.LongGenerator
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.Model
+import pl.helenium.mockingbird.model.ModelError
+import pl.helenium.mockingbird.model.Validator
 import pl.helenium.mockingbird.server.Request
 
 class ContactsMock(context: Context) : DslMock(context, {
@@ -28,6 +30,9 @@ class ContactsMock(context: Context) : DslMock(context, {
         lifecycleHandlers {
             +CreatorLifecycleHandler
             +CreatedUpdatedLifecycleHandler
+        }
+        validators {
+            +ContactNameValidator
         }
     }
 
@@ -104,6 +109,31 @@ private class BearerAuthenticator(
         ?.takeIf { it.startsWith("Bearer ") }
         ?.removePrefix("Bearer ")
         ?.let(::Authorization)
+
+}
+
+object ContactNameValidator : Validator {
+
+    override fun validate(
+        context: Context,
+        metaModel: MetaModel,
+        actor: Actor?,
+        model: Model,
+        errors: MutableList<ModelError>
+    ) {
+        val organization = model
+            .getProperty("is_organization", "false")
+            .toBoolean()
+        if (organization) {
+            if (model.getProperty<String?>("name") == null) {
+                errors += "Property 'name' is required for an organization!"
+            }
+        } else {
+            if (model.getProperty<String?>("last_name") == null) {
+                errors += "Property 'last_name' is required for an individual!"
+            }
+        }
+    }
 
 }
 

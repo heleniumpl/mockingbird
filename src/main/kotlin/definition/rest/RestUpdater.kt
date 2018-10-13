@@ -3,15 +3,10 @@ package pl.helenium.mockingbird.definition.rest
 import pl.helenium.mockingbird.model.Model
 import pl.helenium.mockingbird.model.MutableModel
 import pl.helenium.mockingbird.model.Updater
-import pl.helenium.mockingbird.model.toMutable
 
 object RestUpdater : Updater {
 
-    override fun update(target: Model, source: Model): MutableModel = target
-        .toMutable()
-        .also { doUpdate(it, source) }
-
-    private fun doUpdate(target: MutableModel, source: Model) = source
+    override fun update(target: MutableModel, source: Model) = source
         .asMap()
         .forEach { (prop, newValue) ->
             handleProperty(target, prop, newValue)
@@ -31,7 +26,7 @@ object RestUpdater : Updater {
         if (newValue is List<*> && !target.isList(property)) throw IllegalArgumentException()
 
         if (target.isMap(property)) {
-            doUpdate(target.embeddedModel(property), Model(newValue as Map<String, Any?>))
+            update(target.embeddedModel(property), Model(newValue as Map<String, Any?>))
             return
         }
 

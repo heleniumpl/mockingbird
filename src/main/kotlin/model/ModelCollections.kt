@@ -1,6 +1,7 @@
 package pl.helenium.mockingbird.model
 
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentMap
 
 class ModelCollections(private val context: Context) {
 
@@ -13,15 +14,16 @@ class ModelCollections(private val context: Context) {
 
 class ModelCollection(private val context: Context, private val metaModel: MetaModel) {
 
-    private val models = ConcurrentHashMap<String, MutableModel>()
+    private val models: ConcurrentMap<String, MutableModel> = ConcurrentHashMap()
 
     fun create(actor: Actor?, model: Model): Model {
-        val mutableModel = model.toMutable()
+        val mutableModel = model.toNewMutable()
         preCreate(actor, mutableModel)
         val idProperty = metaModel.id()
         val generatedId = idProperty.generate()
             ?: throw IllegalStateException("ID property has no generator specified!")
         mutableModel.setProperty(idProperty.name, generatedId)
+        metaModel.validate(context, actor, model)
         models[generatedId.toString()] = mutableModel
         postCreate(actor, mutableModel)
         return mutableModel
@@ -31,12 +33,17 @@ class ModelCollection(private val context: Context, private val metaModel: MetaM
 
     fun get(id: Any): Model? = models[id.toString()]
 
-    fun update(actor: Actor?, id: Any, update: Model, updater: Updater = NaiveUpdater) =
-        models.computeIfPresent(id.toString()) { _, existingModel ->
+    // FIXME how to get rid of this synchronized?
+    fun update(actor: Actor?, id: Any, update: Model, updater: Updater = NaiveUpdater): MutableModel? =
+        synchronized(id) {
+            val existingModel = models[id.toString()]?.toNewMutable() ?: return null
             preUpdate(actor, existingModel)
-            updater
-                .update(existingModel, update)
-                .also { postUpdate(actor, it) }
+            metaModel.validate(context, actor, existingModel)
+            updater.update(existingModel, update)
+            postUpdate(actor, existingModel)
+            metaModel.validate(context, actor, existingModel)
+            models[id.toString()] = existingModel
+            existingModel
         }
 
     fun delete(actor: Actor?, id: Any): Model? {
@@ -70,12 +77,12 @@ class ModelCollection(private val context: Context, private val metaModel: MetaM
 
 interface Updater {
 
-    fun update(target: Model, source: Model): MutableModel
+    fun update(target: MutableModel, source: Model)
 
 }
 
 object NaiveUpdater : Updater {
 
-    override fun update(target: Model, source: Model): MutableModel = source.toMutable()
+    override fun update(target: MutableModel, source: Model) = target.replace(source)
 
 }

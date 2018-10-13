@@ -1,7 +1,7 @@
 package pl.helenium.mockingbird.model
 
 @Suppress("UNCHECKED_CAST")
-open class Model(private val data: Map<String, Any?> = mapOf()) {
+open class Model(protected var data: Map<String, Any?> = mapOf()) {
 
     fun exists(property: String) = data.containsKey(property)
 
@@ -9,7 +9,7 @@ open class Model(private val data: Map<String, Any?> = mapOf()) {
 
     fun isMap(property: String) = data[property] is Map<*, *>
 
-    fun <T> getProperty(property: String) = data[property] as T
+    fun <T> getProperty(property: String, default: T? = null) = (data[property] ?: default) as T
 
     open fun asMap() = data
 
@@ -35,6 +35,12 @@ open class Model(private val data: Map<String, Any?> = mapOf()) {
 @Suppress("UNCHECKED_CAST")
 class MutableModel(data: MutableMap<String, Any?>) : Model(data) {
 
+    fun replace(model: Model) {
+        data = model
+            .toNewMutable()
+            .asMap()
+    }
+
     fun setProperty(property: String, value: Any?) {
         asMap()[property] = value
     }
@@ -57,7 +63,7 @@ class MutableModel(data: MutableMap<String, Any?>) : Model(data) {
 }
 
 @Suppress("UNCHECKED_CAST")
-fun Model.toMutable() = MutableModel(asMap().deepCopy() as MutableMap<String, Any?>)
+fun Model.toNewMutable() = MutableModel(asMap().deepCopy() as MutableMap<String, Any?>)
 
 private fun Any?.deepCopy(): Any? = when (this) {
     is List<*> -> this
