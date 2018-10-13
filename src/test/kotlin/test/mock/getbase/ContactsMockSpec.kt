@@ -23,8 +23,12 @@ import pl.helenium.mockingbird.json.defaultObjectMapper
 import pl.helenium.mockingbird.json.readStringKeyMap
 import pl.helenium.mockingbird.model.Model
 import pl.helenium.mockingbird.test.util.StatusAndBody
+import pl.helenium.mockingbird.test.util.TimeTravelTimeService
 import pl.helenium.mockingbird.test.util.execute
 import java.time.Instant
+import java.time.temporal.ChronoUnit.HOURS
+import java.time.temporal.ChronoUnit.MINUTES
+import java.time.temporal.ChronoUnit.SECONDS
 import java.util.concurrent.ThreadLocalRandom
 import kotlin.math.absoluteValue
 
@@ -69,6 +73,8 @@ object ContactsMockSpec : Spek({
 
     describe("Contacts Mock") {
 
+        val time by memoized { TimeTravelTimeService() }
+
         val mock by memoized {
             Mockingbird()
                 .setup {
@@ -79,6 +85,7 @@ object ContactsMockSpec : Spek({
                     }
                     mocks(::ContactsMock)
                 }
+                .apply { context.services.time = time }
                 .start()
         }
 
@@ -90,7 +97,12 @@ object ContactsMockSpec : Spek({
 
             context("when contact is created") {
 
-                val response by memoized { mock.createContact() }
+                val createdAt by memoized { Instant.now().minus(23, HOURS) }
+
+                val response by memoized {
+                    time.now = createdAt
+                    mock.createContact()
+                }
 
                 it("returns 200") {
                     response.status shouldBe 200
@@ -107,7 +119,15 @@ object ContactsMockSpec : Spek({
                     response.model().data().getProperty<Long>("creator_id") shouldBe 12345L
                 }
 
-                it("created_at is set") {
+                it("created_at is set to now") {
+                    response
+                        .model()
+                        .data()
+                        .getProperty<String>("created_at")
+                        .toInstant() shouldBe createdAt.truncatedTo(SECONDS)
+                }
+
+                it("updated_at = created_at") {
                     with(response.model().data()) {
                         getProperty<String>("created_at").toInstant() shouldBe getProperty<String>("updated_at").toInstant()
                     }
@@ -206,7 +226,18 @@ object ContactsMockSpec : Spek({
 
             context("when contact exists") {
 
-                val contact by memoized { mock.createContact().model().data() }
+                val createdAt by memoized { Instant.now().minus(23, HOURS) }
+
+                val updatedAt by memoized { createdAt.plus(42, MINUTES) }
+
+                val contact by memoized {
+                    time.now = createdAt
+                    mock
+                        .createContact()
+                        .also { time.now = updatedAt }
+                        .model()
+                        .data()
+                }
 
                 context("when empty update is done") {
 
@@ -275,6 +306,22 @@ object ContactsMockSpec : Spek({
                                 )
                             }
                         }
+                    }
+
+                    it("created_at is set to original date") {
+                        response
+                            .model()
+                            .data()
+                            .getProperty<String>("created_at")
+                            .toInstant() shouldBe createdAt.truncatedTo(SECONDS)
+                    }
+
+                    it("updated_at is set to now") {
+                        response
+                            .model()
+                            .data()
+                            .getProperty<String>("updated_at")
+                            .toInstant() shouldBe updatedAt.truncatedTo(SECONDS)
                     }
 
                 }

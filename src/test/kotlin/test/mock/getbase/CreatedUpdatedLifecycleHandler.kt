@@ -5,7 +5,6 @@ import pl.helenium.mockingbird.model.Context
 import pl.helenium.mockingbird.model.LifecycleHandler
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.MutableModel
-import java.time.Instant
 import java.time.temporal.ChronoUnit.SECONDS
 
 object CreatedUpdatedLifecycleHandler : LifecycleHandler {
@@ -15,17 +14,19 @@ object CreatedUpdatedLifecycleHandler : LifecycleHandler {
     private const val UPDATED_AT = "updated_at"
 
     override fun preCreate(context: Context, metaModel: MetaModel, actor: Actor?, model: MutableModel) =
-        with(nowAsIso8601()) {
+        with(nowAsIso8601(context)) {
             listOf(CREATED_AT, UPDATED_AT).forEach { property ->
                 model.setProperty(property, this)
             }
         }
 
     override fun preUpdate(context: Context, metaModel: MetaModel, actor: Actor?, model: MutableModel) {
-        model.setProperty(UPDATED_AT, nowAsIso8601())
+        model.setProperty(UPDATED_AT, nowAsIso8601(context))
     }
 
-    private fun nowAsIso8601() = Instant
+    private fun nowAsIso8601(context: Context) = context
+        .services
+        .time
         .now()
         .truncatedTo(SECONDS)
         .toString()

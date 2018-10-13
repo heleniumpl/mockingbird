@@ -16,6 +16,8 @@ class Context(private val server: Server) {
 
     val handlers = Handlers(server)
 
+    val services = Services()
+
 }
 
 class ContextDsl(private val context: Context) {
