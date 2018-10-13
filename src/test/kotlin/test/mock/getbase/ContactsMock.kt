@@ -121,10 +121,7 @@ object ContactNameValidator : Validator {
         model: Model,
         errors: MutableList<ModelError>
     ) {
-        val organization = model
-            .getProperty("is_organization", "false")
-            .toBoolean()
-        if (organization) {
+        if (model.getProperty("is_organization", false)) {
             if (model.getProperty<String?>("name") == null) {
                 errors += "Property 'name' is required for an organization!"
             }

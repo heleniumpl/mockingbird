@@ -174,6 +174,52 @@ object ContactsMockSpec : Spek({
 
             }
 
+            context("when created contact is an individual and has no last name") {
+
+                val response by memoized {
+                    mock.createContact(
+                        // language=json
+                        """{
+  "data": {
+    "is_organization": false
+  }
+}"""
+                    )
+                }
+
+                it("returns 422") {
+                    response.status shouldBe 422
+                }
+
+                it("response contains error details") {
+                    response.body shouldBe "Property 'last_name' is required for an individual!"
+                }
+
+            }
+
+            context("when created contact is an organization and has no name") {
+
+                val response by memoized {
+                    mock.createContact(
+                        // language=json
+                        """{
+  "data": {
+    "is_organization": true
+  }
+}"""
+                    )
+                }
+
+                it("returns 422") {
+                    response.status shouldBe 422
+                }
+
+                it("response contains error details") {
+                    response.body shouldBe "Property 'name' is required for an organization!"
+                }
+
+            }
+
         }
 
         describe("GET contacts") {
