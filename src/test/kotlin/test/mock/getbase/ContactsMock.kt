@@ -1,6 +1,5 @@
 package pl.helenium.mockingbird.test.mock.getbase
 
-import pl.helenium.mockingbird.definition.Authenticator
 import pl.helenium.mockingbird.definition.DslMock
 import pl.helenium.mockingbird.definition.identity
 import pl.helenium.mockingbird.definition.rest.RestCreateOperation
@@ -14,14 +13,12 @@ import pl.helenium.mockingbird.definition.rest.emptyModelRequestParser
 import pl.helenium.mockingbird.definition.then
 import pl.helenium.mockingbird.json.jsonRequestWriter
 import pl.helenium.mockingbird.model.Actor
-import pl.helenium.mockingbird.model.Authorization
 import pl.helenium.mockingbird.model.Context
 import pl.helenium.mockingbird.model.LongGenerator
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.Model
 import pl.helenium.mockingbird.model.ModelError
 import pl.helenium.mockingbird.model.Validator
-import pl.helenium.mockingbird.server.Request
 
 class ContactsMock(context: Context) : DslMock(context, {
 
@@ -96,23 +93,6 @@ class ContactsMock(context: Context) : DslMock(context, {
     }
 
 })
-
-private class BearerAuthenticator(
-    private val context: Context,
-    private val scope: String
-) : Authenticator {
-
-    override fun invoke(request: Request): Actor? = context
-        .actors
-        .scope(scope)
-        .authorize(request.authorization())
-
-    private fun Request.authorization() = header("Authorization")
-        ?.takeIf { it.startsWith("Bearer ") }
-        ?.removePrefix("Bearer ")
-        ?.let(::Authorization)
-
-}
 
 object ContactNameValidator : Validator {
 

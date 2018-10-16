@@ -13,6 +13,7 @@
   * mock aggregator
   * complex path expr for getting property
   * multiple ports
+  * split to multiproject to have a real use case
   
 * Code quality
   * reorganize packages & file contents
@@ -20,5 +21,6 @@
   * fill all exception messages
   * code coverage
   * logging
+  * setup CI
 
 * Documentation

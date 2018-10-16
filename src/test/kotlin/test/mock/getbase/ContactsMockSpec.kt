@@ -32,42 +32,6 @@ import java.time.temporal.ChronoUnit.SECONDS
 import java.util.concurrent.ThreadLocalRandom
 import kotlin.math.absoluteValue
 
-@Suppress("SpellCheckingInspection")
-// language=json
-private const val exampleModel = """{
-  "data": {
-    "contact_id": 1,
-    "first_name": "Mark",
-    "last_name": "Johnson",
-    "title": "CEO",
-    "description": "I know him via Tom",
-    "industry": "Design Services",
-    "website": "http://www.designservice.com",
-    "email": "mark@designservices.com",
-    "phone": "508-778-6516",
-    "mobile": "508-778-6516",
-    "fax": "+44-208-1234567",
-    "twitter": "mjohnson",
-    "facebook": "mjohnson",
-    "linkedin": "mjohnson",
-    "skype": "mjohnson",
-    "address": {
-      "line1": "2726 Smith Street",
-      "city": "Hyannis",
-      "postal_code": "02601",
-      "state": "MA",
-      "country": "US"
-    },
-    "tags": [
-      "contractor",
-      "early-adopter"
-    ],
-    "custom_fields": {
-      "referral_website": "http://www.example.com"
-    }
-  }
-}"""
-
 @Suppress("ConvertCallChainIntoSequence")
 object ContactsMockSpec : Spek({
 
@@ -178,12 +142,9 @@ object ContactsMockSpec : Spek({
 
                 val response by memoized {
                     mock.createContact(
-                        // language=json
-                        """{
-  "data": {
-    "is_organization": false
-  }
-}"""
+                        mapOf(
+                            "is_organization" to false
+                        )
                     )
                 }
 
@@ -201,12 +162,9 @@ object ContactsMockSpec : Spek({
 
                 val response by memoized {
                     mock.createContact(
-                        // language=json
-                        """{
-  "data": {
-    "is_organization": true
-  }
-}"""
+                        mapOf(
+                            "is_organization" to true
+                        )
                     )
                 }
 
@@ -268,7 +226,7 @@ object ContactsMockSpec : Spek({
 
         describe("PUT contact") {
 
-            whenContactDoesNotExist { mock.putContact(it, emptyMap()) }
+            whenContactDoesNotExist { mock.putContact(it, emptyMap<String, Any>()) }
 
             context("when contact exists") {
 
@@ -287,7 +245,7 @@ object ContactsMockSpec : Spek({
 
                 context("when empty update is done") {
 
-                    val response by memoized { mock.putContact(contact.id(), emptyMap()) }
+                    val response by memoized { mock.putContact(contact.id(), emptyMap<String, Any>()) }
 
                     it("returns 200") {
                         response.status shouldBe 200
@@ -494,11 +452,11 @@ private fun Model.meta() = embeddedModel("meta")
 
 private fun Model.id() = getProperty<Long>("id")
 
-private fun Mockingbird.createContact(body: String = exampleModel) =
+private fun Mockingbird.createContact(body: Any = exampleModel()) =
     "http://localhost:${context.port}/v2/contacts"
         .httpPost()
         .header("Authorization" to "Bearer very_secret_auth_token")
-        .body(body)
+        .body(mapOf("data" to body).toJson())
         .execute()
 
 private fun Mockingbird.getContacts() =
@@ -513,11 +471,11 @@ private fun Mockingbird.getContact(id: Long) =
         .authorized()
         .execute()
 
-private fun Mockingbird.putContact(id: Long, body: Map<String, Any?>) =
+private fun Mockingbird.putContact(id: Long, body: Any) =
     "http://localhost:${context.port}/v2/contacts/$id"
         .httpPut()
         .authorized()
-        .body(defaultObjectMapper.writeValueAsString(mapOf("data" to body)))
+        .body(mapOf("data" to body).toJson())
         .execute()
 
 private fun Mockingbird.deleteContact(id: Long) =
@@ -534,3 +492,36 @@ private fun randomLong() = ThreadLocalRandom
     .absoluteValue
 
 private fun String.toInstant(): Instant = Instant.parse(this)
+
+@Suppress("SpellCheckingInspection")
+private fun exampleModel() = mutableMapOf(
+    "contact_id" to 1,
+    "first_name" to "Mark",
+    "last_name" to "Johnson",
+    "title" to "CEO",
+    "description" to "I know him via Tom",
+    "industry" to "Design Services",
+    "website" to "http://www.designservice.com",
+    "email" to "mark@designservices.com",
+    "phone" to "508-778-6516",
+    "mobile" to "508-778-6516",
+    "fax" to "+44-208-1234567",
+    "twitter" to "mjohnson",
+    "facebook" to "mjohnson",
+    "linkedin" to "mjohnson",
+    "skype" to "mjohnson",
+    "address" to mutableMapOf(
+        "line1" to "2726 Smith Street",
+        "city" to "Hyannis",
+        "postal_code" to "02601",
+        "state" to "MA",
+        "country" to "US"
+    ),
+    "tags" to mutableListOf(
+        "contractor",
+        "early-adopter"
+    ),
+    "custom_fields" to mutableMapOf(
+        "referral_website" to "http://www.example.com"
+    )
+)
