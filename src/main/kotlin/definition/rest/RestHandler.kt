@@ -45,3 +45,9 @@ abstract class RestOperation<M>(
     protected fun notFound(request: Request): Nothing = notFound(metaModel, request)
 
 }
+
+fun emptyModelRequestParser(@Suppress("UNUSED_PARAMETER") body: String) = Model()
+
+fun collectionTransformer(elementTransformer: (Model) -> Model): (Collection<Model>) -> Collection<Model> = {
+    it.map(elementTransformer)
+}
