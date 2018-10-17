@@ -25,9 +25,9 @@ open class DslMock(private val context: Context, builder: DslMock.() -> Unit) {
     }
 
     // FIXME consider if this is the proper way of registering meta model
-    fun metaModel(name: String, dsl: MetaModelDsl.() -> Unit) {
+    fun metaModel(name: String, buildBlock: MetaModelDsl.() -> Unit) {
         this.metaModel = MetaModel(name)
-            .apply { dsl().apply(dsl) }
+            .apply { dsl().buildBlock() }
             .also { context.metaModels.register(it) }
     }
 
@@ -35,7 +35,7 @@ open class DslMock(private val context: Context, builder: DslMock.() -> Unit) {
         this.authenticator = authenticator
     }
 
-    fun handlers(dsl: HandlersDsl.() -> Unit) = HandlersDsl().dsl()
+    fun handlers(buildBlock: HandlersDsl.() -> Unit) = HandlersDsl().buildBlock()
 
     fun metaModel(): MetaModel = metaModel
         ?: throw IllegalStateException("MetaModel has to be defined before it is accessed!")

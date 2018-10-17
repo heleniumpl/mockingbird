@@ -48,11 +48,11 @@ data class MetaModel(val name: String) {
 
     inner class MetaModelDsl {
 
-        fun properties(dsl: PropertiesDsl.() -> Unit) = PropertiesDsl(properties).dsl()
+        fun properties(buildBlock: PropertiesDsl.() -> Unit) = PropertiesDsl(properties).buildBlock()
 
-        fun lifecycleHandlers(dsl: LifecycleHandlersDsl.() -> Unit) = LifecycleHandlersDsl().dsl()
+        fun lifecycleHandlers(buildBlock: LifecycleHandlersDsl.() -> Unit) = LifecycleHandlersDsl().buildBlock()
 
-        fun validators(dsl: ValidatorsDsl.() -> Unit) = ValidatorsDsl().dsl()
+        fun validators(buildBlock: ValidatorsDsl.() -> Unit) = ValidatorsDsl().buildBlock()
 
         inner class LifecycleHandlersDsl {
 

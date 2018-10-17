@@ -16,9 +16,15 @@ class DealsMock(context: Context) : DslMock(context, {
 
     metaModel("deal") {
         properties {
-            id().generator(LongGenerator)
-            property("name").required()
-            property("contact_id").required()
+            id {
+                generator(LongGenerator)
+            }
+            property("name") {
+                required()
+            }
+            property("contact_id") {
+                required()
+            }
         }
         lifecycleHandlers {
             +CreatorLifecycleHandler

@@ -13,7 +13,7 @@ class Mockingbird(private val server: Server = SparkServer()) {
 
     val context = Context(server)
 
-    fun setup(dsl: ContextDsl.() -> Unit) = apply { ContextDsl(context).dsl() }
+    fun setup(buildBlock: ContextDsl.() -> Unit) = apply { ContextDsl(context).buildBlock() }
 
     fun start() = apply {
         try {

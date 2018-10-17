@@ -30,7 +30,9 @@ class ContactsMock(context: Context) : DslMock(context, {
 
     metaModel("contact") {
         properties {
-            id().generator(LongGenerator)
+            id {
+                generator(LongGenerator)
+            }
         }
         lifecycleHandlers {
             +CreatorLifecycleHandler

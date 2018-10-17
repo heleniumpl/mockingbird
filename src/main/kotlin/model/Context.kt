@@ -28,15 +28,15 @@ class ContextDsl(private val context: Context) {
             registrant(context)
         }
 
-    fun actors(dsl: ScopesDsl.() -> Unit) = ScopesDsl(context).dsl()
+    fun actors(buildBlock: ScopesDsl.() -> Unit) = ScopesDsl(context).buildBlock()
 
     class ScopesDsl(private val context: Context) {
 
-        fun scope(scope: String, dsl: ScopeDsl.() -> Unit) = context
+        fun scope(scope: String, buildBlock: ScopeDsl.() -> Unit) = context
             .actors
             .scope(scope)
             .let(::ScopeDsl)
-            .dsl()
+            .buildBlock()
 
     }
 
