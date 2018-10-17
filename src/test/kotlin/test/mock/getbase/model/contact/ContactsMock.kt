@@ -1,4 +1,4 @@
-package pl.helenium.mockingbird.test.mock.getbase
+package test.mock.getbase.model.contact
 
 import pl.helenium.mockingbird.definition.DslMock
 import pl.helenium.mockingbird.definition.identity
@@ -19,6 +19,12 @@ import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.Model
 import pl.helenium.mockingbird.model.ModelError
 import pl.helenium.mockingbird.model.Validator
+import pl.helenium.mockingbird.test.mock.getbase.BearerAuthenticator
+import pl.helenium.mockingbird.test.mock.getbase.dataMetaUnwrapper
+import pl.helenium.mockingbird.test.mock.getbase.dataMetaWrapper
+import pl.helenium.mockingbird.test.mock.getbase.handler.CreatedUpdatedLifecycleHandler
+import pl.helenium.mockingbird.test.mock.getbase.handler.CreatorLifecycleHandler
+import pl.helenium.mockingbird.test.mock.getbase.itemsWrapper
 
 class ContactsMock(context: Context) : DslMock(context, {
 

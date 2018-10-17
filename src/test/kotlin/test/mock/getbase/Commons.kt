@@ -1,7 +1,6 @@
 package pl.helenium.mockingbird.test.mock.getbase
 
 import pl.helenium.mockingbird.definition.Authenticator
-import pl.helenium.mockingbird.json.defaultObjectMapper
 import pl.helenium.mockingbird.model.Actor
 import pl.helenium.mockingbird.model.Authorization
 import pl.helenium.mockingbird.model.Context
@@ -48,5 +47,3 @@ fun itemsWrapper(items: Collection<Model>) = Model(
         )
     )
 )
-
-fun Any.toJson() = defaultObjectMapper.writeValueAsString(this)

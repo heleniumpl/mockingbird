@@ -1,4 +1,4 @@
-package pl.helenium.mockingbird.test.mock.getbase
+package pl.helenium.mockingbird.test.mock.getbase.handler
 
 import pl.helenium.mockingbird.model.Actor
 import pl.helenium.mockingbird.model.Context

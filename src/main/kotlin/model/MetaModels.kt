@@ -29,7 +29,7 @@ data class MetaModel(val name: String) {
 
     fun validate(context: Context, actor: Actor?, model: Model) {
         mutableListOf<ModelError>().apply {
-            validators.forEach {
+            allValidators().forEach {
                 it.validate(context, this@MetaModel, actor, model, this)
             }
         }.also { modelErrors(it) }
@@ -37,48 +37,39 @@ data class MetaModel(val name: String) {
 
     fun dsl() = MetaModelDsl()
 
+    private fun allValidators() = sequence {
+        yieldAll(validators)
+        yieldAll(
+            properties
+                .asSequence()
+                .flatMap { it.validators().asSequence() }
+        )
+    }
+
     inner class MetaModelDsl {
 
-        fun properties(dsl: PropertiesDsl.() -> Unit) = PropertiesDsl().dsl()
+        fun properties(dsl: PropertiesDsl.() -> Unit) = PropertiesDsl(properties).dsl()
 
         fun lifecycleHandlers(dsl: LifecycleHandlersDsl.() -> Unit) = LifecycleHandlersDsl().dsl()
 
         fun validators(dsl: ValidatorsDsl.() -> Unit) = ValidatorsDsl().dsl()
 
-        inner class PropertiesDsl {
-
-            fun id(name: String = "id") = Property(name)
-                .id()
-                .also { properties.add(it) }
-
-        }
-
         inner class LifecycleHandlersDsl {
 
-            operator fun LifecycleHandler.unaryPlus() { lifecycleHandlers += this }
+            operator fun LifecycleHandler.unaryPlus() {
+                lifecycleHandlers += this
+            }
 
         }
 
         inner class ValidatorsDsl {
 
-            operator fun Validator.unaryPlus() { validators += this }
+            operator fun Validator.unaryPlus() {
+                validators += this
+            }
 
         }
 
     }
-
-}
-
-class Property(val name: String) {
-
-    var id = false
-        private set
-
-    var generate: () -> Any? = { null }
-        private set
-
-    fun id() = apply { id = true }
-
-    fun generator(generator: () -> Any?) = apply { this.generate = generator }
 
 }
