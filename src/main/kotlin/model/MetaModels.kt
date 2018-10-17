@@ -35,8 +35,6 @@ data class MetaModel(val name: String) {
         }.also { modelErrors(it) }
     }
 
-    fun dsl() = MetaModelDsl()
-
     private fun allValidators() = sequence {
         yieldAll(validators)
         yieldAll(

@@ -27,7 +27,7 @@ open class DslMock(private val context: Context, builder: DslMock.() -> Unit) {
     // FIXME consider if this is the proper way of registering meta model
     fun metaModel(name: String, buildBlock: MetaModelDsl.() -> Unit) {
         this.metaModel = MetaModel(name)
-            .apply { dsl().buildBlock() }
+            .apply { MetaModelDsl().buildBlock() }
             .also { context.metaModels.register(it) }
     }
 
