@@ -42,7 +42,7 @@ data class MetaModel(val name: String) {
         yieldAll(
             properties
                 .asSequence()
-                .flatMap { it.validators().asSequence() }
+                .flatMap { it.validators.asSequence() }
         )
     }
 
