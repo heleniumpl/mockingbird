@@ -3,7 +3,7 @@ package pl.helenium.mockingbird.test.mock.getbase
 import pl.helenium.mockingbird.json.defaultObjectMapper
 import pl.helenium.mockingbird.json.readStringKeyMap
 import pl.helenium.mockingbird.model.Model
-import pl.helenium.mockingbird.test.util.StatusAndBody
+import pl.helenium.mockingbird.test.commons.StatusAndBody
 import java.util.concurrent.ThreadLocalRandom
 import kotlin.math.absoluteValue
 

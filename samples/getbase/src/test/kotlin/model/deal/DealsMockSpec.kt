@@ -1,4 +1,4 @@
-package test.mock.getbase.model.deal
+package pl.helenium.mockingbird.test.mock.getbase.model.deal
 
 import com.github.kittinunf.fuel.httpPost
 import io.kotlintest.matchers.string.contain
@@ -8,9 +8,9 @@ import io.kotlintest.shouldNot
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 import pl.helenium.mockingbird.Mockingbird
+import pl.helenium.mockingbird.test.commons.execute
 import pl.helenium.mockingbird.test.mock.getbase.randomLong
 import pl.helenium.mockingbird.test.mock.getbase.toJson
-import pl.helenium.mockingbird.test.util.execute
 
 object DealsMockSpec : Spek({
 

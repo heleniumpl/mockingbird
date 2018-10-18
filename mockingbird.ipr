@@ -4,8 +4,14 @@
     <bytecodeTargetLevel>
       <module name="core_main" target="11" />
       <module name="core_test" target="11" />
+      <module name="getbase_main" target="11" />
+      <module name="getbase_test" target="11" />
       <module name="mockingbird_main" target="11" />
       <module name="mockingbird_test" target="11" />
+      <module name="samples_getbase_main" target="11" />
+      <module name="samples_getbase_test" target="11" />
+      <module name="test-commons_main" target="11" />
+      <module name="test-commons_test" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
@@ -19,6 +25,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/samples" />
+            <option value="$PROJECT_DIR$/samples/getbase" />
+            <option value="$PROJECT_DIR$/test-commons" />
           </set>
         </option>
       </GradleProjectSettings>
@@ -76,7 +85,15 @@
       <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" group="core" />
       <module fileurl="file://$PROJECT_DIR$/core/core_main.iml" filepath="$PROJECT_DIR$/core/core_main.iml" group="core" />
       <module fileurl="file://$PROJECT_DIR$/core/core_test.iml" filepath="$PROJECT_DIR$/core/core_test.iml" group="core" />
+      <module fileurl="file://$PROJECT_DIR$/samples/getbase/getbase.iml" filepath="$PROJECT_DIR$/samples/getbase/getbase.iml" group="samples/getbase" />
+      <module fileurl="file://$PROJECT_DIR$/samples/getbase/getbase_main.iml" filepath="$PROJECT_DIR$/samples/getbase/getbase_main.iml" group="samples/getbase" />
+      <module fileurl="file://$PROJECT_DIR$/samples/getbase/getbase_test.iml" filepath="$PROJECT_DIR$/samples/getbase/getbase_test.iml" group="samples/getbase" />
       <module fileurl="file://$PROJECT_DIR$/mockingbird.iml" filepath="$PROJECT_DIR$/mockingbird.iml" />
+      <module fileurl="file://$PROJECT_DIR$/samples/samples.iml" filepath="$PROJECT_DIR$/samples/samples.iml" group="samples" />
+      <module fileurl="file://$PROJECT_DIR$/samples/samples.iml" filepath="$PROJECT_DIR$/samples/samples.iml" group="samples" />
+      <module fileurl="file://$PROJECT_DIR$/test-commons/test-commons.iml" filepath="$PROJECT_DIR$/test-commons/test-commons.iml" group="test-commons" />
+      <module fileurl="file://$PROJECT_DIR$/test-commons/test-commons_main.iml" filepath="$PROJECT_DIR$/test-commons/test-commons_main.iml" group="test-commons" />
+      <module fileurl="file://$PROJECT_DIR$/test-commons/test-commons_test.iml" filepath="$PROJECT_DIR$/test-commons/test-commons_test.iml" group="test-commons" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="false" project-jdk-name="11" project-jdk-type="JavaSDK">

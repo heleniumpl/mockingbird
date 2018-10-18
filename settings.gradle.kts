@@ -8,4 +8,8 @@ pluginManagement {
     }
 }
 
-include("core")
+include(
+    "core",
+    "samples:getbase",
+    "test-commons"
+)

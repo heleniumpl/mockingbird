@@ -1,4 +1,4 @@
-package test.mock.getbase.model.contact
+package pl.helenium.mockingbird.test.mock.getbase.model.contact
 
 import com.github.kittinunf.fuel.core.Request
 import com.github.kittinunf.fuel.httpDelete
@@ -22,6 +22,9 @@ import pl.helenium.mockingbird.Mockingbird
 import pl.helenium.mockingbird.json.defaultObjectMapper
 import pl.helenium.mockingbird.json.readStringKeyMap
 import pl.helenium.mockingbird.model.Model
+import pl.helenium.mockingbird.test.commons.StatusAndBody
+import pl.helenium.mockingbird.test.commons.TimeTravelTimeService
+import pl.helenium.mockingbird.test.commons.execute
 import pl.helenium.mockingbird.test.mock.getbase.data
 import pl.helenium.mockingbird.test.mock.getbase.id
 import pl.helenium.mockingbird.test.mock.getbase.items
@@ -29,9 +32,6 @@ import pl.helenium.mockingbird.test.mock.getbase.meta
 import pl.helenium.mockingbird.test.mock.getbase.model
 import pl.helenium.mockingbird.test.mock.getbase.randomLong
 import pl.helenium.mockingbird.test.mock.getbase.toJson
-import pl.helenium.mockingbird.test.util.StatusAndBody
-import pl.helenium.mockingbird.test.util.TimeTravelTimeService
-import pl.helenium.mockingbird.test.util.execute
 import java.time.Instant
 import java.time.temporal.ChronoUnit.HOURS
 import java.time.temporal.ChronoUnit.MINUTES

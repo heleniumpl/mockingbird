@@ -1,4 +1,4 @@
-package test.mock.getbase.model.deal
+package pl.helenium.mockingbird.test.mock.getbase.model.deal
 
 import pl.helenium.mockingbird.definition.DslMock
 import pl.helenium.mockingbird.definition.rest.RestCreateOperation

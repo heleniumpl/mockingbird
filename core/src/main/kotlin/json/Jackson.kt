@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature.USE_LONG_FOR_INTS
 import com.fasterxml.jackson.databind.ObjectMapper
 import pl.helenium.mockingbird.model.Model
 
-internal val defaultObjectMapper = ObjectMapper()
+val defaultObjectMapper: ObjectMapper = ObjectMapper()
     .enable(USE_LONG_FOR_INTS)
 
 fun ObjectMapper.readStringKeyMap(payload: String): Map<String, Any?> =

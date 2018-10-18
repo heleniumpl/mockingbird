@@ -1,4 +1,4 @@
-package pl.helenium.mockingbird.test.util
+package pl.helenium.mockingbird.test.commons
 
 import pl.helenium.mockingbird.model.TimeService
 import java.time.Instant

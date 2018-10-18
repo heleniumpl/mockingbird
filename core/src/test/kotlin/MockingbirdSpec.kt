@@ -11,9 +11,9 @@ import io.kotlintest.shouldBe
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 import pl.helenium.mockingbird.server.spark.SparkServer
+import pl.helenium.mockingbird.test.commons.execute
+import pl.helenium.mockingbird.test.commons.freeTcpPort
 import pl.helenium.mockingbird.test.mock.HelloWorldMock
-import pl.helenium.mockingbird.test.util.execute
-import pl.helenium.mockingbird.test.util.freeTcpPort
 
 class MockingbirdSpec : Spek({
 

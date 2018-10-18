@@ -1,4 +1,4 @@
-package test.mock.getbase.model.contact
+package pl.helenium.mockingbird.test.mock.getbase.model.contact
 
 import pl.helenium.mockingbird.definition.DslMock
 import pl.helenium.mockingbird.definition.identity

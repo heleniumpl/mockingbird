@@ -1,4 +1,4 @@
-package pl.helenium.mockingbird.test.util
+package pl.helenium.mockingbird.test.commons
 
 import com.github.kittinunf.fuel.core.Request
 import kotlin.text.Charsets.UTF_8
