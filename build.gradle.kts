@@ -2,6 +2,8 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 plugins {
     id("com.github.ben-manes.versions") version Versions.GradlePlugins.versions
+
+    kotlin("jvm") version Versions.kotlin apply false
 }
 
 subprojects {

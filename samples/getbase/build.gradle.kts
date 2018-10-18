@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version Versions.kotlin
+    kotlin("jvm")
 }
 
 apply(from = "$rootDir/gradle/test.gradle.kts")

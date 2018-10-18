@@ -96,7 +96,6 @@
       <module fileurl="file://$PROJECT_DIR$/mockingbird_buildSrc_main.iml" filepath="$PROJECT_DIR$/mockingbird_buildSrc_main.iml" group="mockingbird_buildSrc" />
       <module fileurl="file://$PROJECT_DIR$/mockingbird_buildSrc_test.iml" filepath="$PROJECT_DIR$/mockingbird_buildSrc_test.iml" group="mockingbird_buildSrc" />
       <module fileurl="file://$PROJECT_DIR$/samples/samples.iml" filepath="$PROJECT_DIR$/samples/samples.iml" group="samples" />
-      <module fileurl="file://$PROJECT_DIR$/samples/samples.iml" filepath="$PROJECT_DIR$/samples/samples.iml" group="samples" />
       <module fileurl="file://$PROJECT_DIR$/test-commons/test-commons.iml" filepath="$PROJECT_DIR$/test-commons/test-commons.iml" group="test-commons" />
       <module fileurl="file://$PROJECT_DIR$/test-commons/test-commons_main.iml" filepath="$PROJECT_DIR$/test-commons/test-commons_main.iml" group="test-commons" />
       <module fileurl="file://$PROJECT_DIR$/test-commons/test-commons_test.iml" filepath="$PROJECT_DIR$/test-commons/test-commons_test.iml" group="test-commons" />
