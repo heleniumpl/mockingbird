@@ -1,7 +1,7 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 plugins {
-    id("com.github.ben-manes.versions") version "0.20.0"
+    id("com.github.ben-manes.versions") version Versions.GradlePlugins.versions
 }
 
 subprojects {
@@ -15,7 +15,7 @@ subprojects {
 
 tasks {
     withType<Wrapper> {
-        gradleVersion = "4.10.2"
+        gradleVersion = Versions.gradle
         distributionType = Wrapper.DistributionType.ALL
     }
 

@@ -6,6 +6,8 @@
       <module name="core_test" target="11" />
       <module name="getbase_main" target="11" />
       <module name="getbase_test" target="11" />
+      <module name="mockingbird_buildSrc_main" target="11" />
+      <module name="mockingbird_buildSrc_test" target="11" />
       <module name="mockingbird_main" target="11" />
       <module name="mockingbird_test" target="11" />
       <module name="samples_getbase_main" target="11" />
@@ -24,6 +26,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/samples" />
             <option value="$PROJECT_DIR$/samples/getbase" />
@@ -89,6 +92,9 @@
       <module fileurl="file://$PROJECT_DIR$/samples/getbase/getbase_main.iml" filepath="$PROJECT_DIR$/samples/getbase/getbase_main.iml" group="samples/getbase" />
       <module fileurl="file://$PROJECT_DIR$/samples/getbase/getbase_test.iml" filepath="$PROJECT_DIR$/samples/getbase/getbase_test.iml" group="samples/getbase" />
       <module fileurl="file://$PROJECT_DIR$/mockingbird.iml" filepath="$PROJECT_DIR$/mockingbird.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mockingbird_buildSrc.iml" filepath="$PROJECT_DIR$/mockingbird_buildSrc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mockingbird_buildSrc_main.iml" filepath="$PROJECT_DIR$/mockingbird_buildSrc_main.iml" group="mockingbird_buildSrc" />
+      <module fileurl="file://$PROJECT_DIR$/mockingbird_buildSrc_test.iml" filepath="$PROJECT_DIR$/mockingbird_buildSrc_test.iml" group="mockingbird_buildSrc" />
       <module fileurl="file://$PROJECT_DIR$/samples/samples.iml" filepath="$PROJECT_DIR$/samples/samples.iml" group="samples" />
       <module fileurl="file://$PROJECT_DIR$/samples/samples.iml" filepath="$PROJECT_DIR$/samples/samples.iml" group="samples" />
       <module fileurl="file://$PROJECT_DIR$/test-commons/test-commons.iml" filepath="$PROJECT_DIR$/test-commons/test-commons.iml" group="test-commons" />
