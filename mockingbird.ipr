@@ -2,6 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="core_main" target="11" />
+      <module name="core_test" target="11" />
       <module name="mockingbird_main" target="11" />
       <module name="mockingbird_test" target="11" />
     </bytecodeTargetLevel>
@@ -16,6 +18,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/core" />
           </set>
         </option>
       </GradleProjectSettings>
@@ -70,9 +73,10 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" group="core" />
+      <module fileurl="file://$PROJECT_DIR$/core/core_main.iml" filepath="$PROJECT_DIR$/core/core_main.iml" group="core" />
+      <module fileurl="file://$PROJECT_DIR$/core/core_test.iml" filepath="$PROJECT_DIR$/core/core_test.iml" group="core" />
       <module fileurl="file://$PROJECT_DIR$/mockingbird.iml" filepath="$PROJECT_DIR$/mockingbird.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mockingbird_main.iml" filepath="$PROJECT_DIR$/mockingbird_main.iml" group="mockingbird" />
-      <module fileurl="file://$PROJECT_DIR$/mockingbird_test.iml" filepath="$PROJECT_DIR$/mockingbird_test.iml" group="mockingbird" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="false" project-jdk-name="11" project-jdk-type="JavaSDK">
