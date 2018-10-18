@@ -1,7 +1,7 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 plugins {
-    kotlin("jvm") version "1.3.0-rc-146"
+    kotlin("jvm") version "1.3.0-rc-190"
 
     id("com.github.ben-manes.versions") version "0.20.0"
 }
@@ -15,7 +15,7 @@ object Versions {
     // test
     const val spek2 = "2.0.0-rc.1"
     const val kotlinTest = "3.1.10"
-    const val fuel = "1.15.0"
+    const val fuel = "1.16.0"
 }
 
 repositories {
