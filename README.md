@@ -22,5 +22,6 @@
   * code coverage
   * logging
   * setup CI
+  * Bintray
 
 * Documentation
