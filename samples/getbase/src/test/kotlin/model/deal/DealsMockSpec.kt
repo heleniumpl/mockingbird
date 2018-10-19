@@ -101,6 +101,25 @@ object DealsMockSpec : Spek({
 
             }
 
+            context("when deal w/ name not being a string is created") {
+
+                val response by memoized {
+                    mock.createDeal(mapOf(
+                        "name" to false,
+                        "contact_id" to randomLong()
+                    ))
+                }
+
+                it("returns 422") {
+                    response.status shouldBe 422
+                }
+
+                it("response contains error details") {
+                    response.body shouldBe "Property `name` = `false` is not of `string` type!"
+                }
+
+            }
+
         }
 
     }

@@ -70,7 +70,7 @@ class PropertyTypeValidator(private val property: Property) : Validator {
     ) {
         property
             .type
-            .validate(property.name, model.getProperty(property.name), errors)
+            .validate(property.name, model.getProperty(property.name) ?: return, errors)
     }
 
 }
