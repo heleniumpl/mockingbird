@@ -5,6 +5,7 @@ import pl.helenium.mockingbird.definition.rest.RestCreateOperation
 import pl.helenium.mockingbird.definition.rest.RestHandler
 import pl.helenium.mockingbird.json.jsonRequestWriter
 import pl.helenium.mockingbird.model.Context
+import pl.helenium.mockingbird.model.boolean
 import pl.helenium.mockingbird.model.long
 import pl.helenium.mockingbird.model.string
 import pl.helenium.mockingbird.test.mock.getbase.BearerAuthenticator
@@ -27,6 +28,9 @@ class DealsMock(context: Context) : DslMock(context, {
             property("contact_id") {
                 type(long)
                 required()
+            }
+            property("hot") {
+                type(boolean)
             }
         }
         lifecycleHandlers {

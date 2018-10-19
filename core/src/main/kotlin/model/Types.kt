@@ -33,3 +33,6 @@ object long : AbstractType(Long::class) {
 
 @Suppress("ClassName")
 object string : AbstractType(String::class)
+
+@Suppress("ClassName")
+object boolean : AbstractType(Boolean::class)

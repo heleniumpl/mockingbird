@@ -31,6 +31,22 @@ object DealsMockSpec : Spek({
 
         describe("POST deal") {
 
+            context("when deal w/ proper attributes is created") {
+
+                val response by memoized {
+                    mock.createDeal(mapOf(
+                        "name" to "200 bottles of wine",
+                        "contact_id" to randomLong(),
+                        "hot" to true
+                    ))
+                }
+
+                it("returns 200") {
+                    response.status shouldBe 200
+                }
+
+            }
+
             context("when deal w/o name nor contact_id is created") {
 
                 val response by memoized {
@@ -116,6 +132,26 @@ object DealsMockSpec : Spek({
 
                 it("response contains error details") {
                     response.body shouldBe "Property `name` = `false` is not of `string` type!"
+                }
+
+            }
+
+            context("when deal w/ `hot` not being a boolean is created") {
+
+                val response by memoized {
+                    mock.createDeal(mapOf(
+                        "name" to "3 dogs & 4 cats",
+                        "contact_id" to randomLong(),
+                        "hot" to "cold"
+                    ))
+                }
+
+                it("returns 422") {
+                    response.status shouldBe 422
+                }
+
+                it("response contains error details") {
+                    response.body shouldBe "Property `hot` = `cold` is not of `boolean` type!"
                 }
 
             }
