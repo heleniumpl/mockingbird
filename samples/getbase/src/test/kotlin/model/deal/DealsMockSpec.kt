@@ -82,6 +82,25 @@ object DealsMockSpec : Spek({
 
             }
 
+            context("when deal w/ contact_id not being a number is created") {
+
+                val response by memoized {
+                    mock.createDeal(mapOf(
+                        "name" to "200 bottles of wine",
+                        "contact_id" to "not a number"
+                    ))
+                }
+
+                it("returns 422") {
+                    response.status shouldBe 422
+                }
+
+                it("response contains error details") {
+                    response.body shouldBe "Property `contact_id` = `not a number` is not of `long` type!"
+                }
+
+            }
+
         }
 
     }

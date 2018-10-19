@@ -20,10 +20,11 @@ class ModelCollection(private val context: Context, private val metaModel: MetaM
         val mutableModel = model.toNewMutable()
         preCreate(actor, mutableModel)
         val idProperty = metaModel.id()
-        val generatedId = idProperty.generate()
-            ?: throw IllegalStateException("ID property has no generator specified!")
+        val generatedId = idProperty
+            .type
+            .generate() ?: throw IllegalStateException("ID property has no generator specified!")
         mutableModel.setProperty(idProperty.name, generatedId)
-        metaModel.validate(context, actor, model)
+        metaModel.validate(context, actor, mutableModel)
         models[generatedId.toString()] = mutableModel
         postCreate(actor, mutableModel)
         return mutableModel

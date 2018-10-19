@@ -8,7 +8,7 @@ class Property(val name: String) {
 
     var required = false
 
-    var generate: () -> Any? = { null }
+    var type: Type = AnyType
 
     val validators = mutableListOf<Validator>()
 
@@ -21,7 +21,10 @@ class Property(val name: String) {
             if (required) validators += RequiredPropertyValidator(this@Property)
         }
 
-        fun generator(generator: () -> Any?) = apply { this@Property.generate = generator }
+        fun type(type: Type) = apply {
+            this@Property.type = type
+            validators += PropertyTypeValidator(this@Property)
+        }
 
     }
 
@@ -52,6 +55,22 @@ class RequiredPropertyValidator(private val property: Property) : Validator {
         if (!property.required || model.getProperty<Any?>(property.name) != null) return
 
         errors += "Property '${property.name}' is required but was not given!"
+    }
+
+}
+
+class PropertyTypeValidator(private val property: Property) : Validator {
+
+    override fun validate(
+        context: Context,
+        metaModel: MetaModel,
+        actor: Actor?,
+        model: Model,
+        errors: MutableList<ModelError>
+    ) {
+        property
+            .type
+            .validate(property.name, model.getProperty(property.name), errors)
     }
 
 }

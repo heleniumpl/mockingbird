@@ -5,7 +5,7 @@ import pl.helenium.mockingbird.definition.rest.RestCreateOperation
 import pl.helenium.mockingbird.definition.rest.RestHandler
 import pl.helenium.mockingbird.json.jsonRequestWriter
 import pl.helenium.mockingbird.model.Context
-import pl.helenium.mockingbird.model.LongGenerator
+import pl.helenium.mockingbird.model.long
 import pl.helenium.mockingbird.test.mock.getbase.BearerAuthenticator
 import pl.helenium.mockingbird.test.mock.getbase.dataMetaUnwrapper
 import pl.helenium.mockingbird.test.mock.getbase.dataMetaWrapper
@@ -17,12 +17,13 @@ class DealsMock(context: Context) : DslMock(context, {
     metaModel("deal") {
         properties {
             id {
-                generator(LongGenerator)
+                type(long)
             }
             property("name") {
                 required()
             }
             property("contact_id") {
+                type(long)
                 required()
             }
         }

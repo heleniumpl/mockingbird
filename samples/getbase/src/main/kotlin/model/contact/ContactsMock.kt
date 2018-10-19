@@ -14,11 +14,11 @@ import pl.helenium.mockingbird.definition.then
 import pl.helenium.mockingbird.json.jsonRequestWriter
 import pl.helenium.mockingbird.model.Actor
 import pl.helenium.mockingbird.model.Context
-import pl.helenium.mockingbird.model.LongGenerator
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.Model
 import pl.helenium.mockingbird.model.ModelError
 import pl.helenium.mockingbird.model.Validator
+import pl.helenium.mockingbird.model.long
 import pl.helenium.mockingbird.test.mock.getbase.BearerAuthenticator
 import pl.helenium.mockingbird.test.mock.getbase.dataMetaUnwrapper
 import pl.helenium.mockingbird.test.mock.getbase.dataMetaWrapper
@@ -31,7 +31,7 @@ class ContactsMock(context: Context) : DslMock(context, {
     metaModel("contact") {
         properties {
             id {
-                generator(LongGenerator)
+                type(long)
             }
         }
         lifecycleHandlers {
