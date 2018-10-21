@@ -3,6 +3,7 @@ package pl.helenium.mockingbird.test.mock.getbase.model.contact
 import pl.helenium.mockingbird.definition.DslMock
 import pl.helenium.mockingbird.definition.identity
 import pl.helenium.mockingbird.definition.rest.EmptyResponseWriter
+import pl.helenium.mockingbird.definition.rest.JsonResponseWriter
 import pl.helenium.mockingbird.definition.rest.RestCreateOperation
 import pl.helenium.mockingbird.definition.rest.RestDeleteOperation
 import pl.helenium.mockingbird.definition.rest.RestGetOperation
@@ -12,7 +13,6 @@ import pl.helenium.mockingbird.definition.rest.RestUpdateOperation
 import pl.helenium.mockingbird.definition.rest.collectionTransformer
 import pl.helenium.mockingbird.definition.rest.emptyModelRequestParser
 import pl.helenium.mockingbird.definition.then
-import pl.helenium.mockingbird.json.JsonResponseWriter
 import pl.helenium.mockingbird.model.Actor
 import pl.helenium.mockingbird.model.Context
 import pl.helenium.mockingbird.model.MetaModel
