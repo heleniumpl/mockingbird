@@ -36,3 +36,8 @@ object string : AbstractType(String::class)
 
 @Suppress("ClassName")
 object boolean : AbstractType(Boolean::class)
+
+// TODO list
+// TODO map
+//
+// TODO with generator

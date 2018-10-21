@@ -9,7 +9,6 @@
     * sorting
     * paging
   * embedded collections
-  * response headers
   * mock aggregator
   * complex path expr for getting property
   * multiple ports

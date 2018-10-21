@@ -17,13 +17,13 @@ class RestHandler<M, R>(
     private val unwrapper: (Model) -> Model = ::identity,
     private val restOperation: RestOperation<M>,
     private val wrapper: (M) -> R,
-    private val requestWriter: (R) -> Any?
+    private val responseWriter: ResponseWriter<R>
 ) : Handler {
 
     override fun invoke(actor: Actor?, request: Request, response: Response): Any? {
         val inModel = unwrapper(requestParser(request.body()))
         val outModel = restOperation.handle(actor, request, response, inModel)
-        return requestWriter(wrapper(outModel))
+        return responseWriter.write(wrapper(outModel), response)
     }
 
 }

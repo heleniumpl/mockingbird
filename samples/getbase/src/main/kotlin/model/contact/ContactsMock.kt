@@ -2,6 +2,7 @@ package pl.helenium.mockingbird.test.mock.getbase.model.contact
 
 import pl.helenium.mockingbird.definition.DslMock
 import pl.helenium.mockingbird.definition.identity
+import pl.helenium.mockingbird.definition.rest.EmptyResponseWriter
 import pl.helenium.mockingbird.definition.rest.RestCreateOperation
 import pl.helenium.mockingbird.definition.rest.RestDeleteOperation
 import pl.helenium.mockingbird.definition.rest.RestGetOperation
@@ -11,7 +12,7 @@ import pl.helenium.mockingbird.definition.rest.RestUpdateOperation
 import pl.helenium.mockingbird.definition.rest.collectionTransformer
 import pl.helenium.mockingbird.definition.rest.emptyModelRequestParser
 import pl.helenium.mockingbird.definition.then
-import pl.helenium.mockingbird.json.jsonRequestWriter
+import pl.helenium.mockingbird.json.JsonResponseWriter
 import pl.helenium.mockingbird.model.Actor
 import pl.helenium.mockingbird.model.Context
 import pl.helenium.mockingbird.model.MetaModel
@@ -54,7 +55,7 @@ class ContactsMock(context: Context) : DslMock(context, {
                 restOperation = RestCreateOperation(context, metaModel()),
                 unwrapper = dataMetaUnwrapper(),
                 wrapper = dataMetaWrapper(metaModel()),
-                requestWriter = ::jsonRequestWriter
+                responseWriter = JsonResponseWriter
             )
         )
 
@@ -65,7 +66,7 @@ class ContactsMock(context: Context) : DslMock(context, {
                 restOperation = RestListOperation(context, metaModel()),
                 wrapper = collectionTransformer(dataMetaWrapper(metaModel()))
                         then ::itemsWrapper,
-                requestWriter = ::jsonRequestWriter
+                responseWriter = JsonResponseWriter
             )
         )
 
@@ -75,7 +76,7 @@ class ContactsMock(context: Context) : DslMock(context, {
                 requestParser = ::emptyModelRequestParser,
                 restOperation = RestGetOperation(context, metaModel()),
                 wrapper = dataMetaWrapper(metaModel()),
-                requestWriter = ::jsonRequestWriter
+                responseWriter = JsonResponseWriter
             )
         )
 
@@ -85,7 +86,7 @@ class ContactsMock(context: Context) : DslMock(context, {
                 restOperation = RestUpdateOperation(context, metaModel()),
                 unwrapper = dataMetaUnwrapper(),
                 wrapper = dataMetaWrapper(metaModel()),
-                requestWriter = ::jsonRequestWriter
+                responseWriter = JsonResponseWriter
             )
         )
 
@@ -95,7 +96,7 @@ class ContactsMock(context: Context) : DslMock(context, {
                 requestParser = ::emptyModelRequestParser,
                 restOperation = RestDeleteOperation(context, metaModel()),
                 wrapper = ::identity,
-                requestWriter = { "" }
+                responseWriter = EmptyResponseWriter
             )
         )
     }

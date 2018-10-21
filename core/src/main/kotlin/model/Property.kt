@@ -26,6 +26,12 @@ class Property(val name: String) {
             validators += PropertyTypeValidator(this@Property)
         }
 
+        // TODO relatesTo
+
+        // TODO default
+
+        // TODO generators --^
+
     }
 
 }

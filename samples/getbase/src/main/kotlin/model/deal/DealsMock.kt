@@ -3,7 +3,7 @@ package pl.helenium.mockingbird.test.mock.getbase.model.deal
 import pl.helenium.mockingbird.definition.DslMock
 import pl.helenium.mockingbird.definition.rest.RestCreateOperation
 import pl.helenium.mockingbird.definition.rest.RestHandler
-import pl.helenium.mockingbird.json.jsonRequestWriter
+import pl.helenium.mockingbird.json.JsonResponseWriter
 import pl.helenium.mockingbird.model.Context
 import pl.helenium.mockingbird.model.boolean
 import pl.helenium.mockingbird.model.long
@@ -50,7 +50,7 @@ class DealsMock(context: Context) : DslMock(context, {
                 restOperation = RestCreateOperation(context, metaModel()),
                 unwrapper = dataMetaUnwrapper(),
                 wrapper = dataMetaWrapper(metaModel()),
-                requestWriter = ::jsonRequestWriter
+                responseWriter = JsonResponseWriter
             )
         )
     }

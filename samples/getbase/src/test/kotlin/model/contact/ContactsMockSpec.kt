@@ -22,7 +22,7 @@ import pl.helenium.mockingbird.Mockingbird
 import pl.helenium.mockingbird.json.defaultObjectMapper
 import pl.helenium.mockingbird.json.readStringKeyMap
 import pl.helenium.mockingbird.model.Model
-import pl.helenium.mockingbird.test.commons.StatusAndBody
+import pl.helenium.mockingbird.test.commons.Response
 import pl.helenium.mockingbird.test.commons.TimeTravelTimeService
 import pl.helenium.mockingbird.test.commons.execute
 import pl.helenium.mockingbird.test.mock.getbase.data
@@ -77,6 +77,10 @@ object ContactsMockSpec : Spek({
                     response.status shouldBe 200
                 }
 
+                it("Content-Type should be application/json") {
+                    response.contentType() shouldBe "application/json"
+                }
+
                 it("is available through collection") {
                     context
                         .modelCollections
@@ -112,13 +116,13 @@ object ContactsMockSpec : Spek({
 
                 val models by memoized {
                     responses
-                        .map(StatusAndBody::body)
+                        .map(Response::body)
                         .map { Model(defaultObjectMapper.readStringKeyMap(it)) }
                 }
 
                 it("every create returns 200") {
                     responses
-                        .map(StatusAndBody::status)
+                        .map(Response::status)
                         .distinct() shouldHaveSingleElement 200
                 }
 
@@ -381,7 +385,7 @@ object ContactsMockSpec : Spek({
 
 })
 
-private fun Suite.whenContactDoesNotExist(action: (id: Long) -> StatusAndBody) {
+private fun Suite.whenContactDoesNotExist(action: (id: Long) -> Response) {
     context("when contact does not exist") {
 
         val id by memoized { randomLong() }
@@ -400,7 +404,7 @@ private fun Suite.whenContactDoesNotExist(action: (id: Long) -> StatusAndBody) {
 
 }
 
-private fun Suite.behavesLikeRemoteContact(response: StatusAndBody) {
+private fun Suite.behavesLikeRemoteContact(response: Response) {
     it("response contains all the properties") {
         assertSoftly {
             with(response.model().data()) {
