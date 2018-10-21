@@ -31,7 +31,10 @@ class ModelCollection(private val context: Context, private val metaModel: MetaM
         return mutableModel
     }
 
-    fun list() = Page(models.values)
+    fun list(request: PageRequest?): Page<Model> = models
+        .values
+        .toList()
+        .page(request)
 
     fun get(id: Any): Model? = models[id.toString()]
 
@@ -86,11 +89,5 @@ interface Updater {
 object NaiveUpdater : Updater {
 
     override fun update(target: MutableModel, source: Model) = target.replace(source)
-
-}
-
-class Page<out T>(val items: Collection<T>) {
-
-    fun <S> transformItems(elementTransformer: (T) -> S) = Page(items.map(elementTransformer))
 
 }

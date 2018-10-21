@@ -5,6 +5,7 @@ import pl.helenium.mockingbird.model.Context
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.Model
 import pl.helenium.mockingbird.model.Page
+import pl.helenium.mockingbird.model.PageRequest
 import pl.helenium.mockingbird.server.Request
 import pl.helenium.mockingbird.server.Response
 
@@ -20,8 +21,22 @@ class RestCreateOperation(context: Context, metaModel: MetaModel) : RestOperatio
 // FIXME add support for paging
 class RestListOperation(context: Context, metaModel: MetaModel) : RestOperation<Page<Model>>(context, metaModel) {
 
-    override fun handle(actor: Actor?, request: Request, response: Response, model: Model) =
-        collection().list()
+    override fun handle(actor: Actor?, request: Request, response: Response, model: Model): Page<Model> {
+        return collection().list(
+            // FIXME this is custom code
+            PageRequest(
+                request
+                    .queryParam("page")
+                    ?.toInt()
+                    ?.minus(1)
+                    ?: 0,
+                request
+                    .queryParam("per_page")
+                    ?.toInt()
+                    ?: 25
+            )
+        )
+    }
 
 }
 
