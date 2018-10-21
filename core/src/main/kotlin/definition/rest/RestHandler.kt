@@ -8,6 +8,7 @@ import pl.helenium.mockingbird.model.Context
 import pl.helenium.mockingbird.model.Handler
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.Model
+import pl.helenium.mockingbird.model.Page
 import pl.helenium.mockingbird.server.Request
 import pl.helenium.mockingbird.server.Response
 
@@ -48,6 +49,6 @@ abstract class RestOperation<M>(
 
 fun emptyModelRequestParser(@Suppress("UNUSED_PARAMETER") body: String) = Model()
 
-fun collectionTransformer(elementTransformer: (Model) -> Model): (Collection<Model>) -> Collection<Model> = {
-    it.map(elementTransformer)
+fun <L, R> pageTransformer(elementTransformer: (L) -> R): (Page<L>) -> Page<R> = {
+    it.transformItems(elementTransformer)
 }

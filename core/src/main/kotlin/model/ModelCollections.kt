@@ -14,6 +14,7 @@ class ModelCollections(private val context: Context) {
 
 class ModelCollection(private val context: Context, private val metaModel: MetaModel) {
 
+    // TODO allow other backend than memory
     private val models: ConcurrentMap<String, MutableModel> = ConcurrentHashMap()
 
     fun create(actor: Actor?, model: Model): Model {
@@ -30,7 +31,7 @@ class ModelCollection(private val context: Context, private val metaModel: MetaM
         return mutableModel
     }
 
-    fun list(): Collection<Model> = models.values
+    fun list() = Page(models.values)
 
     fun get(id: Any): Model? = models[id.toString()]
 
@@ -85,5 +86,11 @@ interface Updater {
 object NaiveUpdater : Updater {
 
     override fun update(target: MutableModel, source: Model) = target.replace(source)
+
+}
+
+class Page<out T>(val items: Collection<T>) {
+
+    fun <S> transformItems(elementTransformer: (T) -> S) = Page(items.map(elementTransformer))
 
 }

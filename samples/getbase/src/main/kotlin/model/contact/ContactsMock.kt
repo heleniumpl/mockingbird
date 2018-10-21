@@ -10,8 +10,8 @@ import pl.helenium.mockingbird.definition.rest.RestGetOperation
 import pl.helenium.mockingbird.definition.rest.RestHandler
 import pl.helenium.mockingbird.definition.rest.RestListOperation
 import pl.helenium.mockingbird.definition.rest.RestUpdateOperation
-import pl.helenium.mockingbird.definition.rest.collectionTransformer
 import pl.helenium.mockingbird.definition.rest.emptyModelRequestParser
+import pl.helenium.mockingbird.definition.rest.pageTransformer
 import pl.helenium.mockingbird.definition.then
 import pl.helenium.mockingbird.model.Actor
 import pl.helenium.mockingbird.model.Context
@@ -64,7 +64,7 @@ class ContactsMock(context: Context) : DslMock(context, {
             RestHandler(
                 requestParser = ::emptyModelRequestParser,
                 restOperation = RestListOperation(context, metaModel()),
-                wrapper = collectionTransformer(dataMetaWrapper(metaModel()))
+                wrapper = pageTransformer(dataMetaWrapper(metaModel()))
                         then ::itemsWrapper,
                 responseWriter = JsonResponseWriter
             )

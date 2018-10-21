@@ -6,6 +6,7 @@ import pl.helenium.mockingbird.model.Authorization
 import pl.helenium.mockingbird.model.Context
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.Model
+import pl.helenium.mockingbird.model.Page
 import pl.helenium.mockingbird.server.Request
 
 class BearerAuthenticator(
@@ -38,12 +39,12 @@ fun dataMetaWrapper(metaModel: MetaModel): (Model) -> Model = {
     )
 }
 
-fun itemsWrapper(items: Collection<Model>) = Model(
+fun itemsWrapper(page: Page<Model>) = Model(
     mapOf(
-        "items" to items,
+        "items" to page.items,
         "meta" to mapOf(
             "type" to "collection",
-            "count" to items.size
+            "count" to page.items.size
         )
     )
 )
