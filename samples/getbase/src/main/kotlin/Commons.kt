@@ -42,7 +42,9 @@ fun dataMetaWrapper(metaModel: MetaModel): (Model) -> Model = {
 
 fun itemsWrapper(page: Page<Model>) = Model(
     mapOf(
-        "items" to page.items,
+        "items" to page
+            .items
+            .map(Model::asMap),
         "meta" to mapOf(
             "type" to "collection",
             "count" to page.items.size

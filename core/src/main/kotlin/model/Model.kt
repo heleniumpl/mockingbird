@@ -13,18 +13,22 @@ open class Model(protected var data: Map<String, Any?> = mapOf()) {
 
     open fun asMap() = data
 
-    // effectively Map<String, Any?>
-    open fun embeddedModel(path: String) = maybeEmbeddedModel(path) ?: throw IllegalArgumentException()
+    open fun embeddedModel(path: String) = maybeEmbeddedModel(path)
+        ?: noEmbedded(path, "model")
 
-    open fun maybeEmbeddedModel(path: String) = data[path]?.let { Model(it as Map<String, Any?>) }
+    open fun maybeEmbeddedModel(path: String) = data[path]
+        ?.let { Model(it as Map<String, Any?>) }
 
     // effectively List<Map<String, Any?>>
-    open fun embeddedModelList(path: String) = maybeEmbeddedModelList(path) ?: throw IllegalArgumentException()
+    open fun embeddedModelList(path: String) = maybeEmbeddedModelList(path)
+        ?: noEmbedded(path, "model list")
 
-    open fun maybeEmbeddedModelList(path: String) = data[path]?.let { it as List<Map<String, Any?>> }?.map(::Model)
+    open fun maybeEmbeddedModelList(path: String) = data[path]
+        ?.let { it as List<Map<String, Any?>> }
+        ?.map(::Model)
 
-    // effectively List<T>
-    open fun <T> embeddedList(path: String) = maybeEmbeddedList<T>(path) ?: throw IllegalArgumentException()
+    open fun <T> embeddedList(path: String) = maybeEmbeddedList<T>(path)
+        ?: noEmbedded(path, "list")
 
     open fun <T> maybeEmbeddedList(path: String) = data[path] as? List<T>
 
@@ -47,16 +51,20 @@ class MutableModel(data: MutableMap<String, Any?>) : Model(data) {
 
     override fun asMap() = super.asMap() as MutableMap<String, Any?>
 
-    override fun embeddedModel(path: String) = maybeEmbeddedModel(path) ?: throw IllegalArgumentException()
+    override fun embeddedModel(path: String) = maybeEmbeddedModel(path)
+        ?: noEmbedded(path, "model")
 
-    override fun maybeEmbeddedModel(path: String) = asMap()[path]?.let { MutableModel(it as MutableMap<String, Any?>) }
+    override fun maybeEmbeddedModel(path: String) = asMap()[path]
+        ?.let { MutableModel(it as MutableMap<String, Any?>) }
 
-    override fun embeddedModelList(path: String) = maybeEmbeddedModelList(path) ?: throw IllegalArgumentException()
+    override fun embeddedModelList(path: String) = maybeEmbeddedModelList(path)
+        ?: noEmbedded(path, "model list")
 
     override fun maybeEmbeddedModelList(path: String) =
         asMap()[path]?.let { it as List<MutableMap<String, Any?>> }?.map(::MutableModel)
 
-    override fun <T> embeddedList(path: String) = maybeEmbeddedList<T>(path) ?: throw IllegalArgumentException()
+    override fun <T> embeddedList(path: String) = maybeEmbeddedList<T>(path)
+        ?: noEmbedded(path, "list")
 
     override fun <T> maybeEmbeddedList(path: String) = asMap()[path] as? MutableList<T>
 
@@ -75,3 +83,5 @@ private fun Any?.deepCopy(): Any? = when (this) {
     else -> this
 }
 
+private fun noEmbedded(path: String, type: String): Nothing =
+    throw IllegalArgumentException("No embedded $type exists under '$path'")

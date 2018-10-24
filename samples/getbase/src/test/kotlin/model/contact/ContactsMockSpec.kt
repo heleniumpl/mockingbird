@@ -191,26 +191,47 @@ object ContactsMockSpec : Spek({
 
         describe("GET contacts") {
 
-            context("when no contact exists") {
+            mapOf(
+                0 to 0,
+                1 to 1,
+                25 to 25,
+                26 to 25
+            ).forEach { contactCount, expectedPageSize ->
+                context("when $contactCount contact(s) exist(s)") {
 
-                val response by memoized { mock.getContacts() }
+                    val response by memoized {
+                        mock.run {
+                            repeat(contactCount) { createContact() }
+                            getContacts()
+                        }
+                    }
 
-                it("returns 200") {
-                    response.status shouldBe 200
-                }
+                    it("returns 200") {
+                        response.status shouldBe 200
+                    }
 
-                it("has items envelope") {
-                    with(response.model()) {
-                        items() shouldHaveSize 0
-                        with(meta()) {
-                            getProperty<String>("type") shouldBe "collection"
-                            getProperty<Long>("count") shouldBe 0
+                    it("has items envelope") {
+                        with(response.model()) {
+                            items() shouldNotBe null
+                            with(meta()) {
+                                getProperty<String>("type") shouldBe "collection"
+                                getProperty<Long>("count") shouldBe expectedPageSize
+                            }
+                        }
+                    }
+
+                    it("each item has envelope") {
+                        with(response.model().items()) {
+                            this shouldHaveSize expectedPageSize
+                            this.forEach {
+                                it.data().id() shouldNotBe null
+                                it.meta().getProperty<String>("type") shouldBe "contact"
+                            }
                         }
                     }
                 }
 
             }
-
         }
 
         describe("GET contact") {
