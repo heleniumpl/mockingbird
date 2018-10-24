@@ -7,6 +7,7 @@ import pl.helenium.mockingbird.model.Context
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.Model
 import pl.helenium.mockingbird.model.Page
+import pl.helenium.mockingbird.model.PageRequest
 import pl.helenium.mockingbird.server.Request
 
 class BearerAuthenticator(
@@ -26,7 +27,7 @@ class BearerAuthenticator(
 
 }
 
-fun dataMetaUnwrapper(): (Model) -> Model = { it.embeddedModel("data") }
+fun dataMetaUnwrapper(model: Model) = model.embeddedModel("data")
 
 fun dataMetaWrapper(metaModel: MetaModel): (Model) -> Model = {
     Model(
@@ -47,4 +48,16 @@ fun itemsWrapper(page: Page<Model>) = Model(
             "count" to page.items.size
         )
     )
+)
+
+fun pageRequestExtractor(request: Request) = PageRequest(
+    request
+        .queryParam("page")
+        ?.toInt()
+        ?.dec()
+        ?: 0,
+    request
+        .queryParam("per_page")
+        ?.toInt()
+        ?: 25
 )

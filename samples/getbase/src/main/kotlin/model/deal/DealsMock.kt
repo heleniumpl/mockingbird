@@ -48,7 +48,7 @@ class DealsMock(context: Context) : DslMock(context, {
             "/v2/deals",
             RestHandler(
                 restOperation = RestCreateOperation(context, metaModel()),
-                unwrapper = dataMetaUnwrapper(),
+                unwrapper = ::dataMetaUnwrapper,
                 wrapper = dataMetaWrapper(metaModel()),
                 responseWriter = JsonResponseWriter
             )

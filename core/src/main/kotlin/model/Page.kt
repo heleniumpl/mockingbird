@@ -1,5 +1,7 @@
 package pl.helenium.mockingbird.model
 
+import kotlin.math.min
+
 class Page<out T>(val items: Collection<T>) {
 
     fun <S> transformItems(elementTransformer: (T) -> S) = Page(items.map(elementTransformer))
@@ -18,5 +20,5 @@ fun <T> List<T>.page(request: PageRequest?) = Page(
     if (request == null)
         this
     else
-        subList(request.firstItem, kotlin.math.min(request.lastItemExclusive, size))
+        subList(request.firstItem, min(request.lastItemExclusive, size))
 )

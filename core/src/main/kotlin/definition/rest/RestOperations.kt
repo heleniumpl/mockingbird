@@ -18,25 +18,14 @@ class RestCreateOperation(context: Context, metaModel: MetaModel) : RestOperatio
 
 // FIXME add support for filtering
 // FIXME add support for sorting
-// FIXME add support for paging
-class RestListOperation(context: Context, metaModel: MetaModel) : RestOperation<Page<Model>>(context, metaModel) {
+class RestListOperation(
+    context: Context,
+    metaModel: MetaModel,
+    private val pageRequestExtractor: (Request) -> PageRequest? = { null }
+) : RestOperation<Page<Model>>(context, metaModel) {
 
-    override fun handle(actor: Actor?, request: Request, response: Response, model: Model): Page<Model> {
-        return collection().list(
-            // FIXME this is custom code
-            PageRequest(
-                request
-                    .queryParam("page")
-                    ?.toInt()
-                    ?.minus(1)
-                    ?: 0,
-                request
-                    .queryParam("per_page")
-                    ?.toInt()
-                    ?: 25
-            )
-        )
-    }
+    override fun handle(actor: Actor?, request: Request, response: Response, model: Model) =
+        collection().list(pageRequestExtractor(request))
 
 }
 
