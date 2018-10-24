@@ -1,6 +1,6 @@
 object Versions {
 
-    const val kotlin = "1.3.0-rc-190"
+    const val kotlin = "1.3.0-rc-198"
 
     const val logback = "1.2.3"
     const val kotlinLogging = "1.6.10"
