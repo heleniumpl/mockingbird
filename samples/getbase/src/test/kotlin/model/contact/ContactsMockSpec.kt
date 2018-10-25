@@ -191,19 +191,23 @@ object ContactsMockSpec : Spek({
 
         describe("GET contacts") {
 
-            mapOf(
-                0 to 0,
-                1 to 1,
-                25 to 25,
-                26 to 25
-            ).forEach { contactCount, expectedPageSize ->
-                context("when $contactCount contact(s) exist(s)") {
+            listOf(
+                PagingSpecData(0, null, null, IntRange.EMPTY),
+                PagingSpecData(1, null, null, 0..0),
+                PagingSpecData(25, null, null, 0..24),
+                PagingSpecData(26, null, null, 0..24)
+            ).forEach { data ->
+                context("when ${data.contactToCreate} contact(s) exist(s)") {
+
+                    val contacts by memoized {
+                        (1..data.contactToCreate).map {
+                            mock.createContact().model().data().id()
+                        }
+                    }
 
                     val response by memoized {
-                        mock.run {
-                            repeat(contactCount) { createContact() }
-                            getContacts()
-                        }
+                        contacts
+                        mock.getContacts(data.page, data.perPage)
                     }
 
                     it("returns 200") {
@@ -215,23 +219,31 @@ object ContactsMockSpec : Spek({
                             items() shouldNotBe null
                             with(meta()) {
                                 getProperty<String>("type") shouldBe "collection"
-                                getProperty<Long>("count") shouldBe expectedPageSize
+                                getProperty<Long>("count") shouldBe data.expectedItems.count()
                             }
                         }
                     }
 
                     it("each item has envelope") {
-                        with(response.model().items()) {
-                            this shouldHaveSize expectedPageSize
-                            this.forEach {
-                                it.data().id() shouldNotBe null
+                        response
+                            .model()
+                            .items()
+                            .forEach {
+                                it.data() shouldNotBe null
                                 it.meta().getProperty<String>("type") shouldBe "contact"
                             }
-                        }
                     }
-                }
 
+                    it("proper items should be included") {
+                        response
+                            .model()
+                            .items()
+                            .map { it.data().id() }.toSet() shouldBe contacts.slice(data.expectedItems).toSet()
+                    }
+
+                }
             }
+
         }
 
         describe("GET contact") {
@@ -479,9 +491,14 @@ private fun Mockingbird.createContact(body: Any = exampleModel()) =
         .body(mapOf("data" to body).toJson())
         .execute()
 
-private fun Mockingbird.getContacts() =
+private fun Mockingbird.getContacts(page: Int? = null, perPage: Int? = null) =
     "http://localhost:${context.port}/v2/contacts"
-        .httpGet()
+        .httpGet(
+            listOf(
+                "page" to page,
+                "per_page" to perPage
+            )
+        )
         .authorized()
         .execute()
 
@@ -539,4 +556,11 @@ private fun exampleModel() = mutableMapOf(
     "custom_fields" to mutableMapOf(
         "referral_website" to "http://www.example.com"
     )
+)
+
+private data class PagingSpecData(
+    val contactToCreate: Int,
+    val page: Int?,
+    val perPage: Int?,
+    val expectedItems: IntRange
 )

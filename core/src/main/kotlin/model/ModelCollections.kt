@@ -34,6 +34,8 @@ class ModelCollection(private val context: Context, private val metaModel: MetaM
     fun list(request: PageRequest?): Page<Model> = models
         .values
         .toList()
+        // FIXME support other types
+        .sortedBy { it.getProperty<Long>(metaModel.id().name) }
         .page(request)
 
     fun get(id: Any): Model? = models[id.toString()]

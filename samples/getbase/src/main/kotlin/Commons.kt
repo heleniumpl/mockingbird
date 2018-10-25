@@ -62,4 +62,5 @@ fun pageRequestExtractor(request: Request) = PageRequest(
         .queryParam("per_page")
         ?.toInt()
         ?: 25
+        // FIXME max 100
 )
