@@ -8,6 +8,8 @@ import java.io.StringWriter
 
 abstract class AbstractHttpException(val status: Int, message: String) : RuntimeException(message)
 
+class BadRequest : AbstractHttpException(400, "Bad request!")
+
 class Unauthorized : AbstractHttpException(401, "You are unauthorized!")
 
 class NotFoundException(message: String) : AbstractHttpException(404, message)

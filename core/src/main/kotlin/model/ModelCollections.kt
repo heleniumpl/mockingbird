@@ -34,7 +34,7 @@ class ModelCollection(private val context: Context, private val metaModel: MetaM
     fun list(request: PageRequest? = null, orderBy: OrderBy? = null): Page<Model> = models
         .values
         .toList()
-        .sortedWith(OrderByComparator(orderBy ?: OrderBy(metaModel.id().name)))
+        .sortedWith(orderBy ?: Order(metaModel.id().name).toOrderBy())
         .page(request)
 
     fun get(id: Any): Model? = models[id.toString()]

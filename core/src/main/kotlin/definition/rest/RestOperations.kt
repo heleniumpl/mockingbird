@@ -4,6 +4,7 @@ import pl.helenium.mockingbird.model.Actor
 import pl.helenium.mockingbird.model.Context
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.Model
+import pl.helenium.mockingbird.model.OrderBy
 import pl.helenium.mockingbird.model.Page
 import pl.helenium.mockingbird.model.PageRequest
 import pl.helenium.mockingbird.server.Request
@@ -17,15 +18,18 @@ class RestCreateOperation(context: Context, metaModel: MetaModel) : RestOperatio
 }
 
 // FIXME add support for filtering
-// FIXME add support for sorting
 class RestListOperation(
     context: Context,
     metaModel: MetaModel,
-    private val pageRequestExtractor: (Request) -> PageRequest? = { null }
+    private val pageRequestExtractor: (Request) -> PageRequest? = { null },
+    private val orderByExtractor: (Request) -> OrderBy? = { null }
 ) : RestOperation<Page<Model>>(context, metaModel) {
 
     override fun handle(actor: Actor?, request: Request, response: Response, model: Model) =
-        collection().list(pageRequestExtractor(request))
+        collection().list(
+            pageRequestExtractor(request),
+            orderByExtractor(request)
+        )
 
 }
 

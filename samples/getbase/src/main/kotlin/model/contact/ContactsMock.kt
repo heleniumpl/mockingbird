@@ -26,6 +26,7 @@ import pl.helenium.mockingbird.test.mock.getbase.dataMetaWrapper
 import pl.helenium.mockingbird.test.mock.getbase.handler.CreatedUpdatedLifecycleHandler
 import pl.helenium.mockingbird.test.mock.getbase.handler.CreatorLifecycleHandler
 import pl.helenium.mockingbird.test.mock.getbase.itemsWrapper
+import pl.helenium.mockingbird.test.mock.getbase.orderByExtractor
 import pl.helenium.mockingbird.test.mock.getbase.pageRequestExtractor
 
 class ContactsMock(context: Context) : DslMock(context, {
@@ -64,7 +65,12 @@ class ContactsMock(context: Context) : DslMock(context, {
             "/v2/contacts",
             RestHandler(
                 requestParser = ::emptyModelRequestParser,
-                restOperation = RestListOperation(context, metaModel(), ::pageRequestExtractor),
+                restOperation = RestListOperation(
+                    context,
+                    metaModel(),
+                    ::pageRequestExtractor,
+                    ::orderByExtractor
+                ),
                 wrapper = pageTransformer(dataMetaWrapper(metaModel()))
                         then ::itemsWrapper,
                 responseWriter = JsonResponseWriter

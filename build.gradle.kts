@@ -1,4 +1,5 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("com.github.ben-manes.versions") version Versions.GradlePlugins.versions
@@ -12,6 +13,14 @@ subprojects {
 
         maven("https://dl.bintray.com/kotlin/kotlin-eap")
         maven("https://dl.bintray.com/spekframework/spek-dev")
+    }
+
+    tasks {
+        withType<KotlinCompile> {
+            kotlinOptions {
+                jvmTarget = "1.8"
+            }
+        }
     }
 }
 

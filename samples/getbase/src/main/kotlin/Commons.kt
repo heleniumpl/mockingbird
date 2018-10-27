@@ -1,11 +1,15 @@
 package pl.helenium.mockingbird.test.mock.getbase
 
 import pl.helenium.mockingbird.definition.Authenticator
+import pl.helenium.mockingbird.exception.BadRequest
 import pl.helenium.mockingbird.model.Actor
 import pl.helenium.mockingbird.model.Authorization
 import pl.helenium.mockingbird.model.Context
+import pl.helenium.mockingbird.model.Direction
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.Model
+import pl.helenium.mockingbird.model.Order
+import pl.helenium.mockingbird.model.OrderBy
 import pl.helenium.mockingbird.model.Page
 import pl.helenium.mockingbird.model.PageRequest
 import pl.helenium.mockingbird.server.Request
@@ -64,3 +68,19 @@ fun pageRequestExtractor(request: Request) = PageRequest(
         ?: 25
         // FIXME max 100
 )
+
+fun orderByExtractor(request: Request): OrderBy? {
+    val sortBy = request.queryParam("sort_by") ?: return null
+    val matchResult = """(?<property>\w+)(:(?<direction>asc|desc))?"""
+        .toRegex()
+        .matchEntire(sortBy)
+        ?: throw BadRequest()
+    return OrderBy(
+        Order(
+            matchResult.groups["property"]!!.value,
+            (matchResult.groups["direction"]?.value ?: "asc")
+                .let(String::toUpperCase)
+                .let(Direction::valueOf)
+        )
+    )
+}
