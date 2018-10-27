@@ -31,11 +31,10 @@ class ModelCollection(private val context: Context, private val metaModel: MetaM
         return mutableModel
     }
 
-    fun list(request: PageRequest?): Page<Model> = models
+    fun list(request: PageRequest? = null, orderBy: OrderBy? = null): Page<Model> = models
         .values
         .toList()
-        // FIXME support other types
-        .sortedBy { it.getProperty<Long>(metaModel.id().name) }
+        .sortedWith(OrderByComparator(orderBy ?: OrderBy(metaModel.id().name)))
         .page(request)
 
     fun get(id: Any): Model? = models[id.toString()]

@@ -206,6 +206,7 @@ object ContactsMockSpec : Spek({
                     }
 
                     val response by memoized {
+                        @Suppress("UNUSED_EXPRESSION")
                         contacts
                         mock.getContacts(data.page, data.perPage)
                     }
