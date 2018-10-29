@@ -2,7 +2,7 @@ package pl.helenium.mockingbird.model
 
 import pl.helenium.mockingbird.model.Property.PropertyDsl
 
-class Property(val name: String) {
+class Property(val name: String, buildBlock: PropertyDsl.() -> Unit = {}) {
 
     var id = false
 
@@ -11,6 +11,10 @@ class Property(val name: String) {
     var type: Type = AnyType
 
     val validators = mutableListOf<Validator>()
+
+    init {
+        PropertyDsl().buildBlock()
+    }
 
     inner class PropertyDsl {
 
@@ -43,10 +47,8 @@ class PropertiesDsl(private val properties: MutableList<Property>) {
         buildBlock()
     }
 
-    fun property(name: String, buildBlock: PropertyDsl.() -> Unit) = Property(name)
+    fun property(name: String, buildBlock: PropertyDsl.() -> Unit) = Property(name, buildBlock)
         .also { properties += it }
-        .PropertyDsl()
-        .buildBlock()
 }
 
 class RequiredPropertyValidator(private val property: Property) : Validator {

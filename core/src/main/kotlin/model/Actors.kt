@@ -1,14 +1,20 @@
 package pl.helenium.mockingbird.model
 
+import pl.helenium.mockingbird.model.Actors.Scope.ScopeDsl
+
 class Actors {
 
     private val scopes = mutableMapOf<String, Scope>()
 
-    fun scope(scope: String) = scopes.computeIfAbsent(scope) { Scope() }
+    fun scope(scope: String, buildBlock: ScopeDsl.() -> Unit = {}) = scopes.computeIfAbsent(scope) { Scope(buildBlock) }
 
-    class Scope internal constructor() {
+    class Scope internal constructor(buildBlock: ScopeDsl.() -> Unit) {
 
         private val actors = mutableSetOf<Actor>()
+
+        init {
+            ScopeDsl().buildBlock()
+        }
 
         fun register(actor: Actor) {
             actors.add(actor)
@@ -20,6 +26,14 @@ class Actors {
             return actors
                 .asSequence()
                 .find { it.authorization.matches(authorization) }
+        }
+
+        inner class ScopeDsl {
+
+            fun actor(id: Any, authorization: String, name: String = id.toString()) {
+                register(Actor(id, Authorization(authorization), name))
+            }
+
         }
 
     }

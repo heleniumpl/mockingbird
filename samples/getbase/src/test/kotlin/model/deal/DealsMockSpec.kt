@@ -17,15 +17,14 @@ object DealsMockSpec : Spek({
     describe("Deals Mock") {
 
         val mock by memoized {
-            Mockingbird()
-                .setup {
-                    actors {
-                        scope("basePublic") {
-                            actor(12345L, "very_secret_auth_token", "CEO of Base")
-                        }
+            Mockingbird {
+                actors {
+                    scope("basePublic") {
+                        actor(12345L, "very_secret_auth_token", "CEO of Base")
                     }
-                    mocks(::DealsMock)
                 }
+                mocks(::DealsMock)
+            }
                 .start()
         }
 
@@ -34,11 +33,13 @@ object DealsMockSpec : Spek({
             context("when deal w/ proper attributes is created") {
 
                 val response by memoized {
-                    mock.createDeal(mapOf(
-                        "name" to "200 bottles of wine",
-                        "contact_id" to randomLong(),
-                        "hot" to true
-                    ))
+                    mock.createDeal(
+                        mapOf(
+                            "name" to "200 bottles of wine",
+                            "contact_id" to randomLong(),
+                            "hot" to true
+                        )
+                    )
                 }
 
                 it("returns 200") {
@@ -101,10 +102,12 @@ object DealsMockSpec : Spek({
             context("when deal w/ contact_id not being a number is created") {
 
                 val response by memoized {
-                    mock.createDeal(mapOf(
-                        "name" to "200 bottles of wine",
-                        "contact_id" to "not a number"
-                    ))
+                    mock.createDeal(
+                        mapOf(
+                            "name" to "200 bottles of wine",
+                            "contact_id" to "not a number"
+                        )
+                    )
                 }
 
                 it("returns 422") {
@@ -120,10 +123,12 @@ object DealsMockSpec : Spek({
             context("when deal w/ name not being a string is created") {
 
                 val response by memoized {
-                    mock.createDeal(mapOf(
-                        "name" to false,
-                        "contact_id" to randomLong()
-                    ))
+                    mock.createDeal(
+                        mapOf(
+                            "name" to false,
+                            "contact_id" to randomLong()
+                        )
+                    )
                 }
 
                 it("returns 422") {
@@ -139,11 +144,13 @@ object DealsMockSpec : Spek({
             context("when deal w/ `hot` not being a boolean is created") {
 
                 val response by memoized {
-                    mock.createDeal(mapOf(
-                        "name" to "3 dogs & 4 cats",
-                        "contact_id" to randomLong(),
-                        "hot" to "cold"
-                    ))
+                    mock.createDeal(
+                        mapOf(
+                            "name" to "3 dogs & 4 cats",
+                            "contact_id" to randomLong(),
+                            "hot" to "cold"
+                        )
+                    )
                 }
 
                 it("returns 422") {

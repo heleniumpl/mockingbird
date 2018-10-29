@@ -15,13 +15,17 @@ class MetaModels {
 
 }
 
-data class MetaModel(val name: String) {
+class MetaModel(val name: String, buildBlock: MetaModelDsl.() -> Unit = {}) {
 
     private val properties = mutableListOf<Property>()
 
     private val lifecycleHandlers = mutableListOf<LifecycleHandler>()
 
     private val validators = mutableListOf<Validator>()
+
+    init {
+        MetaModelDsl().buildBlock()
+    }
 
     fun id() = properties.find { it.id } ?: throw IllegalStateException("MetaModel $name does not have ID!")
 

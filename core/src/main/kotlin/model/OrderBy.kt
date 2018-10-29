@@ -11,7 +11,7 @@ class OrderBy(vararg orders: Comparator<Model>) : Comparator<Model> {
 
 }
 
-class Order(val property: String, val direction: Direction = ASC) : Comparator<Model> {
+class Order(private val property: String, private val direction: Direction = ASC) : Comparator<Model> {
 
     override fun compare(o1: Model, o2: Model): Int {
         val o1propValue = o1.getProperty<Comparable<Any>>(property)

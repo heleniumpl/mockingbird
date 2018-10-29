@@ -64,6 +64,7 @@
         <w>kotlintest</w>
         <w>kraków</w>
         <w>microutils</w>
+        <w>mockk</w>
         <w>sparkjava</w>
         <w>spek</w>
         <w>spekframework</w>
@@ -253,6 +254,69 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.kotlintest/kotlintest-assertions/3.1.10/9fe422476336e60a8a9dcf0535589a7c7e4acf61/kotlintest-assertions-3.1.10-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="Gradle: io.mockk:mockk-agent-api:1.8.9.kotlin13">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.mockk/mockk-agent-api/1.8.9.kotlin13/10e079a4526adc014a39624c12997ca2dafad1b5/mockk-agent-api-1.8.9.kotlin13.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.mockk/mockk-agent-api/1.8.9.kotlin13/7e034c3d2287a08ad8201768884da54858d0eaba/mockk-agent-api-1.8.9.kotlin13-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: io.mockk:mockk-agent-common:1.8.9.kotlin13">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.mockk/mockk-agent-common/1.8.9.kotlin13/5e55dc9f6d327d37174294d0d3a2c62e950b1846/mockk-agent-common-1.8.9.kotlin13.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.mockk/mockk-agent-common/1.8.9.kotlin13/d92a6a49e1f572097513d326d99389f5bca7bbd6/mockk-agent-common-1.8.9.kotlin13-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: io.mockk:mockk-agent-jvm:1.8.9.kotlin13">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.mockk/mockk-agent-jvm/1.8.9.kotlin13/16367c73609640ef07b0de632e02ba362093ff65/mockk-agent-jvm-1.8.9.kotlin13.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.mockk/mockk-agent-jvm/1.8.9.kotlin13/af4be12d9a8443f47739dd97c170ae860a08984e/mockk-agent-jvm-1.8.9.kotlin13-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: io.mockk:mockk-common:1.8.9.kotlin13" type="kotlin.common">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.mockk/mockk-common/1.8.9.kotlin13/c5c21a31cebb8d168aa8a7d058a55fd2236cb47e/mockk-common-1.8.9.kotlin13.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.mockk/mockk-common/1.8.9.kotlin13/186cadc10447545bcf2f9ebf5be67e5576206286/mockk-common-1.8.9.kotlin13-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: io.mockk:mockk-dsl-jvm:1.8.9.kotlin13">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.mockk/mockk-dsl-jvm/1.8.9.kotlin13/8c784ce85eb4e6c301b272c0e78b8dbcc7938051/mockk-dsl-jvm-1.8.9.kotlin13.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.mockk/mockk-dsl-jvm/1.8.9.kotlin13/cd733c7b6d2e9d8b5b2ed9dbe5a1749d1101d016/mockk-dsl-jvm-1.8.9.kotlin13-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: io.mockk:mockk-dsl:1.8.9.kotlin13">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.mockk/mockk-dsl/1.8.9.kotlin13/b13e62afb27a4a652386ceba5fa6c63f20d42c9a/mockk-dsl-1.8.9.kotlin13.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.mockk/mockk-dsl/1.8.9.kotlin13/2f13fe48bb3792449869bd4999917fd6a919deeb/mockk-dsl-1.8.9.kotlin13-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: io.mockk:mockk:1.8.9.kotlin13">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.mockk/mockk/1.8.9.kotlin13/539a5afaed4a7c06ece8e6fe7e53155c6ba150f6/mockk-1.8.9.kotlin13.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.mockk/mockk/1.8.9.kotlin13/fe111ea4991142742819562790a0e8e848b68257/mockk-1.8.9.kotlin13-sources.jar!/" />
+      </SOURCES>
+    </library>
     <library name="Gradle: javax.servlet:javax.servlet-api:3.1.0">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.servlet/javax.servlet-api/3.1.0/3cd63d075497751784b2fa84be59432f4905bf7c/javax.servlet-api-3.1.0.jar!/" />
@@ -260,6 +324,24 @@
       <JAVADOC />
       <SOURCES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.servlet/javax.servlet-api/3.1.0/ab3976d4574c48d22dc1abf6a9e8bd0fdf928223/javax.servlet-api-3.1.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: net.bytebuddy:byte-buddy-agent:1.8.22">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.8.22/347d063fe292e406f6a71ff64dfd9e8d794f0aba/byte-buddy-agent-1.8.22.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.8.22/f5116311562de48ea10f05dd2603115b0152b32f/byte-buddy-agent-1.8.22-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: net.bytebuddy:byte-buddy:1.8.22">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy/1.8.22/4d65fdf7d9755ef7c75f2213f356119d0e68c2cd/byte-buddy-1.8.22.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy/1.8.22/8292b7eb9fbb4a9463a8c6a461e4497f76ad01c9/byte-buddy-1.8.22-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: org.apiguardian:apiguardian-api:1.0.0">
@@ -467,6 +549,15 @@
       <JAVADOC />
       <SOURCES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.junit.platform/junit-platform-engine/1.1.1/5fcf8e292b87a2240e1e6dcd2fecfc8916b099ba/junit-platform-engine-1.1.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: org.objenesis:objenesis:2.6">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.objenesis/objenesis/2.6/639033469776fd37c08358c6b92a4761feb2af4b/objenesis-2.6.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.objenesis/objenesis/2.6/96614f514a1031296657bf0dde452dc15e42fcb8/objenesis-2.6-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: org.opentest4j:opentest4j:1.0.0">

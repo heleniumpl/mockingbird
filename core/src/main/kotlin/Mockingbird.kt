@@ -2,18 +2,16 @@ package pl.helenium.mockingbird
 
 import mu.KotlinLogging
 import pl.helenium.mockingbird.model.Context
-import pl.helenium.mockingbird.model.ContextDsl
+import pl.helenium.mockingbird.model.Context.ContextDsl
 import pl.helenium.mockingbird.server.Server
 import pl.helenium.mockingbird.server.spark.SparkServer
 import kotlin.system.measureTimeMillis
 
 private val logger = KotlinLogging.logger {}
 
-class Mockingbird(private val server: Server = SparkServer()) {
+class Mockingbird(private val server: Server = SparkServer(), buildBlock: ContextDsl.() -> Unit = {}) {
 
-    val context = Context(server)
-
-    fun setup(buildBlock: ContextDsl.() -> Unit) = apply { ContextDsl(context).buildBlock() }
+    val context = Context(server, buildBlock)
 
     fun start() = apply {
         try {

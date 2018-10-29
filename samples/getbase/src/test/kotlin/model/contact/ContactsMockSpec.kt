@@ -45,15 +45,14 @@ object ContactsMockSpec : Spek({
         val time by memoized { TimeTravelTimeService() }
 
         val mock by memoized {
-            Mockingbird()
-                .setup {
-                    actors {
-                        scope("basePublic") {
-                            actor(12345L, "very_secret_auth_token", "CEO of Base")
-                        }
+            Mockingbird {
+                actors {
+                    scope("basePublic") {
+                        actor(12345L, "very_secret_auth_token", "CEO of Base")
                     }
-                    mocks(::ContactsMock)
                 }
+                mocks(::ContactsMock)
+            }
                 .apply { context.services.time = time }
                 .start()
         }

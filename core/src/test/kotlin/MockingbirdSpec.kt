@@ -76,10 +76,9 @@ class MockingbirdSpec : Spek({
     describe("routes") {
 
         val mock by memoized {
-            Mockingbird()
-                .setup {
-                    mocks(::HelloWorldMock)
-                }
+            Mockingbird {
+                mocks(::HelloWorldMock)
+            }
                 .start()
         }
 
@@ -130,26 +129,25 @@ class MockingbirdSpec : Spek({
     describe("authorization") {
 
         val mock by memoized {
-            Mockingbird()
-                .setup {
-                    mocks(::HelloWorldMock)
-                    actors {
-                        scope("hello world") {
-                            actor(
-                                id = "ceo@helloworld.com",
-                                authorization = "very_hello_world_token",
-                                name = "Hello World CEO"
-                            )
-                        }
-                        scope("goodbye world") {
-                            actor(
-                                id = "ceo@goodbyeworld.com",
-                                authorization = "very_goodbye_world_token",
-                                name = "Goodbye World CEO"
-                            )
-                        }
+            Mockingbird {
+                mocks(::HelloWorldMock)
+                actors {
+                    scope("hello world") {
+                        actor(
+                            id = "ceo@helloworld.com",
+                            authorization = "very_hello_world_token",
+                            name = "Hello World CEO"
+                        )
+                    }
+                    scope("goodbye world") {
+                        actor(
+                            id = "ceo@goodbyeworld.com",
+                            authorization = "very_goodbye_world_token",
+                            name = "Goodbye World CEO"
+                        )
                     }
                 }
+            }
                 .start()
         }
 
