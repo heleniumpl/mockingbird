@@ -24,13 +24,16 @@ class Order(
     }
 
     override fun compare(o1: Model, o2: Model): Int {
-        val o1propValue = o1.getProperty<Comparable<Any>?>(property.name)
-        val o2propValue = o2.getProperty<Comparable<Any>?>(property.name)
+        val v1 = o1.getProperty<Any?>(property.name)
+        val v2 = o2.getProperty<Any?>(property.name)
         return when {
-            o1propValue === o2propValue -> 0
-            o1propValue == null -> -nulls.modifier
-            o2propValue == null -> nulls.modifier
-            else -> o1propValue.compareTo(o2propValue) * direction.modifier
+            v1 === v2 -> 0
+            v1 == null -> -nulls.modifier
+            v2 == null -> nulls.modifier
+            else -> property
+                .type
+                .comparator()
+                .compare(v1, v2) * direction.modifier
         }
     }
 
