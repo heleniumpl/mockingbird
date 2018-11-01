@@ -8,6 +8,8 @@ class Property(val name: String, buildBlock: PropertyDsl.() -> Unit = {}) {
 
     var required = false
 
+    var sortable = true
+
     var type: Type = AnyType
 
     val validators = mutableListOf<Validator>()
@@ -18,12 +20,17 @@ class Property(val name: String, buildBlock: PropertyDsl.() -> Unit = {}) {
 
     inner class PropertyDsl {
 
-        fun id() = apply { id = true }
+        fun id() = apply {
+            id = true
+            sortable()
+        }
 
         fun required(required: Boolean = true) = apply {
             this@Property.required = required
             if (required) validators += RequiredPropertyValidator(this@Property)
         }
+
+        fun sortable(sortable: Boolean = true) = apply { this@Property.sortable = sortable }
 
         fun type(type: Type) = apply {
             this@Property.type = type

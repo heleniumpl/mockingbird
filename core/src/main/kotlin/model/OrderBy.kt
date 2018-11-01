@@ -19,6 +19,10 @@ class Order(
     private val nulls: Nulls = LAST
 ) : Comparator<Model> {
 
+    init {
+        if(!property.sortable) throw IllegalArgumentException("Property `${property.name}` is not sortable!")
+    }
+
     override fun compare(o1: Model, o2: Model): Int {
         val o1propValue = o1.getProperty<Comparable<Any>?>(property.name)
         val o2propValue = o2.getProperty<Comparable<Any>?>(property.name)
