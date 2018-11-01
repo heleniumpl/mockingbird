@@ -49,8 +49,10 @@ class ModelCollectionSpec : Spek({
         context("13 element collection") {
 
             beforeEach {
-                repeat(13) {
-                    collection.create(null, Model(emptyMap()))
+                (1..13).forEach {
+                    collection.create(null, Model(mapOf(
+                        "longProp" to if (it < 13) -it else null
+                    )))
                 }
             }
 
@@ -58,7 +60,7 @@ class ModelCollectionSpec : Spek({
                 collection.list().items shouldHaveSize 13
             }
 
-            describe("default sorting") {
+            describe("paging") {
 
                 mapOf(
                     PageRequest(0, 1) to 0..0,
@@ -76,6 +78,15 @@ class ModelCollectionSpec : Spek({
                     it("should return $results element when page request = $request") {
                         collection.list(request).items shouldBe models.sortedById().slice(results)
                     }
+                }
+
+            }
+
+            describe("sorting") {
+
+                it("should sort by long property") {
+                    collection.list(orderBy = Order("longProp")).items shouldBe models.sortedWith(Order("longProp"))
+                    println(collection.list(orderBy = Order("longProp")).items)
                 }
 
             }
