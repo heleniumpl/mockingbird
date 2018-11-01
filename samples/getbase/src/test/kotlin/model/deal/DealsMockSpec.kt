@@ -115,7 +115,7 @@ object DealsMockSpec : Spek({
                 }
 
                 it("response contains error details") {
-                    response.body shouldBe "Property `contact_id` = `not a number` is not of `long` type!"
+                    response.body shouldBe "Property `contact_id` = `not a number` (of type `java.lang.String`) is not of `long` type!"
                 }
 
             }
@@ -136,7 +136,7 @@ object DealsMockSpec : Spek({
                 }
 
                 it("response contains error details") {
-                    response.body shouldBe "Property `name` = `false` is not of `string` type!"
+                    response.body shouldBe "Property `name` = `false` (of type `java.lang.Boolean`) is not of `string` type!"
                 }
 
             }
@@ -158,7 +158,7 @@ object DealsMockSpec : Spek({
                 }
 
                 it("response contains error details") {
-                    response.body shouldBe "Property `hot` = `cold` is not of `boolean` type!"
+                    response.body shouldBe "Property `hot` = `cold` (of type `java.lang.String`) is not of `boolean` type!"
                 }
 
             }

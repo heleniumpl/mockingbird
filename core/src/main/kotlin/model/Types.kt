@@ -17,7 +17,7 @@ abstract class AbstractType(private val type: KClass<*>) : Type {
 
     override fun validate(path: String, value: Any, errors: MutableList<ModelError>) {
         if (!type.isInstance(value))
-            errors += "Property `$path` = `$value` is not of `${javaClass.simpleName}` type!"
+            errors += "Property `$path` = `$value` (of type `${value.javaClass.name}`) is not of `${javaClass.simpleName}` type!"
     }
 
 }

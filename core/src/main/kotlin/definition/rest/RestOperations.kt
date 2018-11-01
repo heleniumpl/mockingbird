@@ -22,13 +22,13 @@ class RestListOperation(
     context: Context,
     metaModel: MetaModel,
     private val pageRequestExtractor: (Request) -> PageRequest? = { null },
-    private val orderByExtractor: (Request) -> OrderBy? = { null }
+    private val orderByExtractor: (MetaModel, Request) -> OrderBy? = { _, _ -> null }
 ) : RestOperation<Page<Model>>(context, metaModel) {
 
     override fun handle(actor: Actor?, request: Request, response: Response, model: Model) =
         collection().list(
             pageRequestExtractor(request),
-            orderByExtractor(request)
+            orderByExtractor(metaModel, request)
         )
 
 }

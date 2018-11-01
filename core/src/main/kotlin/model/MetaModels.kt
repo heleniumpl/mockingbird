@@ -27,7 +27,9 @@ class MetaModel(val name: String, buildBlock: MetaModelDsl.() -> Unit = {}) {
         MetaModelDsl().buildBlock()
     }
 
-    fun id() = properties.find { it.id } ?: throw IllegalStateException("MetaModel $name does not have ID!")
+    fun id() = properties.find { it.id } ?: throw IllegalStateException("MetaModel `$name` does not have ID!")
+
+    fun property(name: String) = properties.find { it.name == name } ?: throw IllegalStateException("MetaModel `${this.name}` does not have property `$name`!")
 
     fun lifecycleHandlers(): List<LifecycleHandler> = lifecycleHandlers
 

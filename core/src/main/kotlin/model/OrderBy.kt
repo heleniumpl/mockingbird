@@ -14,14 +14,14 @@ class OrderBy(vararg orders: Comparator<Model>) : Comparator<Model> {
 
 // FIXME needs spec
 class Order(
-    private val property: String,
+    private val property: Property,
     private val direction: Direction = ASC,
     private val nulls: Nulls = LAST
 ) : Comparator<Model> {
 
     override fun compare(o1: Model, o2: Model): Int {
-        val o1propValue = o1.getProperty<Comparable<Any>?>(property)
-        val o2propValue = o2.getProperty<Comparable<Any>?>(property)
+        val o1propValue = o1.getProperty<Comparable<Any>?>(property.name)
+        val o2propValue = o2.getProperty<Comparable<Any>?>(property.name)
         return when {
             o1propValue === o2propValue -> 0
             o1propValue == null -> -nulls.modifier

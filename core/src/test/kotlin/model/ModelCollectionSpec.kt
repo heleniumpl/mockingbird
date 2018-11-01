@@ -16,6 +16,9 @@ class ModelCollectionSpec : Spek({
                     id {
                         type(long)
                     }
+                    property("longProp") {
+                        type(long)
+                    }
                 }
             }
         }
@@ -24,7 +27,7 @@ class ModelCollectionSpec : Spek({
 
         val models by memoized { collection.list().items }
 
-        fun List<Model>.sortedById() = sortedWith(Order(metaModel.id().name).toOrderBy())
+        fun List<Model>.sortedById() = sortedWith(Order(metaModel.id()).toOrderBy())
 
         context("0 element collection") {
 
@@ -49,7 +52,7 @@ class ModelCollectionSpec : Spek({
         context("13 element collection") {
 
             beforeEach {
-                (1..13).forEach {
+                (1..13L).forEach {
                     collection.create(null, Model(mapOf(
                         "longProp" to if (it < 13) -it else null
                     )))
@@ -85,8 +88,7 @@ class ModelCollectionSpec : Spek({
             describe("sorting") {
 
                 it("should sort by long property") {
-                    collection.list(orderBy = Order("longProp")).items shouldBe models.sortedWith(Order("longProp"))
-                    println(collection.list(orderBy = Order("longProp")).items)
+                    collection.list(orderBy = Order(metaModel.property("longProp"))).items shouldBe models.sortedWith(Order(metaModel.property("longProp")))
                 }
 
             }

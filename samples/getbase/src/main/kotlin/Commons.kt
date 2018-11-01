@@ -69,7 +69,7 @@ fun pageRequestExtractor(request: Request) = PageRequest(
         // FIXME max 100
 )
 
-fun orderByExtractor(request: Request): OrderBy? {
+fun orderByExtractor(metaModel: MetaModel, request: Request): OrderBy? {
     val sortBy = request.queryParam("sort_by") ?: return null
     val matchResult = """(?<property>\w+)(:(?<direction>asc|desc))?"""
         .toRegex()
@@ -77,7 +77,7 @@ fun orderByExtractor(request: Request): OrderBy? {
         ?: throw BadRequest()
     return OrderBy(
         Order(
-            matchResult.groups["property"]!!.value,
+            metaModel.property(matchResult.groups["property"]!!.value),
             (matchResult.groups["direction"]?.value ?: "asc")
                 .let(String::toUpperCase)
                 .let(Direction::valueOf)
