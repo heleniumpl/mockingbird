@@ -11,7 +11,7 @@ object Versions {
 
     const val spek2 = "2.0.0-rc.1"
     const val kotlinTest = "3.1.10"
-    const val mockk = "1.8.9.kotlin13"
+    const val mockk = "1.8.10.kotlin13"
 
     const val fuel = "1.16.0"
 
