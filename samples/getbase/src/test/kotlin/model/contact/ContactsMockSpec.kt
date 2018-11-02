@@ -190,58 +190,111 @@ object ContactsMockSpec : Spek({
 
         describe("GET contacts") {
 
-            listOf(
-                PagingSpecData(0, null, null, IntRange.EMPTY),
-                PagingSpecData(1, null, null, 0..0),
-                PagingSpecData(25, null, null, 0..24),
-                PagingSpecData(26, null, null, 0..24)
-            ).forEach { data ->
-                context("when ${data.contactToCreate} contact(s) exist(s)") {
+            describe("paging") {
+
+                listOf(
+                    PagingSpecData(0, null, null, IntRange.EMPTY),
+                    PagingSpecData(1, null, null, 0..0),
+                    PagingSpecData(25, null, null, 0..24),
+                    PagingSpecData(26, null, null, 0..24)
+                ).forEach { data ->
+                    context("when ${data.contactToCreate} contact(s) exist(s)") {
+
+                        val contacts by memoized {
+                            (1..data.contactToCreate).map {
+                                mock.createContact().model().data().id()
+                            }
+                        }
+
+                        val response by memoized {
+                            @Suppress("UNUSED_EXPRESSION")
+                            contacts
+                            mock.getContacts(data.page, data.perPage)
+                        }
+
+                        it("returns 200") {
+                            response.status shouldBe 200
+                        }
+
+                        it("has items envelope") {
+                            with(response.model()) {
+                                items() shouldNotBe null
+                                with(meta()) {
+                                    getProperty<String>("type") shouldBe "collection"
+                                    getProperty<Long>("count") shouldBe data.expectedItems.count()
+                                }
+                            }
+                        }
+
+                        it("each item has envelope") {
+                            response
+                                .model()
+                                .items()
+                                .forEach {
+                                    it.data() shouldNotBe null
+                                    it.meta().getProperty<String>("type") shouldBe "contact"
+                                }
+                        }
+
+                        it("proper items should be included") {
+                            response
+                                .model()
+                                .items()
+                                .map { it.data().id() }.toSet() shouldBe contacts.slice(data.expectedItems).toSet()
+                        }
+
+                    }
+                }
+
+            }
+
+            describe("sorting") {
+
+                context("contacts with emails exist") {
 
                     val contacts by memoized {
-                        (1..data.contactToCreate).map {
-                            mock.createContact().model().data().id()
+                        listOf(
+                            "d@example.com",
+                            "b@example.com",
+                            "a@example.com",
+                            "c@example.com"
+                        ).forEach {
+                            mock.createContact(
+                                mapOf(
+                                    "email" to it,
+                                    "last_name" to it
+                                )
+                            )
                         }
                     }
 
-                    val response by memoized {
+                    beforeEach {
                         @Suppress("UNUSED_EXPRESSION")
                         contacts
-                        mock.getContacts(data.page, data.perPage)
                     }
 
-                    it("returns 200") {
-                        response.status shouldBe 200
-                    }
-
-                    it("has items envelope") {
-                        with(response.model()) {
-                            items() shouldNotBe null
-                            with(meta()) {
-                                getProperty<String>("type") shouldBe "collection"
-                                getProperty<Long>("count") shouldBe data.expectedItems.count()
-                            }
-                        }
-                    }
-
-                    it("each item has envelope") {
-                        response
+                    it("should sort by email in asc order") {
+                        mock
+                            .getContacts(sortBy = "email")
                             .model()
                             .items()
-                            .forEach {
-                                it.data() shouldNotBe null
-                                it.meta().getProperty<String>("type") shouldBe "contact"
-                            }
+                            .map { it.data() }
+                            .map { it.getProperty<String>("email") }
+                            .map { it.substringBefore('@') } shouldBe listOf("a", "b", "c", "d")
                     }
 
-                    it("proper items should be included") {
-                        response
+                    it("should sort by email in desc order") {
+                        mock
+                            .getContacts(sortBy = "email:desc")
                             .model()
                             .items()
-                            .map { it.data().id() }.toSet() shouldBe contacts.slice(data.expectedItems).toSet()
+                            .map { it.data() }
+                            .map { it.getProperty<String>("email") }
+                            .map { it.substringBefore('@') } shouldBe listOf("d", "c", "b", "a")
                     }
 
                 }
+
             }
 
         }
@@ -491,12 +544,13 @@ private fun Mockingbird.createContact(body: Any = exampleModel()) =
         .body(mapOf("data" to body).toJson())
         .execute()
 
-private fun Mockingbird.getContacts(page: Int? = null, perPage: Int? = null) =
+private fun Mockingbird.getContacts(page: Int? = null, perPage: Int? = null, sortBy: String? = null) =
     "http://localhost:${context.port}/v2/contacts"
         .httpGet(
             listOf(
                 "page" to page,
-                "per_page" to perPage
+                "per_page" to perPage,
+                "sort_by" to sortBy
             )
         )
         .authorized()

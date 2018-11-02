@@ -71,14 +71,14 @@ fun pageRequestExtractor(request: Request) = PageRequest(
 
 fun orderByExtractor(metaModel: MetaModel, request: Request): OrderBy? {
     val sortBy = request.queryParam("sort_by") ?: return null
-    val matchResult = """(?<property>\w+)(:(?<direction>asc|desc))?"""
+    val matchResult = """(\w+)(:(asc|desc))?"""
         .toRegex()
         .matchEntire(sortBy)
         ?: throw BadRequest()
     return OrderBy(
         Order(
-            metaModel.property(matchResult.groups["property"]!!.value),
-            (matchResult.groups["direction"]?.value ?: "asc")
+            metaModel.property(matchResult.groups[1]!!.value),
+            (matchResult.groups[3]?.value ?: "asc")
                 .let(String::toUpperCase)
                 .let(Direction::valueOf)
         )
