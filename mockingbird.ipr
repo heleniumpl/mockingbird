@@ -2,14 +2,22 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="buildSrc-mockingbird_buildSrc_main" target="11" />
+      <module name="buildSrc-mockingbird_buildSrc_test" target="11" />
       <module name="core_main" target="11" />
       <module name="core_test" target="11" />
       <module name="getbase_main" target="11" />
       <module name="getbase_test" target="11" />
+      <module name="mockingbird-core_main" target="11" />
+      <module name="mockingbird-core_test" target="11" />
+      <module name="mockingbird-test-commons_main" target="11" />
+      <module name="mockingbird-test-commons_test" target="11" />
       <module name="mockingbird.buildSrc.main" target="11" />
       <module name="mockingbird.buildSrc.test" target="11" />
       <module name="mockingbird.core.main" target="11" />
       <module name="mockingbird.core.test" target="11" />
+      <module name="mockingbird.samples-getbase_main" target="11" />
+      <module name="mockingbird.samples-getbase_test" target="11" />
       <module name="mockingbird.samples.getbase.main" target="11" />
       <module name="mockingbird.samples.getbase.test" target="11" />
       <module name="mockingbird.test-commons.main" target="11" />
@@ -95,6 +103,9 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Repositories-mockingbird_buildSrc.iml" filepath="$PROJECT_DIR$/Repositories-mockingbird_buildSrc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/buildSrc-mockingbird_buildSrc_main.iml" filepath="$PROJECT_DIR$/buildSrc-mockingbird_buildSrc_main.iml" group="mockingbird_buildSrc" />
+      <module fileurl="file://$PROJECT_DIR$/buildSrc-mockingbird_buildSrc_test.iml" filepath="$PROJECT_DIR$/buildSrc-mockingbird_buildSrc_test.iml" group="mockingbird_buildSrc" />
       <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" group="core" />
       <module fileurl="file://$PROJECT_DIR$/core/core_main.iml" filepath="$PROJECT_DIR$/core/core_main.iml" group="core" />
       <module fileurl="file://$PROJECT_DIR$/core/core_test.iml" filepath="$PROJECT_DIR$/core/core_test.iml" group="core" />
@@ -102,6 +113,16 @@
       <module fileurl="file://$PROJECT_DIR$/samples/getbase/getbase_main.iml" filepath="$PROJECT_DIR$/samples/getbase/getbase_main.iml" group="samples/getbase" />
       <module fileurl="file://$PROJECT_DIR$/samples/getbase/getbase_test.iml" filepath="$PROJECT_DIR$/samples/getbase/getbase_test.iml" group="samples/getbase" />
       <module fileurl="file://$PROJECT_DIR$/mockingbird.iml" filepath="$PROJECT_DIR$/mockingbird.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/mockingbird-core.iml" filepath="$PROJECT_DIR$/core/mockingbird-core.iml" group="core" />
+      <module fileurl="file://$PROJECT_DIR$/core/mockingbird-core_main.iml" filepath="$PROJECT_DIR$/core/mockingbird-core_main.iml" group="core" />
+      <module fileurl="file://$PROJECT_DIR$/core/mockingbird-core_test.iml" filepath="$PROJECT_DIR$/core/mockingbird-core_test.iml" group="core" />
+      <module fileurl="file://$PROJECT_DIR$/samples/mockingbird-samples.iml" filepath="$PROJECT_DIR$/samples/mockingbird-samples.iml" group="samples" />
+      <module fileurl="file://$PROJECT_DIR$/test-commons/mockingbird-test-commons.iml" filepath="$PROJECT_DIR$/test-commons/mockingbird-test-commons.iml" group="test-commons" />
+      <module fileurl="file://$PROJECT_DIR$/test-commons/mockingbird-test-commons_main.iml" filepath="$PROJECT_DIR$/test-commons/mockingbird-test-commons_main.iml" group="test-commons" />
+      <module fileurl="file://$PROJECT_DIR$/test-commons/mockingbird-test-commons_test.iml" filepath="$PROJECT_DIR$/test-commons/mockingbird-test-commons_test.iml" group="test-commons" />
+      <module fileurl="file://$PROJECT_DIR$/samples/getbase/mockingbird.samples-getbase.iml" filepath="$PROJECT_DIR$/samples/getbase/mockingbird.samples-getbase.iml" group="samples/getbase" />
+      <module fileurl="file://$PROJECT_DIR$/samples/getbase/mockingbird.samples-getbase_main.iml" filepath="$PROJECT_DIR$/samples/getbase/mockingbird.samples-getbase_main.iml" group="samples/getbase" />
+      <module fileurl="file://$PROJECT_DIR$/samples/getbase/mockingbird.samples-getbase_test.iml" filepath="$PROJECT_DIR$/samples/getbase/mockingbird.samples-getbase_test.iml" group="samples/getbase" />
       <module fileurl="file://$PROJECT_DIR$/mockingbird_buildSrc.iml" filepath="$PROJECT_DIR$/mockingbird_buildSrc.iml" />
       <module fileurl="file://$PROJECT_DIR$/mockingbird_buildSrc_main.iml" filepath="$PROJECT_DIR$/mockingbird_buildSrc_main.iml" group="mockingbird_buildSrc" />
       <module fileurl="file://$PROJECT_DIR$/mockingbird_buildSrc_test.iml" filepath="$PROJECT_DIR$/mockingbird_buildSrc_test.iml" group="mockingbird_buildSrc" />
