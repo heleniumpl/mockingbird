@@ -22,6 +22,16 @@ subprojects {
             }
         }
     }
+
+    configurations.all {
+        resolutionStrategy {
+            eachDependency {
+                if(requested.group == "org.jetbrains.kotlin") {
+                    useVersion(Versions.kotlin)
+                }
+            }
+        }
+    }
 }
 
 tasks {
