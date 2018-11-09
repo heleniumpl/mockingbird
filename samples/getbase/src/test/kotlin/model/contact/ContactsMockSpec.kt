@@ -297,6 +297,48 @@ object ContactsMockSpec : Spek({
 
             }
 
+            describe("filtering") {
+
+                context("13 contacts exist") {
+
+                    val contacts by memoized {
+                        (1..13).map {
+                            mock.createContact(
+                                mapOf(
+                                    "first_name" to it.toString(),
+                                    "last_name" to (it % 3).toString(),
+                                    "email" to "${it % 2}@example.com"
+                                )
+                            )
+                        }
+                    }
+
+                    beforeEach {
+                        @Suppress("UNUSED_EXPRESSION")
+                        contacts
+                    }
+
+                    it("should filter by last_name and email") {
+                        mock
+                            .getContacts(
+                                filters = mapOf(
+                                    "last_name" to "0",
+                                    "email" to "1@example.com",
+                                    // this is not filterable so it should be ignored
+                                    "description" to "nothing"
+                                )
+                            )
+                            .model()
+                            .items()
+                            .map(Model::data)
+                            .map { it.getProperty<String>("first_name") }
+                            .shouldContainExactly("3", "9")
+                    }
+
+                }
+
+            }
+
         }
 
         describe("GET contact") {
@@ -544,13 +586,21 @@ private fun Mockingbird.createContact(body: Any = exampleModel()) =
         .body(mapOf("data" to body).toJson())
         .execute()
 
-private fun Mockingbird.getContacts(page: Int? = null, perPage: Int? = null, sortBy: String? = null) =
+private fun Mockingbird.getContacts(
+    page: Int? = null,
+    perPage: Int? = null,
+    sortBy: String? = null,
+    filters: Map<String, Any> = emptyMap()
+) =
     "http://localhost:${context.port}/v2/contacts"
         .httpGet(
             listOf(
                 "page" to page,
                 "per_page" to perPage,
-                "sort_by" to sortBy
+                "sort_by" to sortBy,
+                *filters
+                    .map { (k, v) -> k to v }
+                    .toTypedArray()
             )
         )
         .authorized()

@@ -2,11 +2,14 @@ package pl.helenium.mockingbird.definition.rest
 
 import pl.helenium.mockingbird.model.Actor
 import pl.helenium.mockingbird.model.Context
+import pl.helenium.mockingbird.model.Filter
 import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.Model
 import pl.helenium.mockingbird.model.OrderBy
 import pl.helenium.mockingbird.model.Page
 import pl.helenium.mockingbird.model.PageRequest
+import pl.helenium.mockingbird.model.noFilter
+import pl.helenium.mockingbird.model.noPaging
 import pl.helenium.mockingbird.server.Request
 import pl.helenium.mockingbird.server.Response
 
@@ -17,18 +20,19 @@ class RestCreateOperation(context: Context, metaModel: MetaModel) : RestOperatio
 
 }
 
-// FIXME add support for filtering
 class RestListOperation(
     context: Context,
     metaModel: MetaModel,
-    private val pageRequestExtractor: (Request) -> PageRequest? = { null },
-    private val orderByExtractor: (MetaModel, Request) -> OrderBy? = { _, _ -> null }
+    private val pageRequestExtractor: (Request) -> PageRequest = { noPaging },
+    private val orderByExtractor: (MetaModel, Request) -> OrderBy? = { _, _ -> null },
+    private val filterExtractor: (MetaModel, Request) -> Filter = { _, _-> noFilter }
 ) : RestOperation<Page<Model>>(context, metaModel) {
 
     override fun handle(actor: Actor?, request: Request, response: Response, model: Model) =
         collection().list(
             pageRequestExtractor(request),
-            orderByExtractor(metaModel, request)
+            orderByExtractor(metaModel, request),
+            filterExtractor(metaModel, request)
         )
 
 }

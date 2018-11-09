@@ -42,6 +42,8 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="mockingbird-core_main" />
+    <orderEntry type="module" module-name="mockingbird-core_main" />
+    <orderEntry type="module" module-name="mockingbird-core_main" />
     <orderEntry type="module" module-name="mockingbird-test-commons_main" />
     <orderEntry type="module" module-name="mockingbird-core_main" />
     <orderEntry type="library" name="Gradle: org.spekframework.spek2:spek-dsl-jvm:2.0.0-rc.1" level="project" />

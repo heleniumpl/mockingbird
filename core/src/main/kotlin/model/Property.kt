@@ -10,6 +10,8 @@ class Property(val name: String, buildBlock: PropertyDsl.() -> Unit = {}) {
 
     var sortable = true
 
+    var filterable = true
+
     var type: Type = AnyType
 
     val validators = mutableListOf<Validator>()
@@ -17,6 +19,8 @@ class Property(val name: String, buildBlock: PropertyDsl.() -> Unit = {}) {
     init {
         PropertyDsl().buildBlock()
     }
+
+    override fun toString() = name
 
     inner class PropertyDsl {
 
@@ -31,6 +35,8 @@ class Property(val name: String, buildBlock: PropertyDsl.() -> Unit = {}) {
         }
 
         fun sortable(sortable: Boolean = true) = apply { this@Property.sortable = sortable }
+
+        fun filterable(filterable: Boolean = true) = apply { this@Property.filterable = filterable }
 
         fun type(type: Type) = apply {
             this@Property.type = type

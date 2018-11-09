@@ -19,6 +19,7 @@ import pl.helenium.mockingbird.model.MetaModel
 import pl.helenium.mockingbird.model.Model
 import pl.helenium.mockingbird.model.ModelError
 import pl.helenium.mockingbird.model.Validator
+import pl.helenium.mockingbird.model.extractPropertyFilter
 import pl.helenium.mockingbird.model.long
 import pl.helenium.mockingbird.model.string
 import pl.helenium.mockingbird.test.mock.getbase.BearerAuthenticator
@@ -37,8 +38,15 @@ class ContactsMock(context: Context) : DslMock(context, {
             id {
                 type(long)
             }
+            property("last_name") {
+                type(string)
+            }
             property("email") {
                 type(string)
+            }
+            property("description") {
+                type(string)
+                filterable(false)
             }
         }
         lifecycleHandlers {
@@ -73,7 +81,8 @@ class ContactsMock(context: Context) : DslMock(context, {
                     context,
                     metaModel(),
                     ::pageRequestExtractor,
-                    ::orderByExtractor
+                    ::orderByExtractor,
+                    ::extractPropertyFilter
                 ),
                 wrapper = pageTransformer(dataMetaWrapper(metaModel()))
                         then ::itemsWrapper,

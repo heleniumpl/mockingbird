@@ -48,118 +48,6 @@
     <content url="file://$MODULE_DIR$/buildSrc/src/test" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="buildSrc-mockingbird_buildSrc_main" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/5.0-rc-1/generated-gradle-jars/gradle-api-5.0-rc-1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-rc-1-all/4nu16q3w9l8xx7b8dbbhc8vsz/gradle-5.0-rc-1/lib/groovy-all-1.0-2.5.3.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-rc-1-all/4nu16q3w9l8xx7b8dbbhc8vsz/gradle-5.0-rc-1/lib/gradle-installation-beacon-5.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/5.0-rc-1/generated-gradle-jars/gradle-test-kit-5.0-rc-1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/5.0-rc-1/generated-gradle-jars/gradle-kotlin-dsl-extensions-1.0-rc-14-5.0-rc-1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-rc-1-all/4nu16q3w9l8xx7b8dbbhc8vsz/gradle-5.0-rc-1/lib/gradle-kotlin-dsl-1.0-rc-14.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-rc-1-all/4nu16q3w9l8xx7b8dbbhc8vsz/gradle-5.0-rc-1/lib/gradle-kotlin-dsl-tooling-models-1.0-rc-14.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-rc-1-all/4nu16q3w9l8xx7b8dbbhc8vsz/gradle-5.0-rc-1/lib/kotlin-reflect-1.3.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-rc-1-all/4nu16q3w9l8xx7b8dbbhc8vsz/gradle-5.0-rc-1/lib/kotlin-stdlib-1.3.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-rc-1-all/4nu16q3w9l8xx7b8dbbhc8vsz/gradle-5.0-rc-1/lib/kotlin-stdlib-common-1.3.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-rc-1-all/4nu16q3w9l8xx7b8dbbhc8vsz/gradle-5.0-rc-1/lib/kotlin-stdlib-jdk7-1.3.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-rc-1-all/4nu16q3w9l8xx7b8dbbhc8vsz/gradle-5.0-rc-1/lib/kotlin-stdlib-jdk8-1.3.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.0" level="project" />
-    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-reflect:1.3.0" level="project" />
-    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.0" level="project" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -247,6 +135,52 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-rc-1-all/4nu16q3w9l8xx7b8dbbhc8vsz/gradle-5.0-rc-1/lib/groovy-all-1.0-2.5.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module" module-name="buildSrc-mockingbird_buildSrc_main" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-rc-1-all/4nu16q3w9l8xx7b8dbbhc8vsz/gradle-5.0-rc-1/lib/kotlin-reflect-1.3.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-rc-1-all/4nu16q3w9l8xx7b8dbbhc8vsz/gradle-5.0-rc-1/lib/kotlin-stdlib-jdk7-1.3.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-rc-1-all/4nu16q3w9l8xx7b8dbbhc8vsz/gradle-5.0-rc-1/lib/kotlin-stdlib-jdk8-1.3.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-rc-1-all/4nu16q3w9l8xx7b8dbbhc8vsz/gradle-5.0-rc-1/lib/kotlin-stdlib-1.3.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
           <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-rc-1-all/4nu16q3w9l8xx7b8dbbhc8vsz/gradle-5.0-rc-1/lib/gradle-installation-beacon-5.0.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -277,6 +211,45 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/5.0-rc-1/generated-gradle-jars/gradle-test-kit-5.0-rc-1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/5.0-rc-1/generated-gradle-jars/gradle-kotlin-dsl-extensions-1.0-rc-14-5.0-rc-1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-rc-1-all/4nu16q3w9l8xx7b8dbbhc8vsz/gradle-5.0-rc-1/lib/kotlin-stdlib-common-1.3.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/5.0-rc-1/generated-gradle-jars/gradle-api-5.0-rc-1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-reflect:1.3.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.0" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.3.0" level="project" />
     <orderEntry type="module-library" scope="RUNTIME">
       <library>
@@ -288,6 +261,33 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="Gradle: org.jetbrains:annotations:13.0" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-rc-1-all/4nu16q3w9l8xx7b8dbbhc8vsz/gradle-5.0-rc-1/lib/gradle-installation-beacon-5.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-rc-1-all/4nu16q3w9l8xx7b8dbbhc8vsz/gradle-5.0-rc-1/lib/gradle-kotlin-dsl-1.0-rc-14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-rc-1-all/4nu16q3w9l8xx7b8dbbhc8vsz/gradle-5.0-rc-1/lib/gradle-kotlin-dsl-tooling-models-1.0-rc-14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
   <component name="TestModuleProperties" production-module="mockingbird_buildSrc_main" />
 </module>

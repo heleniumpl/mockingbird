@@ -4,14 +4,11 @@
 
 * Features
   * Request validation
-  * GET on collection
-    * filtering
-    * sorting
-    * paging
   * embedded collections
   * mock aggregator
   * complex path expr for getting property
   * multiple ports
+  * dump collections
   
 * Code quality
   * reorganize packages & file contents

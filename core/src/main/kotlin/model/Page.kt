@@ -18,9 +18,8 @@ data class PageRequest(val page: Int, val itemsPerPage: Int) {
 
 }
 
-fun <T> List<T>.page(request: PageRequest?) = Page(
-    if (request == null)
-        this
-    else
-        subList(request.firstItem, min(request.lastItemExclusive, size))
+fun <T> List<T>.page(request: PageRequest) = Page(
+    subList(request.firstItem, min(request.lastItemExclusive, size))
 )
+
+val noPaging = PageRequest(0, Int.MAX_VALUE)

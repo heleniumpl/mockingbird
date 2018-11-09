@@ -31,9 +31,14 @@ class ModelCollection(private val context: Context, private val metaModel: MetaM
         return mutableModel
     }
 
-    fun list(request: PageRequest? = null, orderBy: Comparator<Model>? = null): Page<Model> = models
+    fun list(
+        request: PageRequest = noPaging,
+        orderBy: Comparator<Model>? = null,
+        filter: Filter = noFilter
+    ): Page<Model> = models
         .values
         .toList()
+        .filter(filter)
         .sortedWith(orderBy ?: Order(metaModel.id()).toOrderBy())
         .page(request)
 
