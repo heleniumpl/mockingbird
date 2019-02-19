@@ -4,21 +4,21 @@ object Versions {
     const val kotlin = "1.3.0"
 
     const val logback = "1.2.3"
-    const val kotlinLogging = "1.6.20"
+    const val kotlinLogging = "1.6.25"
     const val spark = "2.8.0"
-    const val jackson = "2.9.7"
+    const val jackson = "2.9.8"
 
     // test
 
-    const val spek2 = "2.0.0-rc.1"
-    const val kotlinTest = "3.1.10"
-    const val mockk = "1.8.13.kotlin13"
+    const val spek2 = "2.0.0"
+    const val kotlinTest = "3.2.1"
+    const val mockk = "1.9.1"
 
     const val fuel = "1.16.0"
 
     // gradle
 
-    const val gradle = "5.0-rc-3"
+    const val gradle = "5.2.1"
 
     object GradlePlugins {
 
