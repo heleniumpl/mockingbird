@@ -13,7 +13,7 @@ object Versions {
     const val kotlinTest = "3.3.1"
     const val mockk = "1.9.3"
 
-    const val fuel = "1.16.0"
+    const val fuel = "2.0.1"
 
     // gradle
 

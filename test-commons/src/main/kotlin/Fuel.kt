@@ -16,7 +16,7 @@ data class Response(
 fun Request.execute() = response().second.run {
     Response(
         statusCode,
-        headers,
+        headers.mapValues { it.value.toList() },
         data.toString(UTF_8)
     )
 }
