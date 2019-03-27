@@ -10,9 +10,6 @@ plugins {
 subprojects {
     repositories {
         jcenter()
-
-        maven("https://dl.bintray.com/kotlin/kotlin-eap")
-        maven("https://dl.bintray.com/spekframework/spek-dev")
     }
 
     tasks {
@@ -44,15 +41,7 @@ tasks {
         resolutionStrategy {
             componentSelection {
                 all {
-                    if (candidate.group in setOf(
-                            "org.spekframework.spek2",
-                            "org.jetbrains.kotlin",
-                            "org.jetbrains.kotlin.jvm"
-                        )
-                    ) return@all
-
-
-                    listOf("alpha", "beta", "rc", "cr", "m")
+                    listOf("alpha", "beta", "rc", "cr", "m", "eap")
                         .asSequence()
                         .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-]*") }
                         .any { it.matches(candidate.version) }
